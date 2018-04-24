@@ -52,6 +52,8 @@
         <item quantity="other">Studied %1$d cards in %2$s today</item>
     </plurals>
 
+    <!-- Game.java -->
+    <string name="press_back_again_to_exit">Press back again to exit</string>
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
@@ -72,6 +74,7 @@
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="menu_add">Add</string>
+    <string name="menu_game">Game</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account">Sync account</string>
     <string name="menu_dismiss_note">Hide / delete</string>

@@ -132,6 +132,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private static final int REPORT_ERROR = 10;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
+    private static final int GO_GAME = 13;
 
     // For automatic syncing
     // 10 minutes in milliseconds.
@@ -471,6 +472,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         final FloatingActionButton addDeckButton = (FloatingActionButton) findViewById(R.id.add_deck_action);
         final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
         final FloatingActionButton addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
+        final FloatingActionButton addGameButton = (FloatingActionButton) findViewById(R.id.add_game_action);
         addDeckButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -510,6 +512,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onClick(View view) {
                 mActionsMenu.collapse();
                 addNote();
+            }
+        });
+        addGameButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActionsMenu.collapse();
+                addGame();
             }
         });
     }
@@ -854,6 +863,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+    }
+
+    public void addGame() {
+        Intent intent = new Intent(DeckPicker.this, Game.class);
+        startActivityForResultWithAnimation(intent, GO_GAME, ActivityTransitionAnimation.LEFT);
     }
 
 

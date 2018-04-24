@@ -1,0 +1,22 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:id="@+id/game_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <include layout="@layout/toolbar" />
+        <!--TODO: Fix the size of the webview-->
+        <WebView
+            android:id="@+id/web_main"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </RelativeLayout>
+    <!-- TODO: Add the tools in the button
+    <include layout="@layout/anki_progress"/>
+    <include layout="@layout/game_floating_add_button"/>
+    -->
+</android.support.design.widget.CoordinatorLayout>
