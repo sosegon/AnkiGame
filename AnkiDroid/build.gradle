@@ -47,6 +47,11 @@ play {
 }
 
 dependencies {
+    final BUTTERKNIFE_VERSION = '8.4.0'
+    implementation "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:26.1.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
