@@ -15,8 +15,5 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
     </RelativeLayout>
-    <!-- TODO: Add the tools in the button
-    <include layout="@layout/anki_progress"/>
     <include layout="@layout/game_floating_add_button"/>
-    -->
 </android.support.design.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -18,13 +19,23 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class Game extends NavigationDrawerActivity {
     // TODO: Chnage tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
+
+    /**
+     * Available options performed by other activities (request codes for onActivityResult())
+     */
+    private static final int GO_EARN_COINS = 0;
 
     private WebView mWebView;
     private long mLastBackPress;
@@ -34,6 +45,9 @@ public class Game extends NavigationDrawerActivity {
     private long mLastTouch;
     private static final long mTouchThreshold = 2000;
     private Toast pressBackToast;
+
+    @BindView(R.id.game_menu)
+    FloatingActionsMenu mFabGameMenu;
 
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
@@ -71,6 +85,10 @@ public class Game extends NavigationDrawerActivity {
         }
 
         setContentView(R.layout.game);
+
+        ButterKnife.bind(this);
+
+        initFabGameMenu();
 
         // TODO: Remove this code if needed
         /*ChangeLog cl = new ChangeLog(this);
@@ -177,7 +195,8 @@ public class Game extends NavigationDrawerActivity {
      * mBackPressThreshold specifies the maximum delay (ms) between two consecutive backpress to
      * quit the app.
      */
-    // TODO: Check this function when adding actions menu
+    // TODO: AnkiGame, Check this function when adding actions menu
+    // TODO: AnkiGame, See the flow between Game and DeckPicker
     @Override
     public void onBackPressed() {
         long currentTime = System.currentTimeMillis();
@@ -188,5 +207,30 @@ public class Game extends NavigationDrawerActivity {
             pressBackToast.cancel();
             super.finishWithAnimation(ActivityTransitionAnimation.DOWN);
         }
+    }
+
+    private void initFabGameMenu() {
+        if (mFabGameMenu != null) {
+            mFabGameMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_options));
+            configureFloatingActionsMenu();
+        } else {
+            // TODO: AnkiGame, Set button for versions of Android below v14
+        }
+    }
+
+    private void configureFloatingActionsMenu() {
+        final FloatingActionButton fabEarnCoinsButton = (FloatingActionButton) findViewById(R.id.fab_earn_coins_action);
+        fabEarnCoinsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFabGameMenu.collapse();
+                optionsEarnCoins();
+            }
+        });
+    }
+
+    private void optionsEarnCoins() {
+        Intent intent = new Intent(Game.this, DeckPicker.class);
+        startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 }
