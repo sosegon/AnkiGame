@@ -27,6 +27,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTouch;
 
 public class Game extends NavigationDrawerActivity {
     // TODO: AnkiGame, Change tag
@@ -50,6 +51,25 @@ public class Game extends NavigationDrawerActivity {
 
     @BindView(R.id.web_main)
     WebView mWebMain;
+
+    // Set fullscreen toggle on webview LongClick
+    @OnTouch(R.id.web_main)
+    public boolean onTouchGameWebView(View v, MotionEvent event) {
+        // Implement a long touch action by comparing
+        // time between action up and action down
+        long currentTime = System.currentTimeMillis();
+        if ((event.getAction() == MotionEvent.ACTION_UP)
+                && (Math.abs(currentTime - mLastTouch) > mTouchThreshold)) {
+            boolean toggledFullScreen = !isFullScreen();
+            saveFullScreen(toggledFullScreen);
+            applyFullScreen(toggledFullScreen);
+        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mLastTouch = currentTime;
+        }
+        // return so that the event isn't consumed but used
+        // by the webview as well
+        return false;
+    }
 
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
@@ -195,29 +215,8 @@ public class Game extends NavigationDrawerActivity {
             mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
         }
 
-        // TODO: Remove this code if needed
+        // TODO: AnkiGame, Remove this code if needed
         //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();
-        // Set fullscreen toggle on webview LongClick
-        mWebMain.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Implement a long touch action by comparing
-                // time between action up and action down
-                long currentTime = System.currentTimeMillis();
-                if ((event.getAction() == MotionEvent.ACTION_UP)
-                        && (Math.abs(currentTime - mLastTouch) > mTouchThreshold)) {
-                    boolean toggledFullScreen = !isFullScreen();
-                    saveFullScreen(toggledFullScreen);
-                    applyFullScreen(toggledFullScreen);
-                } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mLastTouch = currentTime;
-                }
-                // return so that the event isn't consumed but used
-                // by the webview as well
-                return false;
-            }
-        });
     }
 
     private void initFabGameMenu() {
