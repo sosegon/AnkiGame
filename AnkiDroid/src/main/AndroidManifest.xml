@@ -172,7 +172,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Game">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <!-- TODO: Fill the elements below if necessary -->
+            <!-- TODO: AnkiGame, Fill the elements below if necessary -->
             <!--<meta-data/>
             <intent-filter>
             </intent-filter>-->

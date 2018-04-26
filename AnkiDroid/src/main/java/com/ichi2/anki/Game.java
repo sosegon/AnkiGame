@@ -23,7 +23,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import java.util.Locale;
 
 public class Game extends NavigationDrawerActivity {
-    // TODO: Chnage tag
+    // TODO: AnkiGame, Change tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
 
     private WebView mWebView;
@@ -72,7 +72,7 @@ public class Game extends NavigationDrawerActivity {
 
         setContentView(R.layout.game);
 
-        // TODO: Remove this code if needed
+        // TODO: AnkiGame, Remove this code if needed
         /*ChangeLog cl = new ChangeLog(this);
         if (cl.isFirstRun()) {
             cl.getLogDialog().show();
@@ -96,7 +96,7 @@ public class Game extends NavigationDrawerActivity {
             mWebView.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
         }
 
-        // TODO: Remove this code if needed
+        // TODO: AnkiGame, Remove this code if needed
         //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();
         // Set fullscreen toggle on webview LongClick
         mWebView.setOnTouchListener(new View.OnTouchListener() {
@@ -177,7 +177,7 @@ public class Game extends NavigationDrawerActivity {
      * mBackPressThreshold specifies the maximum delay (ms) between two consecutive backpress to
      * quit the app.
      */
-    // TODO: Check this function when adding actions menu
+    // TODO: AnkiGame, Check this function when adding actions menu
     @Override
     public void onBackPressed() {
         long currentTime = System.currentTimeMillis();
