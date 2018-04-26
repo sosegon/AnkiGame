@@ -25,8 +25,10 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 
 import java.util.Locale;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTouch;
 
 public class Game extends NavigationDrawerActivity {
@@ -48,6 +50,9 @@ public class Game extends NavigationDrawerActivity {
 
     @BindView(R.id.game_menu)
     FloatingActionsMenu mFabGameMenu;
+
+    @BindView(R.id.fab_expand_menu_button)
+    View mFabExpandMenuButton;
 
     @BindView(R.id.web_main)
     WebView mWebMain;
@@ -71,6 +76,22 @@ public class Game extends NavigationDrawerActivity {
         return false;
     }
 
+    @BindView(R.id.fab_earn_coins_action)
+    FloatingActionButton mFabEarnCoins;
+
+    @OnClick(R.id.fab_earn_coins_action)
+    public void earnCoins() {
+        mFabGameMenu.collapse();
+        Intent intent = new Intent(Game.this, DeckPicker.class);
+        startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
+    }
+
+    @BindString(R.string.press_back_again_to_exit)
+    String sBack;
+
+    @BindString(R.string.menu_options)
+    String sMenuOptions;
+
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +107,7 @@ public class Game extends NavigationDrawerActivity {
 
         initWebMain(savedInstanceState);
 
-        pressBackToast = Toast.makeText(getApplicationContext(), R.string.press_back_again_to_exit,
-                Toast.LENGTH_SHORT);
+        pressBackToast = Toast.makeText(getApplicationContext(), sBack, Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -221,26 +241,9 @@ public class Game extends NavigationDrawerActivity {
 
     private void initFabGameMenu() {
         if (mFabGameMenu != null) {
-            mFabGameMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_options));
-            configureFloatingActionsMenu();
+            mFabExpandMenuButton.setContentDescription(sMenuOptions);
         } else {
             // TODO: AnkiGame, Set button for versions of Android below v14
         }
-    }
-
-    private void configureFloatingActionsMenu() {
-        final FloatingActionButton fabEarnCoinsButton = (FloatingActionButton) findViewById(R.id.fab_earn_coins_action);
-        fabEarnCoinsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFabGameMenu.collapse();
-                optionsEarnCoins();
-            }
-        });
-    }
-
-    private void optionsEarnCoins() {
-        Intent intent = new Intent(Game.this, DeckPicker.class);
-        startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 }
