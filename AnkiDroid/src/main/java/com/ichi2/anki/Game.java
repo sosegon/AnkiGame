@@ -1,6 +1,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -225,6 +227,8 @@ public class Game extends NavigationDrawerActivity {
         settings.setDatabaseEnabled(true);
         settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         settings.setDatabasePath(getFilesDir().getParentFile().getPath() + "/databases");
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
 
         // If there is a previous instance restore it in the webview
         if (savedInstanceState != null) {
