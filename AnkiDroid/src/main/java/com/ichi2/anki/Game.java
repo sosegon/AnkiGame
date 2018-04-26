@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Game extends NavigationDrawerActivity {
-    // TODO: Chnage tag
+    // TODO: AnkiGame, Change tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
 
     /**
@@ -37,7 +37,6 @@ public class Game extends NavigationDrawerActivity {
      */
     private static final int GO_EARN_COINS = 0;
 
-    private WebView mWebView;
     private long mLastBackPress;
     private static final long mBackPressThreshold = 3500;
     private static final String IS_FULLSCREEN_PREF = "is_fullscreen_pref";
@@ -49,40 +48,15 @@ public class Game extends NavigationDrawerActivity {
     @BindView(R.id.game_menu)
     FloatingActionsMenu mFabGameMenu;
 
+    @BindView(R.id.web_main)
+    WebView mWebMain;
+
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Don't show an action bar or title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        // If on android 3.0+ activate hardware acceleration
-        if (Build.VERSION.SDK_INT >= 11) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-        }
-
-        // Apply previous setting about showing status bar or not
-        applyFullScreen(isFullScreen());
-
-        // Check if screen rotation is locked in settings
-        boolean isOrientationEnabled = false;
-        try {
-            isOrientationEnabled = Settings.System.getInt(getContentResolver(),
-                    Settings.System.ACCELEROMETER_ROTATION) == 1;
-        } catch (Settings.SettingNotFoundException e) {
-            Log.d(MAIN_ACTIVITY_TAG, "Settings could not be loaded");
-        }
-
-        // If rotation isn't locked and it's a LARGE screen then add orientation changes based on sensor
-        int screenLayout = getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK;
-        if (((screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE)
-                || (screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE))
-                && isOrientationEnabled) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        }
+        initScreenSettings();
 
         setContentView(R.layout.game);
 
@@ -90,53 +64,7 @@ public class Game extends NavigationDrawerActivity {
 
         initFabGameMenu();
 
-        // TODO: Remove this code if needed
-        /*ChangeLog cl = new ChangeLog(this);
-        if (cl.isFirstRun()) {
-            cl.getLogDialog().show();
-        }*/
-
-        // Load webview with game
-        mWebView = (WebView) findViewById(R.id.web_main);
-        WebSettings settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
-        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        settings.setDatabasePath(getFilesDir().getParentFile().getPath() + "/databases");
-
-        // If there is a previous instance restore it in the webview
-        if (savedInstanceState != null) {
-            // TODO: If app was minimized and Locale language was changed, we need to reload webview with changed language
-            mWebView.restoreState(savedInstanceState);
-        } else {
-            // Load webview with current Locale language
-            mWebView.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
-        }
-
-        // TODO: Remove this code if needed
-        //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();
-        // Set fullscreen toggle on webview LongClick
-        mWebView.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Implement a long touch action by comparing
-                // time between action up and action down
-                long currentTime = System.currentTimeMillis();
-                if ((event.getAction() == MotionEvent.ACTION_UP)
-                        && (Math.abs(currentTime - mLastTouch) > mTouchThreshold)) {
-                    boolean toggledFullScreen = !isFullScreen();
-                    saveFullScreen(toggledFullScreen);
-                    applyFullScreen(toggledFullScreen);
-                } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mLastTouch = currentTime;
-                }
-                // return so that the event isn't consumed but used
-                // by the webview as well
-                return false;
-            }
-        });
+        initWebMain(savedInstanceState);
 
         pressBackToast = Toast.makeText(getApplicationContext(), R.string.press_back_again_to_exit,
                 Toast.LENGTH_SHORT);
@@ -145,7 +73,7 @@ public class Game extends NavigationDrawerActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mWebView.saveState(outState);
+        mWebMain.saveState(outState);
     }
 
     @Override
@@ -207,6 +135,89 @@ public class Game extends NavigationDrawerActivity {
             pressBackToast.cancel();
             super.finishWithAnimation(ActivityTransitionAnimation.DOWN);
         }
+    }
+
+    private void initScreenSettings() {
+
+        // Don't show an action bar or title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // If on android 3.0+ activate hardware acceleration
+        if (Build.VERSION.SDK_INT >= 11) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        }
+
+        // Apply previous setting about showing status bar or not
+        applyFullScreen(isFullScreen());
+
+        // Check if screen rotation is locked in settings
+        boolean isOrientationEnabled = false;
+        try {
+            isOrientationEnabled = Settings.System.getInt(getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION) == 1;
+        } catch (Settings.SettingNotFoundException e) {
+            Log.d(MAIN_ACTIVITY_TAG, "Settings could not be loaded");
+        }
+
+        // If rotation isn't locked and it's a LARGE screen then add orientation changes based on sensor
+        int screenLayout = getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK;
+        if (((screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE)
+                || (screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE))
+                && isOrientationEnabled) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        }
+    }
+
+    private void initWebMain(Bundle savedInstanceState) {
+        // TODO: AnkiGame, Remove this code if needed
+        /*ChangeLog cl = new ChangeLog(this);
+        if (cl.isFirstRun()) {
+            cl.getLogDialog().show();
+        }*/
+
+        // Load webview with game
+        // mWebMain = (WebView) findViewById(R.id.web_main);
+        WebSettings settings = mWebMain.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        settings.setDatabasePath(getFilesDir().getParentFile().getPath() + "/databases");
+
+        // If there is a previous instance restore it in the webview
+        if (savedInstanceState != null) {
+            // TODO: If app was minimized and Locale language was changed, we need to reload webview with changed language
+            mWebMain.restoreState(savedInstanceState);
+        } else {
+            // Load webview with current Locale language
+            mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
+        }
+
+        // TODO: Remove this code if needed
+        //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();
+        // Set fullscreen toggle on webview LongClick
+        mWebMain.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Implement a long touch action by comparing
+                // time between action up and action down
+                long currentTime = System.currentTimeMillis();
+                if ((event.getAction() == MotionEvent.ACTION_UP)
+                        && (Math.abs(currentTime - mLastTouch) > mTouchThreshold)) {
+                    boolean toggledFullScreen = !isFullScreen();
+                    saveFullScreen(toggledFullScreen);
+                    applyFullScreen(toggledFullScreen);
+                } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mLastTouch = currentTime;
+                }
+                // return so that the event isn't consumed but used
+                // by the webview as well
+                return false;
+            }
+        });
     }
 
     private void initFabGameMenu() {

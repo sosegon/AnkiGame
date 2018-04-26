@@ -9,7 +9,7 @@
         android:orientation="vertical" >
 
         <include layout="@layout/toolbar" />
-        <!--TODO: Fix the size of the webview-->
+        <!--TODO: AnkiGame, Fix the size of the webview-->
         <WebView
             android:id="@+id/web_main"
             android:layout_width="fill_parent"
