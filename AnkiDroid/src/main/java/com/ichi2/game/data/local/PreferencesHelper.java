@@ -12,6 +12,8 @@ import javax.inject.Singleton;
 public class PreferencesHelper {
     public static final String PREF_FILE_NAME = "ankigame_pref_file";
 
+    public static final String KEY_COINS = "prf_coins";
+
     private final SharedPreferences mPref;
 
     @Inject
@@ -21,5 +23,19 @@ public class PreferencesHelper {
 
     public void clear() {
         mPref.edit().clear().apply();
+    }
+
+    public int retrieveCoins() {
+        return mPref.getInt(KEY_COINS, 10);
+    }
+
+    /**
+     *
+     * @param coins positive or negative
+     */
+    public void updateCoins(int coins) {
+        int current = retrieveCoins();
+        mPref.edit().putInt(KEY_COINS, current+coins).apply();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.ichi2.game.injection.component;
 
+import com.ichi2.game.Game;
 import com.ichi2.game.injection.PerActivity;
 import com.ichi2.game.injection.module.ActivityModule;
 
@@ -11,4 +12,5 @@ import dagger.Subcomponent;
 @PerActivity
 @Subcomponent(modules = ActivityModule.class)
 public interface ActivityComponent {
+    void inject(Game gameActivity);
 }

@@ -2,9 +2,11 @@ package com.ichi2.game;
 
 import com.ichi2.game.base.BasePresenter;
 import com.ichi2.game.data.DataManager;
+import com.ichi2.game.injection.ConfigPersistent;
 
 import javax.inject.Inject;
 
+@ConfigPersistent
 public class GamePresenter extends BasePresenter<GameMvpView> {
     private final DataManager mDataManager;
 
@@ -13,7 +15,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         mDataManager = dataManager;
     }
 
-    public void addMessage(String message) {
-
+    public int getCoins() {
+        return mDataManager.getPreferencesHelper().retrieveCoins();
     }
 }

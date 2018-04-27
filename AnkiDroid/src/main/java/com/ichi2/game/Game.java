@@ -105,6 +105,8 @@ public class Game extends BaseActivity implements GameMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        activityComponent().inject(this);
+
         initScreenSettings();
 
         setContentView(R.layout.game);
@@ -115,13 +117,25 @@ public class Game extends BaseActivity implements GameMvpView {
 
         initWebMain(savedInstanceState);
 
+        mGamePresenter.attachView(this);
+
         pressBackToast = Toast.makeText(getApplicationContext(), sBack, Toast.LENGTH_SHORT);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mWebMain.saveState(outState);
+    public void onResume() {
+        super.onResume();
+        if(!mGamePresenter.isViewAttached()) {
+            mGamePresenter.attachView(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mGamePresenter.isViewAttached()) {
+            mGamePresenter.detachView();
+        }
     }
 
     @Override
@@ -227,7 +241,7 @@ public class Game extends BaseActivity implements GameMvpView {
 
         // Load webview with game
         // mWebMain = (WebView) findViewById(R.id.web_main);
-        mWebMain.addJavascriptInterface(new WebAppInterface(this), "Anki");
+        mWebMain.addJavascriptInterface(new WebAppInterface(this, mGamePresenter), "Anki");
         WebSettings settings = mWebMain.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
