@@ -57,8 +57,13 @@ play {
 
 dependencies {
     final BUTTERKNIFE_VERSION = '8.4.0'
+    final DAGGER_VERSION = '2.5'
+
     implementation "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+
+    implementation "com.google.dagger:dagger:$DAGGER_VERSION"
+    annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION" //Required by Dagger2
 
 
     compile fileTree(dir: 'libs', include: ['*.jar'])

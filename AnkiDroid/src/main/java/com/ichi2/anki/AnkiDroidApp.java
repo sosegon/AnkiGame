@@ -33,6 +33,9 @@ import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.game.injection.component.ApplicationComponent;
+import com.ichi2.game.injection.component.DaggerApplicationComponent;
+import com.ichi2.game.injection.module.ApplicationModule;
 import com.ichi2.utils.LanguageUtil;
 
 import org.acra.ACRA;
@@ -139,6 +142,29 @@ public class AnkiDroidApp extends Application {
      * collections being upgraded to (or after) this version must update preferences.
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
+
+    /**
+     * AnkiGame
+     */
+    ApplicationComponent mApplicationComponent;
+
+    public static AnkiDroidApp get(Context context) {
+        return (AnkiDroidApp) context.getApplicationContext();
+    }
+
+    public ApplicationComponent getComponent() {
+        if (mApplicationComponent == null) {
+            mApplicationComponent = DaggerApplicationComponent.builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .build();
+        }
+        return mApplicationComponent;
+    }
+
+    // Needed to replace the component with a test specific one
+    public void setComponent(ApplicationComponent applicationComponent) {
+        mApplicationComponent = applicationComponent;
+    }
 
 
     /**
