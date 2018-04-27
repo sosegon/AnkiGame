@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.game.WebAppInterface;
 
 import java.util.Locale;
 
@@ -221,6 +222,7 @@ public class Game extends NavigationDrawerActivity {
 
         // Load webview with game
         // mWebMain = (WebView) findViewById(R.id.web_main);
+        mWebMain.addJavascriptInterface(new WebAppInterface(this), "Anki");
         WebSettings settings = mWebMain.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);

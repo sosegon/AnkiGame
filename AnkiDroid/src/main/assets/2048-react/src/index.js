@@ -56,10 +56,15 @@ class BoardView extends React.Component {
   // prop, otherwise, it won't work.
   removeTwos(event) {
     event.preventDefault();
-    this.setState({board: this.state.board.removeTwos()});
-    // // TODO: AnkiGame, find a way to avoid this second call
-    // // TODO: AnkiGame, avoid it when board has just twos tiles.
-    this.setState({board: this.state.board.removeTwos()});
+    
+    if(typeof(Anki) !== undefined) {
+      if(Anki.hasMoneyForTrick("bomb")) {
+        this.setState({board: this.state.board.removeTwos()});
+        // // TODO: AnkiGame, find a way to avoid this second call
+        // // TODO: AnkiGame, avoid it when board has just twos tiles.
+        this.setState({board: this.state.board.removeTwos()});
+      }
+    }
   }
   render() {
     // TODO: AnkiGame, Implement the other tricks
