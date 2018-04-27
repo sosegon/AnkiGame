@@ -1,7 +1,6 @@
-package com.ichi2.anki;
+package com.ichi2.game;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +22,9 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.game.WebAppInterface;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.NavigationDrawerActivity;
+import com.ichi2.anki.R;
 
 import java.util.Locale;
 

@@ -167,7 +167,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.Game"
+            android:name="com.ichi2.game.Game"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Game">

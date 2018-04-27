@@ -86,6 +86,7 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.game.Game;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Sched;
