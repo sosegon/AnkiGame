@@ -15,8 +15,21 @@ public class WebAppInterface {
 
     @JavascriptInterface
     public boolean hasMoneyForTrick(String trickName) {
-        // TODO: AnkiGame, use this value to return true or false
+        boolean r = false;
         int coins =  mGamePresenter.getCoins();
-        return true;
+        int requiredCoins = -1;
+        if(trickName.contentEquals("bomb")) {
+            requiredCoins = 10;
+        }
+
+        if(requiredCoins > 0 && coins >= requiredCoins) {
+            r = true;
+            mGamePresenter.reduceCoins(requiredCoins);
+        } else {
+            // TODO: AnkiGame, toast not working
+            Toast.makeText(mContext, "Not enough coins", Toast.LENGTH_SHORT);
+        }
+
+        return r;
     }
 }
