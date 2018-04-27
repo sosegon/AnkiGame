@@ -14,6 +14,12 @@ class BoardView extends React.Component {
       event.preventDefault();
       var direction = event.keyCode - 37;
       this.setState({board: this.state.board.move(direction)});
+    } else if( event.keyCode == 49) {
+      event.preventDefault();
+      this.setState({board: this.state.board.removeTwos()});
+      // TODO: AnkiGame, find a way to avoid this second call
+      // TODO: AnkiGame, avoid it when board has just twos tiles.
+      this.setState({board: this.state.board.removeTwos()});
     }
   }
   handleTouchStart(event) {

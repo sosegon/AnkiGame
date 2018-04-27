@@ -175,3 +175,18 @@ Board.prototype.hasLost = function () {
   }
   return !canMove;
 };
+
+Board.prototype.removeTwos = function() {
+  this.clearOldTiles();
+  
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      if (this.cells[r][c].value == 2) {
+        this.cells[r][c] = this.addTile();
+      }
+    }
+  }
+
+  this.setPositions();
+  return this;
+}
