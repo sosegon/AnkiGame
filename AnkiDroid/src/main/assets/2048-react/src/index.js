@@ -14,12 +14,6 @@ class BoardView extends React.Component {
       event.preventDefault();
       var direction = event.keyCode - 37;
       this.setState({board: this.state.board.move(direction)});
-    } else if( event.keyCode == 49) {
-      event.preventDefault();
-      this.setState({board: this.state.board.removeTwos()});
-      // TODO: AnkiGame, find a way to avoid this second call
-      // TODO: AnkiGame, avoid it when board has just twos tiles.
-      this.setState({board: this.state.board.removeTwos()});
     }
   }
   handleTouchStart(event) {
@@ -58,7 +52,24 @@ class BoardView extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown.bind(this));
   }
+  // This function has to be bound when assigning it to the child's
+  // prop, otherwise, it won't work.
+  removeTwos(event) {
+    event.preventDefault();
+    this.setState({board: this.state.board.removeTwos()});
+    // // TODO: AnkiGame, find a way to avoid this second call
+    // // TODO: AnkiGame, avoid it when board has just twos tiles.
+    this.setState({board: this.state.board.removeTwos()});
+  }
   render() {
+    // TODO: AnkiGame, Implement the other tricks
+    var rt = this.removeTwos;
+    var tricks = [1].map(val => {
+      return (
+        <Trick doTrick={rt.bind(this)} />
+      );
+    });
+
     var cells = this.state.board.cells.map((row, rowIndex) => {
       return (
         <div key={rowIndex}>
@@ -70,10 +81,15 @@ class BoardView extends React.Component {
       .filter(tile => tile.value != 0)
       .map(tile => <TileView tile={tile} key={tile.id} />);
     return (
-      <div className='board' onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)} tabIndex="1">
-        {cells}
-        {tiles}
-        <GameEndOverlay board={this.state.board} onRestart={this.restartGame.bind(this)} />
+      <div>
+        <div className='board' onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)} tabIndex="1">
+          {cells}
+          {tiles}
+          <GameEndOverlay board={this.state.board} onRestart={this.restartGame.bind(this)} />
+        </div>
+        <div>
+          {tricks}
+        </div>
       </div>
     );
   }
@@ -122,6 +138,13 @@ class TileView extends React.Component {
     return (
       <span className={classes}>{tile.value}</span>
     );
+  }
+}
+
+class Trick extends React.Component {
+  render() {
+    return (
+    <span className='trick' onClick={this.props.doTrick}>{''}</span>)
   }
 }
 
