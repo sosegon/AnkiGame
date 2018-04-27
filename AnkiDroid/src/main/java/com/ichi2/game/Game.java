@@ -25,8 +25,11 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
+import com.ichi2.game.base.BaseActivity;
 
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -34,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 
-public class Game extends NavigationDrawerActivity {
+public class Game extends BaseActivity implements GameMvpView {
     // TODO: AnkiGame, Change tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
 
@@ -50,6 +53,8 @@ public class Game extends NavigationDrawerActivity {
     private long mLastTouch;
     private static final long mTouchThreshold = 2000;
     private Toast pressBackToast;
+
+    @Inject GamePresenter mGamePresenter;
 
     @BindView(R.id.game_menu)
     FloatingActionsMenu mFabGameMenu;
