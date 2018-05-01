@@ -1,4 +1,4 @@
-package com.ichi2.game;
+package com.ichi2.anki.ankigame.features.game;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -27,7 +27,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.game.base.BaseActivity;
+import com.ichi2.anki.ankigame.base.BaseActivity;
 
 import java.util.Locale;
 

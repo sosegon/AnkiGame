@@ -1,12 +1,9 @@
-package com.ichi2.game;
+package com.ichi2.anki.ankigame.features.game;
 
 import android.os.Handler;
 import android.webkit.JavascriptInterface;
 
-import com.ichi2.game.util.RxEvent;
-import com.ichi2.game.util.RxEventBus;
-
-import static com.ichi2.game.util.RxEvent.RX_EVENT_TYPE.COINS_UPDATED;
+import com.ichi2.anki.ankigame.util.RxEventBus;
 
 public class WebAppInterface {
     GameMvpView mGameView;

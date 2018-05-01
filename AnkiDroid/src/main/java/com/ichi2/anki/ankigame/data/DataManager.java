@@ -1,7 +1,7 @@
-package com.ichi2.game.data;
+package com.ichi2.anki.ankigame.data;
 
-import com.ichi2.game.data.local.PreferencesHelper;
-import com.ichi2.game.util.RxEventBus;
+import com.ichi2.anki.ankigame.data.local.PreferencesHelper;
+import com.ichi2.anki.ankigame.util.RxEventBus;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

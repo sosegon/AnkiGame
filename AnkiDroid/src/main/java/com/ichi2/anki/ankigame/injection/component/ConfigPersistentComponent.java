@@ -1,7 +1,7 @@
-package com.ichi2.game.injection.component;
+package com.ichi2.anki.ankigame.injection.component;
 
-import com.ichi2.game.injection.ConfigPersistent;
-import com.ichi2.game.injection.module.ActivityModule;
+import com.ichi2.anki.ankigame.injection.ConfigPersistent;
+import com.ichi2.anki.ankigame.injection.module.ActivityModule;
 
 import dagger.Component;
 

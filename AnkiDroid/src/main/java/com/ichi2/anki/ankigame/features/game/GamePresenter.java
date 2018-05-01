@@ -1,8 +1,8 @@
-package com.ichi2.game;
+package com.ichi2.anki.ankigame.features.game;
 
-import com.ichi2.game.base.BasePresenter;
-import com.ichi2.game.data.DataManager;
-import com.ichi2.game.injection.ConfigPersistent;
+import com.ichi2.anki.ankigame.base.BasePresenter;
+import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
 

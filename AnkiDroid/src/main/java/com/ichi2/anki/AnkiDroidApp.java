@@ -33,9 +33,9 @@ import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.game.injection.component.ApplicationComponent;
-import com.ichi2.game.injection.component.DaggerApplicationComponent;
-import com.ichi2.game.injection.module.ApplicationModule;
+import com.ichi2.anki.ankigame.injection.component.ApplicationComponent;
+import com.ichi2.anki.ankigame.injection.component.DaggerApplicationComponent;
+import com.ichi2.anki.ankigame.injection.module.ApplicationModule;
 import com.ichi2.utils.LanguageUtil;
 
 import org.acra.ACRA;

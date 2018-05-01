@@ -1,4 +1,4 @@
-package com.ichi2.game.util;
+package com.ichi2.anki.ankigame.util;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

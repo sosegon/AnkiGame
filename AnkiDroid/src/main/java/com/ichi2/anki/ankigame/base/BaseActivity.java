@@ -1,13 +1,13 @@
-package com.ichi2.game.base;
+package com.ichi2.anki.ankigame.base;
 
 import android.os.Bundle;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
-import com.ichi2.game.injection.component.ActivityComponent;
-import com.ichi2.game.injection.component.ConfigPersistentComponent;
-import com.ichi2.game.injection.component.DaggerConfigPersistentComponent;
-import com.ichi2.game.injection.module.ActivityModule;
+import com.ichi2.anki.ankigame.injection.component.ActivityComponent;
+import com.ichi2.anki.ankigame.injection.component.ConfigPersistentComponent;
+import com.ichi2.anki.ankigame.injection.component.DaggerConfigPersistentComponent;
+import com.ichi2.anki.ankigame.injection.module.ActivityModule;
 
 import java.util.HashMap;
 import java.util.Map;

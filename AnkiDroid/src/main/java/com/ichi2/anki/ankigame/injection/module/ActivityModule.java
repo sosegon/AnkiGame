@@ -1,9 +1,9 @@
-package com.ichi2.game.injection.module;
+package com.ichi2.anki.ankigame.injection.module;
 
 import android.app.Activity;
 import android.content.Context;
 
-import com.ichi2.game.injection.ActivityContext;
+import com.ichi2.anki.ankigame.injection.ActivityContext;
 
 import dagger.Module;
 import dagger.Provides;

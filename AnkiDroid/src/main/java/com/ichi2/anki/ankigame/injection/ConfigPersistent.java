@@ -1,4 +1,4 @@
-package com.ichi2.game.injection;
+package com.ichi2.anki.ankigame.injection;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

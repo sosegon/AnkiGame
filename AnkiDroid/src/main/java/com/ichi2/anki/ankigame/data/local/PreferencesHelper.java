@@ -1,9 +1,9 @@
-package com.ichi2.game.data.local;
+package com.ichi2.anki.ankigame.data.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ichi2.game.injection.ApplicationContext;
+import com.ichi2.anki.ankigame.injection.ApplicationContext;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -1,14 +1,14 @@
-package com.ichi2.game.injection.component;
+package com.ichi2.anki.ankigame.injection.component;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.game.data.DataManager;
-import com.ichi2.game.data.local.PreferencesHelper;
-import com.ichi2.game.injection.ApplicationContext;
-import com.ichi2.game.injection.module.ApplicationModule;
-import com.ichi2.game.util.RxEventBus;
+import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.data.local.PreferencesHelper;
+import com.ichi2.anki.ankigame.injection.ApplicationContext;
+import com.ichi2.anki.ankigame.injection.module.ApplicationModule;
+import com.ichi2.anki.ankigame.util.RxEventBus;
 
 import javax.inject.Singleton;
 
