@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -17,15 +18,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.game.base.BaseActivity;
+import com.ichi2.game.util.RxEvent;
+import com.ichi2.game.util.RxEventBus;
 
 import java.util.Locale;
 
@@ -36,6 +40,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import io.reactivex.functions.Consumer;
+import timber.log.Timber;
+
+import static com.ichi2.game.util.RxEvent.RX_EVENT_TYPE.COINS_UPDATED;
 
 public class Game extends BaseActivity implements GameMvpView {
     // TODO: AnkiGame, Change tag
@@ -55,6 +63,18 @@ public class Game extends BaseActivity implements GameMvpView {
     private Toast pressBackToast;
 
     @Inject GamePresenter mGamePresenter;
+
+    @BindView(R.id.lbl_coins_game)
+    TextView mLblCoins;
+
+    @BindView(R.id.btn_add_coins)
+    Button btnCoins;
+
+    @OnClick(R.id.btn_add_coins)
+    public void addCoins() {
+        mGamePresenter.increaseCoins(10);
+        updateLblGameCoins(mGamePresenter.getCoins());
+    }
 
     @BindView(R.id.game_menu)
     FloatingActionsMenu mFabGameMenu;
@@ -113,11 +133,13 @@ public class Game extends BaseActivity implements GameMvpView {
 
         ButterKnife.bind(this);
 
+        mGamePresenter.attachView(this);
+
+        updateLblGameCoins(mGamePresenter.getCoins());
+
         initFabGameMenu();
 
         initWebMain(savedInstanceState);
-
-        mGamePresenter.attachView(this);
 
         pressBackToast = Toast.makeText(getApplicationContext(), sBack, Toast.LENGTH_SHORT);
     }
@@ -199,6 +221,17 @@ public class Game extends BaseActivity implements GameMvpView {
         }
     }
 
+    @Override
+    public void updateLblGameCoins(int coins) {
+        mLblCoins.setText(String.valueOf(coins));
+    }
+
+    @Override
+    public void showNoCoinsToast() {
+        // TODO: AnkiGame, Fix this, toast not displayed
+        Toast.makeText(this, "Not enough coins", Toast.LENGTH_SHORT);
+    }
+
     private void initScreenSettings() {
 
         // Don't show an action bar or title
@@ -211,7 +244,7 @@ public class Game extends BaseActivity implements GameMvpView {
         }
 
         // Apply previous setting about showing status bar or not
-        applyFullScreen(isFullScreen());
+        //applyFullScreen(isFullScreen());
 
         // Check if screen rotation is locked in settings
         boolean isOrientationEnabled = false;
@@ -241,7 +274,7 @@ public class Game extends BaseActivity implements GameMvpView {
 
         // Load webview with game
         // mWebMain = (WebView) findViewById(R.id.web_main);
-        mWebMain.addJavascriptInterface(new WebAppInterface(this, mGamePresenter), "Anki");
+        mWebMain.addJavascriptInterface(new WebAppInterface(new Handler(), this, mGamePresenter), "Anki");
         WebSettings settings = mWebMain.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);

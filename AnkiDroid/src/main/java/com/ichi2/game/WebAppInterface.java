@@ -1,16 +1,23 @@
 package com.ichi2.game;
 
-import android.content.Context;
+import android.os.Handler;
 import android.webkit.JavascriptInterface;
-import android.widget.Toast;
+
+import com.ichi2.game.util.RxEvent;
+import com.ichi2.game.util.RxEventBus;
+
+import static com.ichi2.game.util.RxEvent.RX_EVENT_TYPE.COINS_UPDATED;
 
 public class WebAppInterface {
-    Context mContext;
+    GameMvpView mGameView;
     GamePresenter mGamePresenter;
+    RxEventBus mEventBus;
+    Handler mHandler;
 
-    public WebAppInterface(Context mContext, GamePresenter gamePresenter) {
-        this.mContext = mContext;
+    public WebAppInterface(Handler handler, GameMvpView gameView, GamePresenter gamePresenter) {
+        this.mGameView = gameView;
         this.mGamePresenter = gamePresenter;
+        this.mHandler = handler;
     }
 
     @JavascriptInterface
@@ -25,9 +32,22 @@ public class WebAppInterface {
         if(requiredCoins > 0 && coins >= requiredCoins) {
             r = true;
             mGamePresenter.reduceCoins(requiredCoins);
+            // WebView has its own threads, therefore, updates in the UI has to be done accordingly
+            // The following line has to be executed in a handler created in the activity
+            // mGameView.updateLblGameCoins(mGamePresenter.getCoins());
+            mHandler.post(new Runnable(){
+                @Override
+                public void run () {
+                    mGameView.updateLblGameCoins(mGamePresenter.getCoins());
+                }
+            });
         } else {
-            // TODO: AnkiGame, toast not working
-            Toast.makeText(mContext, "Not enough coins", Toast.LENGTH_SHORT);
+            mHandler.post(new Runnable(){
+                @Override
+                public void run () {
+                    mGameView.showNoCoinsToast();
+                }
+            });
         }
 
         return r;

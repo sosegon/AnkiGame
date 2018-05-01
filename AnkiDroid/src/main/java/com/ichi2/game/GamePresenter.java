@@ -22,4 +22,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     public void reduceCoins(int coins) {
         mDataManager.getPreferencesHelper().updateCoins(-coins);
     }
+
+    public void increaseCoins(int coins) {
+        mDataManager.getPreferencesHelper().updateCoins(coins);
+    }
 }
