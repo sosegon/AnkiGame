@@ -134,7 +134,7 @@
         </activity>
         <activity
             android:theme="@style/Theme_Dark_Compat.Launcher"
-            android:name="com.ichi2.anki.deckpicker.DeckPicker"
+            android:name=".ankigame.features.deckpicker.DeckPicker"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
@@ -144,22 +144,22 @@
             android:exported="false"
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:label="StudyOptions"
-            android:parentActivityName=".deckpicker.DeckPicker">
+            android:parentActivityName=".ankigame.features.deckpicker.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.deckpicker.DeckPicker" />
+                android:value=".ankigame.features.deckpicker.DeckPicker" />
         </activity>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser"
-            android:parentActivityName=".deckpicker.DeckPicker">
+            android:parentActivityName=".ankigame.features.deckpicker.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.deckpicker.DeckPicker" />
+                android:value=".ankigame.features.deckpicker.DeckPicker" />
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -191,11 +191,11 @@
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
-            android:parentActivityName=".deckpicker.DeckPicker">
+            android:parentActivityName=".ankigame.features.deckpicker.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.deckpicker.DeckPicker" />
+                android:value=".ankigame.features.deckpicker.DeckPicker" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -258,11 +258,11 @@
             android:name="com.ichi2.anki.Statistics"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:parentActivityName=".deckpicker.DeckPicker">
+            android:parentActivityName=".ankigame.features.deckpicker.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.deckpicker.DeckPicker" />
+                android:value=".ankigame.features.deckpicker.DeckPicker" />
         </activity>
         <activity
             android:exported="false"

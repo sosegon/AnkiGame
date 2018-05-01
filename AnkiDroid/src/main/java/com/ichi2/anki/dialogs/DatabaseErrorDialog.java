@@ -11,7 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 

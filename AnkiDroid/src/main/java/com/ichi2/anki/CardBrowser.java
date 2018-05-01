@@ -53,7 +53,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.dialogs.CardBrowserContextMenu;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;

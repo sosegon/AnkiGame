@@ -6,7 +6,7 @@ import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.R;
 
 import java.io.File;

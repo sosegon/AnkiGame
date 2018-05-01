@@ -50,7 +50,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.dialogs.NoteEditorRescheduleCard;
 import com.ichi2.anki.dialogs.NoteEditorRepositionCard;
 import com.ichi2.anki.dialogs.ConfirmationDialog;

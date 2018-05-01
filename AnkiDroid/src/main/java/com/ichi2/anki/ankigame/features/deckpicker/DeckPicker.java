@@ -19,7 +19,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.deckpicker;
+package com.ichi2.anki.ankigame.features.deckpicker;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
