@@ -78,6 +78,8 @@ import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.ankigame.base.BaseActivity;
+import com.ichi2.anki.ankigame.features.game.Game;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
@@ -102,7 +104,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.anki.ankigame.features.game.Game;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Sched;
@@ -122,12 +123,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
-public class DeckPicker extends NavigationDrawerActivity implements
-        StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
-        MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
+public class DeckPicker extends BaseActivity implements DeckPickerMvpView {
 
 
     /**
@@ -364,6 +364,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
+    // ----------------------------------------------------------------------------
+    // ANKIGAME
+    // ----------------------------------------------------------------------------
+
+    @Inject DeckPickerPresenter mDeckPickerPresenter;
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
@@ -382,6 +387,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
+
+        // ANKIGAME
+        activityComponent().inject(this);
+        mDeckPickerPresenter.attachView(this);
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -748,6 +757,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
+
+        // ANKIGAME
+        if(!mDeckPickerPresenter.isViewAttached()) {
+            mDeckPickerPresenter.attachView(this);
+        }
     }
 
 
@@ -794,6 +808,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mProgressDialog.dismiss();
         }
         Timber.d("onDestroy()");
+
+        // ANKIGAME
+        if(mDeckPickerPresenter.isViewAttached()) {
+            mDeckPickerPresenter.detachView();
+        }
     }
 
     private void automaticSync() {
