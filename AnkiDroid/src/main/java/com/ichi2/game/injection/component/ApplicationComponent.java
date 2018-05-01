@@ -8,6 +8,7 @@ import com.ichi2.game.data.DataManager;
 import com.ichi2.game.data.local.PreferencesHelper;
 import com.ichi2.game.injection.ApplicationContext;
 import com.ichi2.game.injection.module.ApplicationModule;
+import com.ichi2.game.util.RxEventBus;
 
 import javax.inject.Singleton;
 
@@ -26,4 +27,6 @@ public interface ApplicationComponent {
     PreferencesHelper preferencesHelper();
 
     DataManager dataManager();
+
+    RxEventBus eventBus();
 }
