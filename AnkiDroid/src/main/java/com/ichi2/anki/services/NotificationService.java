@@ -27,7 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
 

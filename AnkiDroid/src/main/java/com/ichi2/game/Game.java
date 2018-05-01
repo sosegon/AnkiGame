@@ -25,11 +25,9 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.game.base.BaseActivity;
-import com.ichi2.game.util.RxEvent;
-import com.ichi2.game.util.RxEventBus;
 
 import java.util.Locale;
 
@@ -40,10 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
-import io.reactivex.functions.Consumer;
-import timber.log.Timber;
-
-import static com.ichi2.game.util.RxEvent.RX_EVENT_TYPE.COINS_UPDATED;
 
 public class Game extends BaseActivity implements GameMvpView {
     // TODO: AnkiGame, Change tag

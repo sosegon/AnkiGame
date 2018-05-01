@@ -27,7 +27,7 @@ import android.widget.RemoteViews;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.deckpicker.DeckPicker;
 
 import java.io.File;
 

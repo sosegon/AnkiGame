@@ -34,6 +34,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;

@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;

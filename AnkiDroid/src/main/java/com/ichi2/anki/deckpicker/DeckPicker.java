@@ -19,7 +19,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki.deckpicker;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -61,7 +61,23 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.DeckOptions;
+import com.ichi2.anki.FilteredDeckOptions;
+import com.ichi2.anki.Info;
+import com.ichi2.anki.ModelBrowser;
+import com.ichi2.anki.MyAccount;
+import com.ichi2.anki.NavigationDrawerActivity;
+import com.ichi2.anki.NoteEditor;
+import com.ichi2.anki.R;
+import com.ichi2.anki.Reviewer;
+import com.ichi2.anki.StudyOptionsActivity;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CustomStudyDialog;

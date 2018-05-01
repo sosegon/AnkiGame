@@ -28,6 +28,7 @@ import android.view.animation.Animation;
 import android.widget.ProgressBar;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;

@@ -24,10 +24,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.Toolbar;
@@ -52,6 +50,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.deckpicker.DeckPicker;
 import com.ichi2.anki.dialogs.NoteEditorRescheduleCard;
 import com.ichi2.anki.dialogs.NoteEditorRepositionCard;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
