@@ -125,6 +125,8 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class DeckPicker extends BaseActivity implements DeckPickerMvpView {
@@ -370,6 +372,14 @@ public class DeckPicker extends BaseActivity implements DeckPickerMvpView {
 
     @Inject DeckPickerPresenter mDeckPickerPresenter;
 
+    @BindView(R.id.lbl_coins)
+    TextView lblCoins;
+
+    @Override
+    public void updateLblGameCoins(int coins) {
+        lblCoins.setText(String.valueOf(coins));
+    }
+
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -389,8 +399,12 @@ public class DeckPicker extends BaseActivity implements DeckPickerMvpView {
         View mainView = findViewById(android.R.id.content);
 
         // ANKIGAME
+        ButterKnife.bind(this);
         activityComponent().inject(this);
         mDeckPickerPresenter.attachView(this);
+
+        updateLblGameCoins(mDeckPickerPresenter.getCoins());
+
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);

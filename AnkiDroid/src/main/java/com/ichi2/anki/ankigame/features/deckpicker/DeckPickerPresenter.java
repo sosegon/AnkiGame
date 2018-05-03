@@ -13,4 +13,8 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
     public DeckPickerPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
+
+    public int getCoins() {
+        return mDataManager.getPreferencesHelper().retrieveCoins();
+    }
 }
