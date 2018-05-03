@@ -187,7 +187,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/model_editor_label" />
         <activity
-            android:name="com.ichi2.anki.Reviewer"
+            android:name="com.ichi2.anki.ankigame.features.reviewer.Reviewer"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"

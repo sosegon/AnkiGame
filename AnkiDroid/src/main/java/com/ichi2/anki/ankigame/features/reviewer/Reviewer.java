@@ -16,7 +16,7 @@
  ****************************************************************************************/
 // TODO: implement own menu? http://www.codeproject.com/Articles/173121/Android-Menus-My-Way
 
-package com.ichi2.anki;
+package com.ichi2.anki.ankigame.features.reviewer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -39,19 +39,27 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.AbstractFlashcardViewer;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.DeckOptions;
+import com.ichi2.anki.Lookup;
+import com.ichi2.anki.MetaDB;
+import com.ichi2.anki.NoteEditor;
+import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.Whiteboard;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
-import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
-import java.text.MessageFormat;
 import java.util.List;
 
 import timber.log.Timber;
