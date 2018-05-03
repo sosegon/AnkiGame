@@ -37,9 +37,9 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.DeckOptions;
@@ -49,6 +49,7 @@ import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.Whiteboard;
+import com.ichi2.anki.ankigame.base.BaseActivity2;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -62,15 +63,34 @@ import org.json.JSONException;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class Reviewer extends AbstractFlashcardViewer {
+public class Reviewer extends BaseActivity2 implements ReviewerMvpView {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
+
+    // ----------------------------------------------------------------------------
+    // ANKIGAME
+    // ----------------------------------------------------------------------------
+
+    @Inject
+    ReviewerPresenter mReviewerPresenter;
+
+    @BindView(R.id.lbl_coins)
+    TextView lblCoins;
+
+    @Override
+    public void updateLblGameCoins(int coins) {
+        lblCoins.setText(String.valueOf(coins));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +102,11 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         super.onCreate(savedInstanceState);
+
+        // ANKIGAME
+        ButterKnife.bind(this);
+        activityComponent().inject(this);
+        updateLblGameCoins(mReviewerPresenter.getCoins());
     }
 
     private void selectDeckFromExtra() {
