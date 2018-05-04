@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
@@ -59,6 +58,8 @@ public class Game extends BaseActivity implements GameMvpView {
     private Toast pressBackToast;
 
     @Inject GamePresenter mGamePresenter;
+
+    GameJsInterface mGameJsInterface;
 
     @BindView(R.id.lbl_coins_game)
     TextView mLblCoins;
@@ -100,9 +101,6 @@ public class Game extends BaseActivity implements GameMvpView {
         return false;
     }
 
-    @BindView(R.id.fab_earn_coins_action)
-    FloatingActionButton mFabEarnCoins;
-
     @OnClick(R.id.fab_earn_coins_action)
     public void earnCoins() {
         mFabGameMenu.collapse();
@@ -122,7 +120,7 @@ public class Game extends BaseActivity implements GameMvpView {
         .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                mWebMain.loadUrl("javascript:restartGame()");
             }
         })
         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -156,6 +154,8 @@ public class Game extends BaseActivity implements GameMvpView {
         setContentView(R.layout.game);
 
         ButterKnife.bind(this);
+
+        mGameJsInterface = new GameJsInterface(new Handler(), this, mGamePresenter);
 
         mGamePresenter.attachView(this);
 
@@ -298,7 +298,7 @@ public class Game extends BaseActivity implements GameMvpView {
 
         // Load webview with game
         // mWebMain = (WebView) findViewById(R.id.web_main);
-        mWebMain.addJavascriptInterface(new WebAppInterface(new Handler(), this, mGamePresenter), "Anki");
+        mWebMain.addJavascriptInterface(mGameJsInterface, "Anki");
         WebSettings settings = mWebMain.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);

@@ -171,4 +171,9 @@ var GameEndOverlay = ({board, onRestart}) => {
   );
 };
 
-ReactDOM.render(<BoardView />, document.getElementById('boardDiv'));
+var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('boardDiv'));
+
+// To be called from Android
+var restartGame = function() {
+  BoardViewRendered.restartGame();
+}

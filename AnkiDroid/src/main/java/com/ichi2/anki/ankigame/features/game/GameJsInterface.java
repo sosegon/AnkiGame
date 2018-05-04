@@ -5,13 +5,13 @@ import android.webkit.JavascriptInterface;
 
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
-public class WebAppInterface {
+public class GameJsInterface {
     GameMvpView mGameView;
     GamePresenter mGamePresenter;
     RxEventBus mEventBus;
     Handler mHandler;
 
-    public WebAppInterface(Handler handler, GameMvpView gameView, GamePresenter gamePresenter) {
+    public GameJsInterface(Handler handler, GameMvpView gameView, GamePresenter gamePresenter) {
         this.mGameView = gameView;
         this.mGamePresenter = gamePresenter;
         this.mHandler = handler;
