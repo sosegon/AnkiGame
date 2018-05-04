@@ -259,7 +259,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
-    private int mCurrentEase;
+    protected int mCurrentEase;
 
     private boolean mButtonHeightSet = false;
 
@@ -1324,8 +1324,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
+        // ANKIGAME
+        onCardIsAnswered();
+
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new DeckTask.TaskData(mCurrentCard, mCurrentEase));
+    }
+
+    public void onCardIsAnswered(){
+
     }
 
 

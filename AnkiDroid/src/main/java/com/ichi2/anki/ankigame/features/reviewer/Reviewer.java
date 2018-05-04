@@ -109,6 +109,13 @@ public class Reviewer extends BaseActivity2 implements ReviewerMvpView {
         updateLblGameCoins(mReviewerPresenter.getCoins());
     }
 
+    // ANKIGAME
+    @Override
+    public void onCardIsAnswered() {
+        int coins = mReviewerPresenter.increaseCoins(mCurrentEase);
+        updateLblGameCoins(coins);
+    }
+
     private void selectDeckFromExtra() {
         Bundle extras = getIntent().getExtras();
         long did = extras.getLong("deckId", Long.MIN_VALUE);
