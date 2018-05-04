@@ -117,18 +117,10 @@ public class Game extends BaseActivity implements GameMvpView {
 
         new AlertDialog.Builder(this)
         .setMessage(sRestart)
-        .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mWebMain.loadUrl("javascript:restartGame()");
-            }
-        })
-        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        })
+        .setPositiveButton(R.string.dialog_ok,
+                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame()"))
+        .setNegativeButton(R.string.dialog_cancel,
+                (dialog, which) ->  {})
         .create()
         .show();
     }
