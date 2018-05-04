@@ -13,6 +13,7 @@ public class PreferencesHelper {
     public static final String PREF_FILE_NAME = "ankigame_pref_file";
 
     public static final String KEY_COINS = "prf_coins";
+    public static final String KEY_USER_ID = "prf_user_id";
 
     private final SharedPreferences mPref;
 
@@ -37,5 +38,13 @@ public class PreferencesHelper {
         int current = retrieveCoins();
         mPref.edit().putInt(KEY_COINS, current+coins).apply();
 
+    }
+
+    public String retrieveUserId() {
+        return mPref.getString(KEY_USER_ID, "");
+    }
+
+    public void storeUserId(String userId) {
+        mPref.edit().putString(KEY_USER_ID, userId).apply();
     }
 }
