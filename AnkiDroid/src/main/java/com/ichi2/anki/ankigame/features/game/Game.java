@@ -1,6 +1,7 @@
 package com.ichi2.anki.ankigame.features.game;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -108,11 +110,39 @@ public class Game extends BaseActivity implements GameMvpView {
         startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 
+    @OnClick(R.id.fab_restart_action)
+    public void restartGame() {
+        if (mFabGameMenu == null) {
+            return;
+        }
+        mFabGameMenu.collapse();
+
+        new AlertDialog.Builder(this)
+        .setMessage(sRestart)
+        .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        })
+        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        })
+        .create()
+        .show();
+    }
+
     @BindString(R.string.press_back_again_to_exit)
     String sBack;
 
     @BindString(R.string.menu_options)
     String sMenuOptions;
+
+    @BindString(R.string.restart_game)
+    String sRestart;
 
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override

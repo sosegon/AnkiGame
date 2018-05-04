@@ -55,6 +55,7 @@
     <!-- Game.java -->
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="earn_coins">Earn coins</string>
+    <string name="restart_game">Restart game</string>
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>

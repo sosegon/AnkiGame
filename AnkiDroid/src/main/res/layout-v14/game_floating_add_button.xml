@@ -37,9 +37,9 @@
             fab:fab_icon="@drawable/ic_leaderboard_32dp"
             fab:fab_title="@string/leaderboard"
             fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>
+            fab:fab_colorPressed="?attr/fab_pressed"/>-->
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/restart_action"
+            android:id="@+id/fab_restart_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/restart_game"
@@ -47,7 +47,7 @@
             fab:fab_icon="@drawable/ic_restart_game_32dp"
             fab:fab_title="@string/restart_game"
             fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>-->
+            fab:fab_colorPressed="?attr/fab_pressed"/>
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_earn_coins_action"
             android:layout_width="wrap_content"
