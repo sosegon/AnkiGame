@@ -131,7 +131,8 @@ Board.prototype.addRandomTile = function () {
   }
   var index = ~~(Math.random() * emptyCells.length);
   var cell = emptyCells[index];
-  var newValue = Math.random() < Board.fourProbability ? 4 : 2;
+  //var newValue = Math.random() < Board.fourProbability ? 4 : 2;
+  var newValue = 2;
   this.cells[cell.r][cell.c] = this.addTile(newValue);
 };
 
