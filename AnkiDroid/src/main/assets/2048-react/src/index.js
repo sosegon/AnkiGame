@@ -67,6 +67,13 @@ class BoardView extends React.Component {
     }
   }
   render() {
+
+    var currentScore = this.state.board.score;
+    var addition = this.state.board.addition;
+    var scoreElem = (
+      <Score score={currentScore} addition={addition}/>
+    );
+
     // TODO: AnkiGame, Implement the other tricks
     var rt = this.removeTwos;
     var tricks = [1].map(val => {
@@ -87,6 +94,9 @@ class BoardView extends React.Component {
       .map(tile => <TileView tile={tile} key={tile.id} />);
     return (
       <div>
+        <div className="scores-container">
+          {scoreElem}
+        </div>
         <div className='board' onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)} tabIndex="1">
           {cells}
           {tiles}
@@ -150,6 +160,24 @@ class Trick extends React.Component {
   render() {
     return (
     <span className='trick' onClick={this.props.doTrick}>{''}</span>)
+  }
+}
+
+class Score extends React.Component {
+  render() {
+    var score = this.props.score;
+    var addition = this.props.addition;
+    // TODO: AnkiGame, The addition is not displayed if the previous move generated
+    // non-zero addition
+    var increment = addition > 0 ? 
+    (<div className="score-addition">+{addition}</div>) : 
+    (<span/>);
+    return (
+      <div className="score-container">
+        <span>{score}</span>
+        {increment}
+      </div>
+    )
   }
 }
 

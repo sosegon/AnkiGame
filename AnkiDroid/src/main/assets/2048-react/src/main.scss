@@ -3,6 +3,18 @@
   src: url('../clear-sans.ttf') format('truetype');
 }
 
+@mixin animation($args...) {
+  -webkit-animation: $args;
+  -moz-animation: $args;
+  animation: $args;
+}
+
+@mixin animation-fill-mode($args...) {
+  -webkit-animation-fill-mode: $args;
+  -moz-animation-fill-mode: $args;
+  animation-fill-mode: $args;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -192,4 +204,75 @@ body {
 
 .overlay .message {
   color: #666;
+}
+
+$game-container-background: #bbada0;
+$text-color: #776E65;
+$tile-color: #eee4da;
+
+@keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1;
+  }
+
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}
+
+.scores-container {
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+.score-container, .best-container {
+  $height: 25px;
+
+  position: relative;
+  display: inline-block;
+  background: $game-container-background;
+  padding: 15px 25px;
+  font-size: $height;
+  height: $height;
+  line-height: $height + 22px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: $tile-color;
+  }
+
+  .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: $height;
+    line-height: $height;
+    font-weight: bold;
+    color: rgba($text-color, .9);
+    z-index: 100;
+    @include animation(move-up 600ms ease-in);
+    @include animation-fill-mode(both);
+  }
+}
+
+.score-container:after {
+  content: "Score";
+}
+
+.best-container:after {
+  content: "Best";
 }
