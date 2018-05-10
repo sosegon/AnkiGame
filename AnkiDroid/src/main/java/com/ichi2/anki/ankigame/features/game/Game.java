@@ -105,6 +105,8 @@ public class Game extends BaseActivity implements GameMvpView {
     public void earnCoins() {
         mFabGameMenu.collapse();
         Intent intent = new Intent(Game.this, DeckPicker.class);
+        // TODO: ANKIGAME, uncomment this when it is ready
+        // mGamePresenter.logGoToAnki();
         startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 

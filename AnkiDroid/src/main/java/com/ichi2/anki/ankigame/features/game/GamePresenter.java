@@ -2,6 +2,7 @@ package com.ichi2.anki.ankigame.features.game;
 
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
@@ -29,5 +30,9 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
 
     public String initUser() {
         return mDataManager.initUser();
+    }
+
+    public void logGoToAnki() {
+        mDataManager.logBehaviour(AnkiLog.GO_TO_ANKI);
     }
 }
