@@ -63,6 +63,7 @@ var Board = function () {
     this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
   }
   this.addRandomTile();
+  this.addRandomTile(); // Two tiles at the begining
   this.setPositions();
   this.won = false;
   this.score = 0;
