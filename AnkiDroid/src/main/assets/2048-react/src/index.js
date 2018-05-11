@@ -1,10 +1,16 @@
 class BoardView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {board: new Board};
+    this.storageManager = new LocalStorageManager;
+    this.setup();
+  }
+  setup() {
+    var previousState = this.storageManager.getGameState();
+    this.state = {board: new Board(previousState)};
   }
   restartGame() {
     this.setState({board: new Board});
+    this.storageManager.clearGameState();
   }
   handleKeyDown(event) {
     if (this.state.board.hasWon()) {
@@ -67,6 +73,9 @@ class BoardView extends React.Component {
     }
   }
   render() {
+    // Since render is executed every time the state changes
+    // Here we store the state of the game
+    this.storageManager.setGameState(this.state.board.serialize());
 
     var currentScore = this.state.board.score;
     var addition = this.state.board.addition;

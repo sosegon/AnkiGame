@@ -56,19 +56,39 @@ Tile.prototype.toColumn = function () {
   return this.mergedInto ? this.mergedInto.column : this.column;
 };
 
-var Board = function () {
+var Board = function (state) {
   this.tiles = [];
   this.cells = [];
   for (var i = 0; i < Board.size; ++i) {
     this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
   }
-  this.addRandomTile();
-  this.addRandomTile(); // Two tiles at the begining
+
+  if (state) {
+    console.log(state.values)
+    this.setTileValues(state.values);
+    this.score = state.score;
+  } else {
+    this.addRandomTile();
+    this.addRandomTile(); // Two tiles at the begining
+    this.score = 0;
+  }
+
   this.setPositions();
   this.won = false;
-  this.score = 0;
   this.addition = 0;
 };
+
+Board.prototype.setTileValues = function(values) {
+  // values is an array of size 16
+  var self = this;
+  this.cells.forEach((row, rowIndex) => {
+    row.forEach((tile, columnIndex) => {
+
+      console.log(rowIndex * Board.size);
+      tile.value = values[rowIndex * Board.size + columnIndex];
+    });
+  });
+}
 
 Board.prototype.addTile = function () {
   var res = new Tile;
@@ -197,4 +217,22 @@ Board.prototype.removeTwos = function() {
 
   this.setPositions();
   return this;
+}
+
+Board.prototype.serialize = function() {
+  return {
+    score: this.score,
+    values: this.serializeTiles()
+  }
+}
+
+Board.prototype.serializeTiles = function() {
+  var values = [];
+  this.cells.forEach((row, rowIndex) => {
+    row.forEach((tile, columnIndex) => {
+      values.push(tile.value);
+    });
+  });
+
+  return values;
 }
