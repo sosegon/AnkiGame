@@ -76,7 +76,6 @@ var Board = function (state) {
   }
 
   this.setPositions();
-  this.won = false;
   this.addition = 0;
 };
 
@@ -119,7 +118,6 @@ Board.prototype.moveLeft = function () {
         this.addition += targetTile.value;
       }
       resultRow[target] = targetTile;
-      this.won |= (targetTile.value == 2048);
       hasChanged |= (targetTile.value != this.cells[row][target].value);
     }
     this.cells[row] = resultRow;
@@ -182,10 +180,6 @@ Board.prototype.move = function (direction) {
 Board.prototype.clearOldTiles = function () {
   this.tiles = this.tiles.filter(tile => tile.markForDeletion == false);
   this.tiles.forEach(tile => { tile.markForDeletion = true; });
-};
-
-Board.prototype.hasWon = function () {
-  return this.won;
 };
 
 Board.deltaX = [-1, 0, 1, 0];

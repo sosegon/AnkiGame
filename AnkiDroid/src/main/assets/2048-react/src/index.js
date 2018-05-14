@@ -16,9 +16,6 @@ class BoardView extends React.Component {
     return this.state.board.asString();
   }
   handleKeyDown(event) {
-    if (this.state.board.hasWon()) {
-      return;
-    }
     if (event.keyCode >= 37 && event.keyCode <= 40) {
       event.preventDefault();
       var direction = event.keyCode - 37;
@@ -26,9 +23,6 @@ class BoardView extends React.Component {
     }
   }
   handleTouchStart(event) {
-    if (this.state.board.hasWon()) {
-      return;
-    }
     if (event.touches.length != 1) {
       return;
     }
@@ -37,9 +31,6 @@ class BoardView extends React.Component {
     event.preventDefault();
   }
   handleTouchEnd(event) {
-    if (this.state.board.hasWon()) {
-      return;
-    }
     if (event.changedTouches.length != 1) {
       return;
     }
@@ -117,7 +108,6 @@ class BoardView extends React.Component {
         <div className='board' onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)} tabIndex="1">
           {cells}
           {tiles}
-          <GameEndOverlay board={this.state.board} onRestart={this.restartGame.bind(this)} />
         </div>
         <div>
           {tricks}
@@ -208,24 +198,6 @@ class BestScore extends React.Component {
     )
   }
 }
-
-var GameEndOverlay = ({board, onRestart}) => {
-  var contents = '';
-  if (board.hasWon()) {
-    contents = 'Good Job!';
-  } else if (board.hasLost()) {
-    contents = 'Game Over';
-  }
-  if (!contents) {
-    return null;
-  }
-  return (
-    <div className='overlay'>
-      <p className='message'>{contents}</p>
-      <button className="tryAgain" onClick={onRestart} onTouchEnd={onRestart}>Try again</button>
-    </div>
-  );
-};
 
 var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('boardDiv'));
 
