@@ -1,7 +1,9 @@
 package com.ichi2.anki.ankigame.data.model;
 
-public class AnkiLog {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+public class AnkiLog {
 
     // Types of logs
     public static final int NONE = 0;
@@ -15,6 +17,26 @@ public class AnkiLog {
     public static final int GO_TO_GAME = 8;
     public static final int TAKE_QUIZZ = 9;
 
+    // Keys for fields in log
+    public static final String KEY_USER_ID = "userId";
+    public static final String KEY_LOG_TYPE = "logType";
+    public static final String KEY_DATE = "date";
+    public static final String KEY_TIME = "time";
+    public static final String KEY_BEST_SCORE = "bestScore";
+    public static final String KEY_TOTAL_COINS = "totalCoins";
+    public static final String KEY_GAME_MODE = "gameMode";
+    public static final String KEY_LEADERBOARD_POSITION = "loaderboardPosition";
+    public static final String KEY_CURRENT_SCORE= "currentScore";
+    public static final String KEY_USED_COINS= "usedCoins";
+    public static final String KEY_USED_TRICKS= "usedTricks";
+    public static final String KEY_TRICK_TYPE= "trickType";
+    public static final String KEY_BOARD_VALUES= "boardValues";
+    public static final String KEY_MOVES= "moves";
+    public static final String KEY_SELECTED_GAME_MODE= "selectedGameMode";
+    public static final String KEY_EARNED_COINS= "earnedCoins";
+    public static final String KEY_REVISED_CARDS= "revisedCards";
+    public static final String KEY_CORRECT_ANSWERS= "correctAnswers";
+
     // Information to be stored in the logs
     public String userId;
     public int logType;
@@ -26,20 +48,30 @@ public class AnkiLog {
     public int leaderboardPosition;
     public int currentScore;
     public int usedCoins;
-    public int[] usedTricks;
+    public String usedTricks;
     public int trickType;
-    public int[][] boardState;
+    public String boardValues;
     public int moves;
     public int selectedGameMode;
     public int earnedCoins;
     public int revisedCards;
     public int correctAnswers;
 
-    public AnkiLog(String userId, String date, String time) {
-        this.userId = userId;
+    public AnkiLog(String date, String time) {
         this.date = date;
         this.time = time;
         this.logType = NONE;
+    }
+
+    public static AnkiLog logBase() {
+        Date date = new Date();
+        Date newDate = new Date(date.getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        String sDate = dateFormat.format(newDate);
+        String sTime = timeFormat.format(newDate);
+
+        return new AnkiLog(sDate, sTime);
     }
 
     public void setStartGame(int bestScore, int totalCoins, int gameMode, int leaderboardPosition) {
@@ -57,7 +89,7 @@ public class AnkiLog {
         this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
         this.usedCoins = usedCoins;
-        this.usedTricks = usedTricks;
+        //this.usedTricks = usedTricks;
         this.logType = END_GAME;
     }
 
@@ -68,7 +100,7 @@ public class AnkiLog {
         this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
         this.trickType = trickType;
-        this.boardState = boardState;
+        //this.boardValues = boardValues;
         this.moves = moves;
         this.logType = USE_TRICK;
     }
@@ -79,7 +111,7 @@ public class AnkiLog {
         this.gameMode = gameMode;
         this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
-        this.boardState = boardState;
+        //this.boardValues = boardValues;
         this.selectedGameMode = selectedGameMode;
         this.logType = SELECT_GAME_MODE;
     }
@@ -90,7 +122,7 @@ public class AnkiLog {
         this.gameMode = gameMode;
         this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
-        this.boardState = boardState;
+        //this.boardValues = boardValues;
         this.logType = CHECK_LEADERBOARD;
     }
 
@@ -100,20 +132,21 @@ public class AnkiLog {
         this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
         this.usedCoins = usedCoins;
-        this.usedTricks = usedTricks;
-        this.boardState = boardState;
+        //this.usedTricks = usedTricks;
+        //this.boardValues = boardValues;
         this.logType = RESTART_GAME;
     }
 
-    public void setGoToAnki(int bestScore, int totalCoins, int gameMode, int leaderboardPosition, int currentScore, int usedCoins, int[] usedTricks, int[][] boardState) {
+    // TODO: AnkiGame, Check the other commented fields
+    public void setGoToAnki(int bestScore, int totalCoins, int currentScore, String usedTricks, String boardValues) {
         this.bestScore = bestScore;
         this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
+        //this.gameMode = gameMode;
+        //this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
-        this.usedCoins = usedCoins;
+        //this.usedCoins = usedCoins;
         this.usedTricks = usedTricks;
-        this.boardState = boardState;
+        this.boardValues = boardValues;
         this.logType = GO_TO_ANKI;
     }
 
@@ -132,4 +165,9 @@ public class AnkiLog {
     public String getUserId() {
         return userId;
     }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
 }

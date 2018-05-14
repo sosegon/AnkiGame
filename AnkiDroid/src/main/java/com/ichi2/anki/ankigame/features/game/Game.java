@@ -1,7 +1,6 @@
 package com.ichi2.anki.ankigame.features.game;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -26,9 +25,9 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseActivity;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 
 import java.util.Locale;
 
@@ -105,8 +104,7 @@ public class Game extends BaseActivity implements GameMvpView {
     public void earnCoins() {
         mFabGameMenu.collapse();
         Intent intent = new Intent(Game.this, DeckPicker.class);
-        // TODO: ANKIGAME, uncomment this when it is ready
-        // mGamePresenter.logGoToAnki();
+        mWebMain.loadUrl("javascript:getBoard()");
         startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 

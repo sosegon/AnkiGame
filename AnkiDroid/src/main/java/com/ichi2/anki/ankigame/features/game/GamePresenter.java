@@ -3,6 +3,7 @@ package com.ichi2.anki.ankigame.features.game;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
+import com.ichi2.anki.ankigame.data.model.Board;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
@@ -32,7 +33,25 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return mDataManager.initUser();
     }
 
-    public void logGoToAnki() {
-        mDataManager.logBehaviour(AnkiLog.GO_TO_ANKI);
+    public void logGoToAnki(Board board) {
+        AnkiLog ankiLog = AnkiLog.logBase();
+
+        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        ankiLog.setUserId(userId);
+
+        int bestScore = board.getBestScore();
+        int currentScore = board.getScore();
+        String usedTricks = board.getUsedTricksAsString();
+        String boardValues = board.getBoardValuesAsString();
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        ankiLog.setGoToAnki(
+            bestScore,
+            totalCoins,
+            currentScore,
+            usedTricks,
+            boardValues
+        );
+
+        mDataManager.logBehaviour(ankiLog);
     }
 }

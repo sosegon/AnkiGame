@@ -7,13 +7,8 @@ import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import timber.log.Timber;
 
 import static com.ichi2.anki.ankigame.data.remote.FirebaseHelper.USERLOGS_KEY;
 
@@ -56,40 +51,7 @@ public class DataManager {
         return userId;
     }
 
-    public void logBehaviour(int logType) {
-        AnkiLog log = null;
-        switch (logType) {
-            case AnkiLog.START_GAME:
-                log = logStartGame();
-                break;
-            case AnkiLog.END_GAME:
-                log = logEndGame();
-                break;
-            case AnkiLog.USE_TRICK:
-                log = logUseTrick();
-                break;
-            case AnkiLog.SELECT_GAME_MODE:
-                log = logSelectGame();
-                break;
-            case AnkiLog.CHECK_LEADERBOARD:
-                log = logCheckLeaderboard();
-                break;
-            case AnkiLog.RESTART_GAME:
-                log = logRestartGame();
-                break;
-            case AnkiLog.GO_TO_ANKI:
-                log = logGoToAnki();
-                break;
-            case AnkiLog.GO_TO_GAME:
-                log = logGoToGame();
-                break;
-            case AnkiLog.TAKE_QUIZZ:
-                log = logTakeQuizz();
-                break;
-            default:
-                break;
-        }
-
+    public void logBehaviour(AnkiLog log) {
         if(log != null) {
             DatabaseReference logRef = mFirebaseHelper.storeLog(log);
 
@@ -103,97 +65,4 @@ public class DataManager {
         // Subscribe consumers
     }
 
-    private AnkiLog logBase() {
-        Date date = new Date();
-        Date newDate = new Date(date.getTime());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        String sDate = dateFormat.format(newDate);
-        String sTime = timeFormat.format(newDate);
-
-        String userId = getPreferencesHelper().retrieveUserId();
-
-        return new AnkiLog(userId, sDate, sTime);
-    }
-
-    private AnkiLog logStartGame() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setStartGame();
-
-        return log;
-    }
-
-    private AnkiLog logEndGame() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setEndGame();
-
-        return log;
-    }
-
-    private AnkiLog logUseTrick() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setUseTrick();
-
-        return log;
-    }
-
-    private AnkiLog logSelectGame() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setSelectGame();
-
-        return log;
-    }
-
-    private AnkiLog logCheckLeaderboard() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setCheckLeaderboard();
-
-        return log;
-    }
-
-    private AnkiLog logRestartGame() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setRestartGame();
-
-        return log;
-    }
-
-    private AnkiLog logGoToAnki() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setGoToAnki();
-
-        return log;
-    }
-
-    private AnkiLog logGoToGame() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setGoToGame();
-
-        return log;
-    }
-
-    private AnkiLog logTakeQuizz() {
-        AnkiLog log = logBase();
-
-        // TODO: AnkiGame, complete code to use function below
-        // log.setTakeQuizz();
-
-        return log;
-    }
 }

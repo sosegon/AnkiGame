@@ -3,6 +3,7 @@ package com.ichi2.anki.ankigame.features.game;
 import android.os.Handler;
 import android.webkit.JavascriptInterface;
 
+import com.ichi2.anki.ankigame.data.model.Board;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
 public class GameJsInterface {
@@ -48,5 +49,16 @@ public class GameJsInterface {
         }
 
         return r;
+    }
+
+    @JavascriptInterface
+    public void getBoardState(String jsonString) {
+        mHandler.post(new Runnable(){
+            @Override
+            public void run () {
+                Board board =  Board.parseJSON(jsonString);
+                mGamePresenter.logGoToAnki(board);
+            }
+        });
     }
 }
