@@ -63,9 +63,7 @@ class BoardView extends React.Component {
     if(typeof(Anki) !== undefined) {
       if(Anki.hasMoneyForTrick("bomb")) {
         this.setState({board: this.state.board.removeTwos()});
-        // // TODO: AnkiGame, find a way to avoid this second call
-        // // TODO: AnkiGame, avoid it when board has just twos tiles.
-        this.setState({board: this.state.board.removeTwos()});
+        // TODO: AnkiGame, avoid it when board has just twos tiles.
       }
     }
   }
@@ -85,14 +83,6 @@ class BoardView extends React.Component {
     var scoreElem = (
       <Score score={currentScore} addition={addition}/>
     );
-
-    // TODO: AnkiGame, Implement the other tricks
-    var rt = this.removeTwos;
-    var tricks = [1].map(val => {
-      return (
-        <Trick doTrick={rt.bind(this)} />
-      );
-    });
 
     var cells = this.state.board.cells.map((row, rowIndex) => {
       return (
@@ -114,7 +104,7 @@ class BoardView extends React.Component {
           {tiles}
         </div>
         <div>
-          {tricks}
+          <span className='trick' onClick={this.removeTwos.bind(this)}>{''}</span>
         </div>
       </div>
     );
@@ -164,13 +154,6 @@ class TileView extends React.Component {
     return (
       <span className={classes}>{tile.value}</span>
     );
-  }
-}
-
-class Trick extends React.Component {
-  render() {
-    return (
-    <span className='trick' onClick={this.props.doTrick}>{''}</span>)
   }
 }
 

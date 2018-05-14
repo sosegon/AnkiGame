@@ -67,10 +67,12 @@ var Board = function (state, bestScore) {
     console.log(state.values)
     this.setTileValues(state.values);
     this.score = state.score;
+    this.usedTricks = state.usedTricks;
   } else {
     this.addRandomTile();
     this.addRandomTile(); // Two tiles at the begining
     this.score = 0;
+    this.usedTricks = [];
   }
 
   if(bestScore) {
@@ -216,16 +218,25 @@ Board.prototype.removeTwos = function() {
     for (var c = 0; c < Board.size; ++c) {
       if (this.cells[r][c].value == 2) {
         this.cells[r][c] = this.addTile();
+        this.cells[r][c].markForDeletion = true;
       }
     }
   }
-
   this.setPositions();
+
+  // Need to clear old tile since those with value 2
+  // are supposed to be removed
+  this.clearOldTiles();
+  this.setPositions();
+
+  // Add the trick to the list of used ones
+  this.usedTricks.push("bomb")
   return this;
 }
 
 Board.prototype.serialize = function() {
   return {
+    usedTricks: this.usedTricks,
     hasLost: this.hasLost(),
     bestScore: this.bestScore,
     score: this.score,
