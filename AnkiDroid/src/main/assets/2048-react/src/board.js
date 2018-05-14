@@ -56,7 +56,7 @@ Tile.prototype.toColumn = function () {
   return this.mergedInto ? this.mergedInto.column : this.column;
 };
 
-var Board = function (state) {
+var Board = function (state, bestScore) {
   this.tiles = [];
   this.cells = [];
   for (var i = 0; i < Board.size; ++i) {
@@ -67,11 +67,15 @@ var Board = function (state) {
     console.log(state.values)
     this.setTileValues(state.values);
     this.score = state.score;
-    this.bestScore = state.bestScore;
   } else {
     this.addRandomTile();
     this.addRandomTile(); // Two tiles at the begining
     this.score = 0;
+  }
+
+  if(bestScore) {
+    this.bestScore = bestScore;
+  } else {
     this.bestScore = 0;
   }
 

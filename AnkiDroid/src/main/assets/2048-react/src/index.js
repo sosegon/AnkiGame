@@ -6,10 +6,13 @@ class BoardView extends React.Component {
   }
   setup() {
     var previousState = this.storageManager.getGameState();
-    this.state = {board: new Board(previousState)};
+    var bestScore = this.storageManager.getBestScore();
+    this.state = {board: new Board(previousState, bestScore)};
   }
   restartGame() {
-    this.setState({board: new Board});
+    // Do not restart the best score
+    var bestScore = this.storageManager.getBestScore();
+    this.setState({board: new Board(undefined, bestScore)});
     this.storageManager.clearGameState();
   }
   getBoardStateAsString() {
@@ -68,8 +71,9 @@ class BoardView extends React.Component {
   }
   render() {
     // Since render is executed every time the state changes
-    // Here we store the state of the game
+    // Here we store the state of the game and the best score
     this.storageManager.setGameState(this.state.board.serialize());
+    this.storageManager.setBestScore(this.state.board.bestScore);
 
     var bestScore = this.state.board.bestScore;
     var bestScoreElem = (
