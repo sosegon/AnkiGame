@@ -236,3 +236,7 @@ Board.prototype.serializeTiles = function() {
 
   return values;
 }
+
+Board.prototype.asString =  function () {
+  return JSON.stringify(this.serialize());
+}

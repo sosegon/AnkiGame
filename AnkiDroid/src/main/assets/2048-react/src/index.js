@@ -12,6 +12,9 @@ class BoardView extends React.Component {
     this.setState({board: new Board});
     this.storageManager.clearGameState();
   }
+  getBoardStateAsString() {
+    return this.state.board.asString();
+  }
   handleKeyDown(event) {
     if (this.state.board.hasWon()) {
       return;
@@ -213,4 +216,10 @@ var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('
 // To be called from Android
 var restartGame = function() {
   BoardViewRendered.restartGame();
+}
+
+var getBoard = function () {
+  if(typeof(Anki) !== undefined) {
+    Anki.getBoardState(BoardViewRendered.getBoardStateAsString())
+  }
 }
