@@ -33,9 +33,25 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return mDataManager.initUser();
     }
 
-    public void logGoToAnki(Board board) {
+    public void log(Board board, int logType) {
         AnkiLog ankiLog = AnkiLog.logBase();
 
+        switch (logType) {
+            case AnkiLog.GO_TO_ANKI:
+                ankiLog = logGoToAnki(board);
+                break;
+            case AnkiLog.RESTART_GAME:
+                ankiLog = logRestartGame(board);
+                break;
+            default:
+                break;
+        }
+
+        mDataManager.logBehaviour(ankiLog);
+    }
+
+    private AnkiLog logGoToAnki(Board board) {
+        AnkiLog ankiLog = AnkiLog.logBase();
         String userId = mDataManager.getPreferencesHelper().retrieveUserId();
         ankiLog.setUserId(userId);
 
@@ -45,13 +61,34 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         String boardValues = board.getBoardValuesAsString();
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         ankiLog.setGoToAnki(
-            bestScore,
-            totalCoins,
-            currentScore,
-            usedTricks,
-            boardValues
+                bestScore,
+                totalCoins,
+                currentScore,
+                usedTricks,
+                boardValues
         );
 
-        mDataManager.logBehaviour(ankiLog);
+        return ankiLog;
+    }
+
+    private AnkiLog logRestartGame(Board board) {
+        AnkiLog ankiLog = AnkiLog.logBase();
+        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        ankiLog.setUserId(userId);
+
+        int bestScore = board.getBestScore();
+        int currentScore = board.getScore();
+        String usedTricks = board.getUsedTricksAsString();
+        String boardValues = board.getBoardValuesAsString();
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        ankiLog.setRestartGame(
+                bestScore,
+                totalCoins,
+                currentScore,
+                usedTricks,
+                boardValues
+        );
+
+        return ankiLog;
     }
 }

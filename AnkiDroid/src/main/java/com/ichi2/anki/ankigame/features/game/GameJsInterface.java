@@ -52,12 +52,12 @@ public class GameJsInterface {
     }
 
     @JavascriptInterface
-    public void getBoardState(String jsonString) {
+    public void getBoardState(String jsonString, int logType) {
         mHandler.post(new Runnable(){
             @Override
             public void run () {
                 Board board =  Board.parseJSON(jsonString);
-                mGamePresenter.logGoToAnki(board);
+                mGamePresenter.log(board, logType);
             }
         });
     }

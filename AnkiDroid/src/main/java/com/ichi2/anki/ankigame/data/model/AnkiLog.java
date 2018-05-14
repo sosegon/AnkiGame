@@ -126,14 +126,15 @@ public class AnkiLog {
         this.logType = CHECK_LEADERBOARD;
     }
 
-    public void setRestartGame(int totalCoins, int gameMode, int leaderboardPosition, int currentScore, int usedCoins, int[] usedTricks, int[][] boardState) {
+    public void setRestartGame(int bestScore, int totalCoins, int currentScore, String usedTricks, String boardValues) {
+        this.bestScore = bestScore;
         this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
+        //this.gameMode = gameMode;
+        //this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
-        this.usedCoins = usedCoins;
-        //this.usedTricks = usedTricks;
-        //this.boardValues = boardValues;
+        //this.usedCoins = usedCoins;
+        this.usedTricks = usedTricks;
+        this.boardValues = boardValues;
         this.logType = RESTART_GAME;
     }
 

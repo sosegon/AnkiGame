@@ -82,6 +82,10 @@ public class Board {
     }
 
     public String getUsedTricksAsString() {
+        if(usedTricks.length == 0) {
+            return "";
+        }
+
         StringBuilder sUsedTricks = new StringBuilder();
         for(int i = 0; i < usedTricks.length; i++) {
             sUsedTricks.append(usedTricks[i] + ",");
