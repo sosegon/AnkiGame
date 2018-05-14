@@ -185,6 +185,8 @@ Board.prototype.clearOldTiles = function () {
 Board.deltaX = [-1, 0, 1, 0];
 Board.deltaY = [0, -1, 0, 1];
 
+// Board to test lost
+// [2,2,8,16,32,64,128,256,512,128,64,32,16,8,4,2]
 Board.prototype.hasLost = function () {
   var canMove = false;
   for (var row = 0; row < Board.size; ++row) {
@@ -220,6 +222,7 @@ Board.prototype.removeTwos = function() {
 
 Board.prototype.serialize = function() {
   return {
+    hasLost: this.hasLost(),
     bestScore: this.bestScore,
     score: this.score,
     values: this.serializeTiles()
