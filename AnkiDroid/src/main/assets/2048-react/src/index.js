@@ -80,6 +80,11 @@ class BoardView extends React.Component {
     // Here we store the state of the game
     this.storageManager.setGameState(this.state.board.serialize());
 
+    var bestScore = this.state.board.bestScore;
+    var bestScoreElem = (
+      <BestScore bestScore={bestScore} />
+    );
+
     var currentScore = this.state.board.score;
     var addition = this.state.board.addition;
     var scoreElem = (
@@ -107,7 +112,7 @@ class BoardView extends React.Component {
     return (
       <div>
         <div className="scores-container">
-          {scoreElem}
+          {scoreElem} {bestScoreElem}
         </div>
         <div className='board' onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)} tabIndex="1">
           {cells}
@@ -188,6 +193,17 @@ class Score extends React.Component {
       <div className="score-container">
         <span>{score}</span>
         {increment}
+      </div>
+    )
+  }
+}
+
+class BestScore extends React.Component {
+  render() {
+    var bestScore = this.props.bestScore;
+    return (
+      <div className="best-container">
+        <span>{bestScore}</span>
       </div>
     )
   }

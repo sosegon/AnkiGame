@@ -67,10 +67,12 @@ var Board = function (state) {
     console.log(state.values)
     this.setTileValues(state.values);
     this.score = state.score;
+    this.bestScore = state.bestScore;
   } else {
     this.addRandomTile();
     this.addRandomTile(); // Two tiles at the begining
     this.score = 0;
+    this.bestScore = 0;
   }
 
   this.setPositions();
@@ -124,6 +126,9 @@ Board.prototype.moveLeft = function () {
   }
   
   this.score += this.addition;
+  if(this.score > this.bestScore) {
+    this.bestScore = this.score;
+  }
   return hasChanged;
 };
 
@@ -221,6 +226,7 @@ Board.prototype.removeTwos = function() {
 
 Board.prototype.serialize = function() {
   return {
+    bestScore: this.bestScore,
     score: this.score,
     values: this.serializeTiles()
   }
