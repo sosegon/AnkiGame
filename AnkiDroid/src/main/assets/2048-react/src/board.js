@@ -269,8 +269,6 @@ Board.prototype.hasLost = function () {
   return !canMove;
 };
 
-// TODO: AnkiGame, Has to be called when there are at least
-// one non-two cell
 Board.prototype.removeTwos = function() {
   // For history.
   // The state has to be stored once the board has changed.
@@ -315,7 +313,6 @@ Board.prototype.ableToDeleteTwos = function() {
   return false;
 }
 
-// TODO: AnkiGame, has to be called when there are empty cells
 Board.prototype.addGift = function() {
   // For history.
   // The state has to be stored once the board has changed.
@@ -337,9 +334,8 @@ Board.prototype.addGift = function() {
   return this;
 }
 
-// TODO: AnkiGame, has to be called when there are cells to do it
 Board.prototype.double = function(){
-   // For history.
+  // For history.
   // The state has to be stored once the board has changed.
   var state = this.serialize();
 
@@ -423,7 +419,6 @@ Board.prototype.updateHistory = function(state) {
   this.history.push(state);
 }
 
-// TODO: AnkiGame, Has to be called when there are history logs
 Board.prototype.undo = function() {
   var last = this.history.pop();
   if(typeof(last) !== "undefined") {
