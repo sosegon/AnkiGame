@@ -50,22 +50,32 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         mDataManager.logBehaviour(ankiLog);
     }
 
+    public void logUseTrick(Board board, String trickName, boolean trickExecuted) {
+        AnkiLog ankiLog = AnkiLog.logBase();
+        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        ankiLog.setUserId(userId);
+
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+
+        ankiLog.setUseTrick(
+                board,
+                totalCoins,
+                trickName,
+                trickExecuted
+        );
+
+        mDataManager.logBehaviour(ankiLog);
+    }
+
     private AnkiLog logGoToAnki(Board board) {
         AnkiLog ankiLog = AnkiLog.logBase();
         String userId = mDataManager.getPreferencesHelper().retrieveUserId();
         ankiLog.setUserId(userId);
 
-        int bestScore = board.getBestScore();
-        int currentScore = board.getScore();
-        String usedTricks = board.getUsedTricksAsString();
-        String boardValues = board.getBoardValuesAsString();
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         ankiLog.setGoToAnki(
-                bestScore,
-                totalCoins,
-                currentScore,
-                usedTricks,
-                boardValues
+                board,
+                totalCoins
         );
 
         return ankiLog;
@@ -76,17 +86,10 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         String userId = mDataManager.getPreferencesHelper().retrieveUserId();
         ankiLog.setUserId(userId);
 
-        int bestScore = board.getBestScore();
-        int currentScore = board.getScore();
-        String usedTricks = board.getUsedTricksAsString();
-        String boardValues = board.getBoardValuesAsString();
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         ankiLog.setRestartGame(
-                bestScore,
-                totalCoins,
-                currentScore,
-                usedTricks,
-                boardValues
+                board,
+                totalCoins
         );
 
         return ankiLog;

@@ -19,8 +19,9 @@ public class GameJsInterface {
     }
 
     @JavascriptInterface
-    public boolean hasMoneyForTrick(String trickName) {
+    public boolean hasMoneyForTrick(String trickName, String jsonString) {
         boolean r = false;
+        Board board = Board.parseJSON(jsonString);
         int coins =  mGamePresenter.getCoins();
         int requiredCoins = -1;
         if(trickName.contentEquals("bomb")) {
@@ -37,13 +38,16 @@ public class GameJsInterface {
                 @Override
                 public void run () {
                     mGameView.updateLblGameCoins(mGamePresenter.getCoins());
+                    mGamePresenter.logUseTrick(board, trickName, true);
                 }
             });
         } else {
             mHandler.post(new Runnable(){
                 @Override
                 public void run () {
+                    // TODO: AnkiGame, Fix this not working toast
                     mGameView.showNoCoinsToast();
+                    mGamePresenter.logUseTrick(board, trickName, false);
                 }
             });
         }

@@ -27,8 +27,8 @@ public class AnkiLog {
     public static final String KEY_GAME_MODE = "gameMode";
     public static final String KEY_LEADERBOARD_POSITION = "loaderboardPosition";
     public static final String KEY_CURRENT_SCORE= "currentScore";
-    public static final String KEY_USED_COINS= "usedCoins";
     public static final String KEY_USED_TRICKS= "usedTricks";
+    public static final String KEY_TRICK_EXECUTED= "trickExecuted";
     public static final String KEY_TRICK_TYPE= "trickType";
     public static final String KEY_BOARD_VALUES= "boardValues";
     public static final String KEY_MOVES= "moves";
@@ -47,9 +47,9 @@ public class AnkiLog {
     public int gameMode;
     public int leaderboardPosition;
     public int currentScore;
-    public int usedCoins;
     public String usedTricks;
-    public int trickType;
+    public String trickType;
+    public boolean trickExecuted;
     public String boardValues;
     public int moves;
     public int selectedGameMode;
@@ -88,20 +88,24 @@ public class AnkiLog {
         this.gameMode = gameMode;
         this.leaderboardPosition = leaderboardPosition;
         this.currentScore = currentScore;
-        this.usedCoins = usedCoins;
         //this.usedTricks = usedTricks;
         this.logType = END_GAME;
     }
 
-    public void setUseTrick(int bestScore, int totalCoins, int gameMode, int leaderboardPosition, int currentScore, int trickType, int[][] boardState, int moves) {
-        this.bestScore = bestScore;
+    // TODO: AnkiGame, Implement the commented fields
+    public void setUseTrick(Board board, int totalCoins, String trickType, boolean trickExecuted) {
+        this.bestScore = board.getBestScore();
+        this.currentScore = board.getScore();
+        this.usedTricks = board.getUsedTricksAsString();
+        this.boardValues = board.getBoardValuesAsString();
         this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
-        this.currentScore = currentScore;
+        // this.gameMode = gameMode;
+        // this.leaderboardPosition = leaderboardPosition;
         this.trickType = trickType;
         //this.boardValues = boardValues;
-        this.moves = moves;
+        //this.moves = moves;
+        this.trickExecuted = trickExecuted;
+
         this.logType = USE_TRICK;
     }
 
@@ -126,28 +130,29 @@ public class AnkiLog {
         this.logType = CHECK_LEADERBOARD;
     }
 
-    public void setRestartGame(int bestScore, int totalCoins, int currentScore, String usedTricks, String boardValues) {
-        this.bestScore = bestScore;
+    // TODO: AnkiGame, Implement the commented fields
+    public void setRestartGame(Board board, int totalCoins) {
+        this.bestScore = board.getBestScore();
+        this.currentScore = board.getScore();
+        this.usedTricks = board.getUsedTricksAsString();
+        this.boardValues = board.getBoardValuesAsString();
         this.totalCoins = totalCoins;
         //this.gameMode = gameMode;
         //this.leaderboardPosition = leaderboardPosition;
-        this.currentScore = currentScore;
-        //this.usedCoins = usedCoins;
-        this.usedTricks = usedTricks;
-        this.boardValues = boardValues;
+
         this.logType = RESTART_GAME;
     }
 
-    // TODO: AnkiGame, Check the other commented fields
-    public void setGoToAnki(int bestScore, int totalCoins, int currentScore, String usedTricks, String boardValues) {
-        this.bestScore = bestScore;
+    // TODO: AnkiGame, Implement the commented fields
+    public void setGoToAnki(Board board, int totalCoins) {
+        this.bestScore = board.getBestScore();
+        this.currentScore = board.getScore();
+        this.usedTricks = board.getUsedTricksAsString();
+        this.boardValues = board.getBoardValuesAsString();
         this.totalCoins = totalCoins;
         //this.gameMode = gameMode;
         //this.leaderboardPosition = leaderboardPosition;
-        this.currentScore = currentScore;
-        //this.usedCoins = usedCoins;
-        this.usedTricks = usedTricks;
-        this.boardValues = boardValues;
+
         this.logType = GO_TO_ANKI;
     }
 
