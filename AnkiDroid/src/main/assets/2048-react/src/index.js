@@ -65,8 +65,9 @@ class BoardView extends React.Component {
     
     //if(typeof(Anki) !== "undefined") {
       //if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
-        this.setState({board: this.state.board.removeTwos()});
-        // TODO: AnkiGame, avoid it when board has just twos tiles.
+        if(this.state.board.ableToDeleteTwos()){
+          this.setState({board: this.state.board.removeTwos()});
+        }
       //}
     //}
   }

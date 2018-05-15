@@ -302,6 +302,19 @@ Board.prototype.removeTwos = function() {
   return this;
 }
 
+// At least one cell has to be greater than two
+Board.prototype.ableToDeleteTwos = function() {
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      var value = this.cells[r][c].value;
+      if (value > 2) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 // TODO: AnkiGame, has to be called when there are empty cells
 Board.prototype.addGift = function() {
   // For history.
