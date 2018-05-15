@@ -110,18 +110,36 @@ Board.prototype.moveLeft = function () {
   var hasChanged = false;
   this.addition = 0;
   for (var row = 0; row < Board.size; ++row) {
+    // A row has to be processed to merge the colliding tiles
+    // Those non zero tiles are the ones to collide
     var currentRow = this.cells[row].filter(tile => tile.value != 0);
     var resultRow = [];
+
     for (var target = 0; target < Board.size; ++target) {
       var targetTile = currentRow.length ? currentRow.shift() : this.addTile();
-      if (currentRow.length > 0 && currentRow[0].value == targetTile.value) {
-        var tile1 = targetTile;
-        targetTile = this.addTile(targetTile.value);
-        tile1.mergedInto = targetTile;
-        var tile2 = currentRow.shift();
-        tile2.mergedInto = targetTile;
-        targetTile.value += tile2.value;
-        this.addition += targetTile.value;
+
+      if (currentRow.length > 0){
+        if(currentRow[0].value == targetTile.value ||
+         currentRow[0].value == -1 ||
+         targetTile.value == -1) {
+
+          var tile1 = targetTile;
+          targetTile = this.addTile(targetTile.value);
+          tile1.mergedInto = targetTile;
+
+          var tile2 = currentRow.shift();
+          tile2.mergedInto = targetTile;
+
+          var toAdd = 0;
+          if(this.isGift(targetTile, tile2)) {
+            targetTile.value = this.mergeGift(targetTile, tile2);
+            toAdd = targetTile.value > 0 ? targetTile.value : 0;
+          } else {
+            targetTile.value += tile2.value;
+            toAdd = targetTile.value;
+          }
+          this.addition += toAdd;
+        }
       }
       resultRow[target] = targetTile;
       hasChanged |= (targetTile.value != this.cells[row][target].value);
@@ -139,6 +157,35 @@ Board.prototype.moveLeft = function () {
   return hasChanged;
 };
 
+Board.prototype.isGift = function (tile1, tile2) {
+  var result = false;
+  if(tile1.value == -1 && tile2.value > 0) {
+    result = true;
+  } else if(tile1.value > 0 && tile2.value == -1) {
+    result = true;
+  } else if(tile1.value == -1 && tile2.value == -1) {
+    result = true;
+  }
+  return result;
+}
+
+Board.prototype.mergeGift = function(tile1, tile2) {
+  var result = 0;
+
+  if(tile1.value == -1 && tile2.value == -1) {
+    result = -1;
+  } else if (tile1.value == -1) {
+    result = tile2.value < 512 ? tile2.value * 2 : tile2.value;
+  } else if (tile2.value == -1) {
+    result = tile1.value < 512 ? tile1.value * 2 : tile1.value;
+  } else {
+    // unreachable
+    result = tile1.value + tile2.value;
+  }
+
+  return result;
+}
+
 Board.prototype.setPositions = function () {
   this.cells.forEach((row, rowIndex) => {
     row.forEach((tile, columnIndex) => {
@@ -153,7 +200,7 @@ Board.prototype.setPositions = function () {
 
 Board.fourProbability = 0.1;
 
-Board.prototype.addRandomTile = function () {
+Board.prototype.addRandomTile = function (value=2) {
   var emptyCells = [];
   for (var r = 0; r < Board.size; ++r) {
     for (var c = 0; c < Board.size; ++c) {
@@ -165,7 +212,7 @@ Board.prototype.addRandomTile = function () {
   var index = ~~(Math.random() * emptyCells.length);
   var cell = emptyCells[index];
   //var newValue = Math.random() < Board.fourProbability ? 4 : 2;
-  var newValue = 2;
+  var newValue = value;
   this.cells[cell.r][cell.c] = this.addTile(newValue);
 };
 
@@ -235,6 +282,27 @@ Board.prototype.removeTwos = function() {
   // Add the trick to the list of used ones
   this.usedTricks.push("bomb")
   return this;
+}
+
+Board.prototype.addGift = function() {
+  this.clearOldTiles();
+  this.addRandomTile(-1);
+  this.setPositions();
+
+  // Add the trick to the list of used ones
+  this.usedTricks.push("gift")
+  return this;
+}
+
+Board.prototype.hasEmptyCells = function() {
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      if (this.cells[r][c].value == 0) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 Board.prototype.serialize = function() {

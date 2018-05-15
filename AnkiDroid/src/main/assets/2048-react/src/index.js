@@ -67,6 +67,15 @@ class BoardView extends React.Component {
       }
     }
   }
+  addGift(event) {
+    event.preventDefault();
+
+    //if(typeof(Anki) !== "undefined") {
+        if(this.state.board.hasEmptyCells()) {
+          this.setState({board: this.state.board.addGift()});
+        }
+    //}
+  }
   render() {
     // Since render is executed every time the state changes
     // Here we store the state of the game and the best score
@@ -105,6 +114,7 @@ class BoardView extends React.Component {
         </div>
         <div>
           <span className='trick' onClick={this.removeTwos.bind(this)}>{''}</span>
+          <span className='trick' onClick={this.addGift.bind(this)}>{''}</span>
         </div>
       </div>
     );
@@ -135,7 +145,11 @@ class TileView extends React.Component {
   render() {
     var tile = this.props.tile;
     var classArray = ['tile'];
-    classArray.push('tile' + this.props.tile.value);
+    if(this.props.tile.value < 0) {
+      classArray.push('tilegift');
+    } else {
+      classArray.push('tile' + this.props.tile.value);
+    }
     if (!tile.mergedInto) {
       classArray.push('position_' + tile.row + '_' + tile.column);
     }
