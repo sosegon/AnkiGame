@@ -23,6 +23,7 @@ window.fakeStorage = {
 function LocalStorageManager() {
   this.bestScoreKey     = "bestScore";
   this.gameStateKey     = "gameState";
+  this.historyKey       = "history";
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
@@ -62,4 +63,26 @@ LocalStorageManager.prototype.setGameState = function (gameState) {
 
 LocalStorageManager.prototype.clearGameState = function () {
   this.storage.removeItem(this.gameStateKey);
+};
+
+// Hiatory getters/setters
+LocalStorageManager.prototype.getHistory = function () {
+  var history = this.storage.getItem(this.historyKey);
+  var historyArray;
+
+  if(typeof(history) !== "undefined") {
+    historyArray = JSON.parse(history);
+  } else {
+    historyArray = [];
+  }
+
+  return historyArray;
+};
+
+LocalStorageManager.prototype.setHistory = function (history) {
+  this.storage.setItem(this.historyKey, JSON.stringify(history));
+};
+
+LocalStorageManager.prototype.clearHistory = function () {
+  this.storage.removeItem(this.historyKey);
 };

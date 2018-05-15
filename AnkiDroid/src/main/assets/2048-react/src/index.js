@@ -7,13 +7,16 @@ class BoardView extends React.Component {
   setup() {
     var previousState = this.storageManager.getGameState();
     var bestScore = this.storageManager.getBestScore();
-    this.state = {board: new Board(previousState, bestScore)};
+    var history = this.storageManager.getHistory();
+    console.log(history);
+    this.state = {board: new Board(previousState, bestScore, history)};
   }
   restartGame() {
     // Do not restart the best score
     var bestScore = this.storageManager.getBestScore();
-    this.setState({board: new Board(undefined, bestScore)});
+    this.setState({board: new Board(undefined, bestScore, undefined)});
     this.storageManager.clearGameState();
+    this.storageManager.clearHistory();
   }
   getBoardStateAsString() {
     return this.state.board.asString();
@@ -60,12 +63,12 @@ class BoardView extends React.Component {
   removeTwos(event) {
     event.preventDefault();
     
-    if(typeof(Anki) !== "undefined") {
-      if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
+    //if(typeof(Anki) !== "undefined") {
+      //if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
         this.setState({board: this.state.board.removeTwos()});
         // TODO: AnkiGame, avoid it when board has just twos tiles.
-      }
-    }
+      //}
+    //}
   }
   addGift(event) {
     event.preventDefault();
@@ -76,11 +79,21 @@ class BoardView extends React.Component {
         }
     //}
   }
+  undoLast(event) {
+    event.preventDefault()
+
+      //if(typeof(Anki) !== "undefined") {
+        if(this.state.board.hasHistory()) {
+          this.setState({board: this.state.board.undo()});
+        }
+    //}
+  }
   render() {
     // Since render is executed every time the state changes
     // Here we store the state of the game and the best score
     this.storageManager.setGameState(this.state.board.serialize());
     this.storageManager.setBestScore(this.state.board.bestScore);
+    this.storageManager.setHistory(this.state.board.history);
 
     var bestScore = this.state.board.bestScore;
     var bestScoreElem = (
@@ -115,6 +128,7 @@ class BoardView extends React.Component {
         <div>
           <span className='trick' onClick={this.removeTwos.bind(this)}>{''}</span>
           <span className='trick' onClick={this.addGift.bind(this)}>{''}</span>
+          <span className='trick' onClick={this.undoLast.bind(this)}>{''}</span>
         </div>
       </div>
     );

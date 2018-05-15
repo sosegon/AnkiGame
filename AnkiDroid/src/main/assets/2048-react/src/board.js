@@ -56,7 +56,7 @@ Tile.prototype.toColumn = function () {
   return this.mergedInto ? this.mergedInto.column : this.column;
 };
 
-var Board = function (state, bestScore) {
+var Board = function (state, bestScore, history) {
   this.tiles = [];
   this.cells = [];
   for (var i = 0; i < Board.size; ++i) {
@@ -64,7 +64,6 @@ var Board = function (state, bestScore) {
   }
 
   if (state) {
-    console.log(state.values)
     this.setTileValues(state.values);
     this.score = state.score;
     this.usedTricks = state.usedTricks;
@@ -81,6 +80,12 @@ var Board = function (state, bestScore) {
     this.bestScore = 0;
   }
 
+  if(history) {
+    this.history = history
+  } else {
+    this.history = [];
+  }
+
   this.setPositions();
   this.addition = 0;
 };
@@ -90,8 +95,6 @@ Board.prototype.setTileValues = function(values) {
   var self = this;
   this.cells.forEach((row, rowIndex) => {
     row.forEach((tile, columnIndex) => {
-
-      console.log(rowIndex * Board.size);
       tile.value = values[rowIndex * Board.size + columnIndex];
     });
   });
@@ -217,6 +220,10 @@ Board.prototype.addRandomTile = function (value=2) {
 };
 
 Board.prototype.move = function (direction) {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
   // 0 -> left, 1 -> up, 2 -> right, 3 -> down
   this.clearOldTiles();
   for (var i = 0; i < direction; ++i) {
@@ -228,6 +235,7 @@ Board.prototype.move = function (direction) {
   }
   if (hasChanged) {
     this.addRandomTile();
+    this.updateHistory(state);
   }
   this.setPositions();
   return this;
@@ -261,14 +269,21 @@ Board.prototype.hasLost = function () {
   return !canMove;
 };
 
+// TODO: AnkiGame, Has to be called when there are at least
+// one non-two cell
 Board.prototype.removeTwos = function() {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
   this.clearOldTiles();
-  
+  var hasChanged = false;
   for (var r = 0; r < Board.size; ++r) {
     for (var c = 0; c < Board.size; ++c) {
       if (this.cells[r][c].value == 2) {
         this.cells[r][c] = this.addTile();
         this.cells[r][c].markForDeletion = true;
+        hasChanged = true;
       }
     }
   }
@@ -280,17 +295,26 @@ Board.prototype.removeTwos = function() {
   this.setPositions();
 
   // Add the trick to the list of used ones
-  this.usedTricks.push("bomb")
+  if(hasChanged) {
+    this.usedTricks.push("bomb")
+    this.updateHistory(state);
+  }
   return this;
 }
 
+// TODO: AnkiGame, has to be called when there are empty cells
 Board.prototype.addGift = function() {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
   this.clearOldTiles();
   this.addRandomTile(-1);
   this.setPositions();
 
   // Add the trick to the list of used ones
   this.usedTricks.push("gift")
+  this.updateHistory(state);
   return this;
 }
 
@@ -328,4 +352,37 @@ Board.prototype.serializeTiles = function() {
 
 Board.prototype.asString =  function () {
   return JSON.stringify(this.serialize());
+}
+
+Board.prototype.updateHistory = function(state) {
+  // TODO: AnkiGame, Check the hard-coded value
+  if(this.history.length >= 10) {
+    this.history.shift();
+  }
+  this.history.push(state);
+}
+
+// TODO: AnkiGame, Has to be called when there are history logs
+Board.prototype.undo = function() {
+  var last = this.history.pop();
+  if(typeof(last) !== "undefined") {
+    this.tiles = [];
+    this.cells = [];
+    for (var i = 0; i < Board.size; ++i) {
+      this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
+    }
+    this.setTileValues(last.values);
+    this.score = last.score;
+    this.bestScore = last.bestScore;
+    this.setPositions();
+
+    // Add the trick to the list of used ones
+    this.usedTricks.push("undo")
+  }
+
+  return this;
+}
+
+Board.prototype.hasHistory = function() {
+  return this.history.length > 0;
 }
