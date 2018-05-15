@@ -60,7 +60,7 @@ class BoardView extends React.Component {
   removeTwos(event) {
     event.preventDefault();
     
-    if(typeof(Anki) !== undefined) {
+    if(typeof(Anki) !== "undefined") {
       if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
         this.setState({board: this.state.board.removeTwos()});
         // TODO: AnkiGame, avoid it when board has just twos tiles.
@@ -202,14 +202,14 @@ var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('
 
 // To be called from Android
 var restartGame = function() {
-  if(typeof(Anki) !== undefined) {
+  if(typeof(Anki) !== "undefined") {
     Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), 6);
     BoardViewRendered.restartGame();
   }
 }
 
 var goToAnki = function () {
-  if(typeof(Anki) !== undefined) {
+  if(typeof(Anki) !== "undefined") {
     Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), 7)
   }
 }

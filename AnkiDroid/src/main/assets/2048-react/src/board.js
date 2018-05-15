@@ -132,7 +132,7 @@ Board.prototype.moveLeft = function () {
   this.score += this.addition;
   if(this.score > this.bestScore) {
     this.bestScore = this.score;
-    if(typeof(Anki) !== undefined) {
+    if(typeof(Anki) !== "undefined") {
       Anki.updateBestScore(this.bestScore);
     }
   }
