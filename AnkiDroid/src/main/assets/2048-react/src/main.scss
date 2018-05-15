@@ -64,7 +64,6 @@ body {
   background-color: #dcb;
 }
 
-/*TODO: AnkiGame, Update this properly*/
 .trick {
   width: 100px;
   height: 100px;
@@ -75,10 +74,31 @@ body {
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
-  border-radius: 7px;
+  border-radius: 50px;
   font-family: "Clear Sans";
   color: #766;
   background-color: #dcb;
+}
+
+/*TODO: AnkiGame, Update the icons properly*/
+.trickBomb {
+  background-color: #eec022;
+  background-image: url("../img/bomb_icon.png");
+}
+
+.trickGift {
+  background-color: #22caee;
+  background-image: url("../img/gift_icon.png");
+}
+
+.trickUndo {
+  background-color: #22ee98;
+  background-image: url("../img/undo_icon.png");
+}
+
+.trickDouble {
+  background-color: #ee9c22;
+  background-image: url("../img/double_icon.png");
 }
 
 .tile0 {

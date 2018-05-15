@@ -136,10 +136,10 @@ class BoardView extends React.Component {
           {tiles}
         </div>
         <div>
-          <span className='trick' onClick={this.removeTwos.bind(this)}>{''}</span>
-          <span className='trick' onClick={this.addGift.bind(this)}>{''}</span>
-          <span className='trick' onClick={this.undoLast.bind(this)}>{''}</span>
-          <span className='trick' onClick={this.double.bind(this)}>{''}</span>
+          <span className='trick trickBomb' onClick={this.removeTwos.bind(this)}>{''}</span>
+          <span className='trick trickGift' onClick={this.addGift.bind(this)}>{''}</span>
+          <span className='trick trickUndo' onClick={this.undoLast.bind(this)}>{''}</span>
+          <span className='trick trickDouble' onClick={this.double.bind(this)}>{''}</span>
         </div>
       </div>
     );
