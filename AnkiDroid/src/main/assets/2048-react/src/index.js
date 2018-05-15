@@ -88,6 +88,15 @@ class BoardView extends React.Component {
         }
     //}
   }
+  double(event) {
+    event.preventDefault()
+
+      //if(typeof(Anki) !== "undefined") {
+        if(this.state.board.ableToDouble()) {
+          this.setState({board: this.state.board.double()});
+        }
+    //}
+  }
   render() {
     // Since render is executed every time the state changes
     // Here we store the state of the game and the best score
@@ -129,6 +138,7 @@ class BoardView extends React.Component {
           <span className='trick' onClick={this.removeTwos.bind(this)}>{''}</span>
           <span className='trick' onClick={this.addGift.bind(this)}>{''}</span>
           <span className='trick' onClick={this.undoLast.bind(this)}>{''}</span>
+          <span className='trick' onClick={this.double.bind(this)}>{''}</span>
         </div>
       </div>
     );

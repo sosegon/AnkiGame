@@ -308,14 +308,62 @@ Board.prototype.addGift = function() {
   // The state has to be stored once the board has changed.
   var state = this.serialize();
 
+  var hasChanged = false;
+  if(this.hasEmptyCells()) {
+    hasChanged = true;
+    this.clearOldTiles();
+    this.addRandomTile(-1);
+    this.setPositions();
+  }
+
+  if(hasChanged){
+    // Add the trick to the list of used ones
+    this.usedTricks.push("gift")
+    this.updateHistory(state);
+  }
+  return this;
+}
+
+// TODO: AnkiGame, has to be called when there are cells to do it
+Board.prototype.double = function(){
+   // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
   this.clearOldTiles();
-  this.addRandomTile(-1);
-  this.setPositions();
+  var hasChanged = false;
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      var value = this.cells[r][c].value;
+      if (value > 0 && value <= 2) {
+        this.cells[r][c].value *= 2;
+        this.cells[r][c].markForDeletion = false;
+        hasChanged = true;
+      }
+    }
+  }
 
   // Add the trick to the list of used ones
-  this.usedTricks.push("gift")
-  this.updateHistory(state);
+  if(hasChanged) {
+    var values = this.serializeTiles();
+    this.setGridState(values);
+
+    this.usedTricks.push("double")
+    this.updateHistory(state);
+  }
   return this;
+}
+
+Board.prototype.ableToDouble = function() {
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      var value = this.cells[r][c].value;
+      if (value > 0 && value <= 2) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 Board.prototype.hasEmptyCells = function() {
@@ -366,15 +414,9 @@ Board.prototype.updateHistory = function(state) {
 Board.prototype.undo = function() {
   var last = this.history.pop();
   if(typeof(last) !== "undefined") {
-    this.tiles = [];
-    this.cells = [];
-    for (var i = 0; i < Board.size; ++i) {
-      this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
-    }
-    this.setTileValues(last.values);
     this.score = last.score;
     this.bestScore = last.bestScore;
-    this.setPositions();
+    this.setGridState(last.values);
 
     // Add the trick to the list of used ones
     this.usedTricks.push("undo")
@@ -385,4 +427,14 @@ Board.prototype.undo = function() {
 
 Board.prototype.hasHistory = function() {
   return this.history.length > 0;
+}
+
+Board.prototype.setGridState = function(tileValues) {
+  this.tiles = [];
+  this.cells = [];
+  for (var i = 0; i < Board.size; ++i) {
+    this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
+  }
+  this.setTileValues(tileValues);
+  this.setPositions();
 }
