@@ -14,6 +14,7 @@ public class PreferencesHelper {
 
     public static final String KEY_COINS = "prf_coins";
     public static final String KEY_USER_ID = "prf_user_id";
+    public static final String KEY_BEST_SCORE = "prf_best_score";
 
     private final SharedPreferences mPref;
 
@@ -46,5 +47,9 @@ public class PreferencesHelper {
 
     public void storeUserId(String userId) {
         mPref.edit().putString(KEY_USER_ID, userId).apply();
+    }
+
+    public void storeBestScore(int bestScore) {
+        mPref.edit().putInt(KEY_BEST_SCORE, bestScore).apply();;
     }
 }

@@ -65,4 +65,14 @@ public class GameJsInterface {
             }
         });
     }
+
+    @JavascriptInterface
+    public void updateBestScore(int bestScore) {
+        mHandler.post(new Runnable(){
+            @Override
+            public void run () {
+                mGamePresenter.updateBestScore(bestScore);
+            }
+        });
+    }
 }

@@ -33,6 +33,14 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return mDataManager.initUser();
     }
 
+    public void updateBestScore(int bestScore) {
+        mDataManager.updateBestScore(bestScore);
+
+        // TODO: AnkiGame, Display message when user reaches top of leaderboard.
+        // Keep in mind that doing it constantly once the top is reached can be
+        // annoying.
+    }
+
     public void log(Board board, int logType) {
         AnkiLog ankiLog = AnkiLog.logBase();
 

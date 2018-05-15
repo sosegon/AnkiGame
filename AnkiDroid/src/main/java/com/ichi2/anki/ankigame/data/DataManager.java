@@ -61,6 +61,12 @@ public class DataManager {
         }
     }
 
+    public void updateBestScore(int bestScore) {
+        mPreferencesHelper.storeBestScore(bestScore);
+        String userId = mPreferencesHelper.retrieveUserId();
+        mFirebaseHelper.storeBestScore(userId, bestScore);
+    }
+
     private void initBus() {
         // Subscribe consumers
     }
