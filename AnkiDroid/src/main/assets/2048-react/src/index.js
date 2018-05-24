@@ -58,46 +58,57 @@ class BoardView extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown.bind(this));
   }
+  showMessage(message) {
+
+  }
   // This function has to be bound when assigning it to the child's
   // prop, otherwise, it won't work.
   removeTwos(event) {
     event.preventDefault();
     
-    if(typeof(Anki) !== "undefined" &&
-      Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
-      if(this.state.board.ableToDeleteTwos()){
+    if(this.state.board.ableToDeleteTwos()){
+      if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
         this.setState({board: this.state.board.removeTwos()});
       }
+    } else {
+      // TODO: AnkiGame, Display message
+      Anki.unableToDoTrick("bomb", this.getBoardStateAsString());
     }
   }
   addGift(event) {
     event.preventDefault();
 
-    if(typeof(Anki) !== "undefined" &&
-      Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
-      if(this.state.board.hasEmptyCells()) {
+    if(this.state.board.hasEmptyCells()) {
+      if(Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
         this.setState({board: this.state.board.addGift()});
       }
+    } else {
+      // TODO: AnkiGame, Display message
+      Anki.unableToDoTrick("gift", this.getBoardStateAsString());
     }
   }
   undoLast(event) {
     event.preventDefault()
 
-    if(typeof(Anki) !== "undefined" &&
-      Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
-      if(this.state.board.hasHistory()) {
+    if(this.state.board.hasHistory()) {
+      if(Anki.hasMoneyForTrick("undo", this.getBoardStateAsString())) {
         this.setState({board: this.state.board.undo()});
       }
+    } else {
+      // TODO: AnkiGame, Display message
+      Anki.unableToDoTrick("undo", this.getBoardStateAsString());
     }
   }
   double(event) {
     event.preventDefault()
 
-    if(typeof(Anki) !== "undefined" &&
-      Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
-      if(this.state.board.ableToDouble()) {
+    if(this.state.board.ableToDouble()) {
+      if(Anki.hasMoneyForTrick("double", this.getBoardStateAsString())) {
         this.setState({board: this.state.board.double()});
       }
+    } else {
+      // TODO: AnkiGame, Display message
+      Anki.unableToDoTrick("double", this.getBoardStateAsString());
     }
   }
   render() {
@@ -254,3 +265,16 @@ var goToAnki = function () {
     Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), 7)
   }
 }
+
+// Uncomment just for testing purposes
+// var Anki = {
+//   hasMoneyForTrick: function() {
+//     return true;
+//   },
+//   unableToDoTrick: function(trickName) {
+//     console.log("unable to do " + trickName);
+//   },
+//   updateBestScore: function(score) {
+//     console.log("best score " + score);
+//   }
+// }

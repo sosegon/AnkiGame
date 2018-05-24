@@ -94,4 +94,15 @@ public class GameJsInterface {
             }
         });
     }
+
+    @JavascriptInterface
+    public void unableToDoTrick(String trickName, String jsonString) {
+        Board board = Board.parseJSON(jsonString);
+        mHandler.post(new Runnable(){
+            @Override
+            public void run () {
+                mGamePresenter.logUseTrick(board, trickName, false);
+            }
+        });
+    }
 }
