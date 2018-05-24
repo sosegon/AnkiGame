@@ -1,7 +1,10 @@
 package com.ichi2.anki.ankigame.data.remote;
 
+import android.os.Debug;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.data.model.User;
 
@@ -10,6 +13,8 @@ import javax.inject.Singleton;
 @Singleton
 public class FirebaseHelper {
     // Database
+    public static final String CONNECTION_KEY = "connection";
+    public static final String INDEPENDENT_KEY = "independent";
     public static final String USERS_KEY = "users";
     public static final String LOGS_KEY = "logs";
     public static final String USERLOGS_KEY = "logs";
@@ -23,8 +28,15 @@ public class FirebaseHelper {
     public FirebaseHelper() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseDatabase.setPersistenceEnabled(true);
-        mUsersDatabaseReference = mFirebaseDatabase.getReference().child(USERS_KEY);
-        mLogsDatabaseReference = mFirebaseDatabase.getReference().child(LOGS_KEY);
+        DatabaseReference root;
+        if(BuildConfig.FLAVOR == "connection") {
+            root = mFirebaseDatabase.getReference().child(CONNECTION_KEY);
+        } else {
+            root = mFirebaseDatabase.getReference().child(INDEPENDENT_KEY);
+
+        }
+        mUsersDatabaseReference = root.child(USERS_KEY);
+        mLogsDatabaseReference = root.child(LOGS_KEY);
     }
 
     public DatabaseReference storeUser(User user) {
