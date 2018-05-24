@@ -774,6 +774,7 @@ public class DeckPicker extends BaseActivity implements DeckPickerMvpView {
         if(!mDeckPickerPresenter.isViewAttached()) {
             mDeckPickerPresenter.attachView(this);
         }
+        updateLblGameCoins(mDeckPickerPresenter.getCoins());
     }
 
 

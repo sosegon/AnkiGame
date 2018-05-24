@@ -169,6 +169,7 @@ public class Game extends BaseActivity implements GameMvpView {
         if(!mGamePresenter.isViewAttached()) {
             mGamePresenter.attachView(this);
         }
+        updateLblGameCoins(mGamePresenter.getCoins());
     }
 
     @Override
