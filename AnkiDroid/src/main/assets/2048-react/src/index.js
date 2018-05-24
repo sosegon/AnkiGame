@@ -63,40 +63,42 @@ class BoardView extends React.Component {
   removeTwos(event) {
     event.preventDefault();
     
-    //if(typeof(Anki) !== "undefined") {
-      //if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
-        if(this.state.board.ableToDeleteTwos()){
-          this.setState({board: this.state.board.removeTwos()});
-        }
-      //}
-    //}
+    if(typeof(Anki) !== "undefined" &&
+      Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
+      if(this.state.board.ableToDeleteTwos()){
+        this.setState({board: this.state.board.removeTwos()});
+      }
+    }
   }
   addGift(event) {
     event.preventDefault();
 
-    //if(typeof(Anki) !== "undefined") {
-        if(this.state.board.hasEmptyCells()) {
-          this.setState({board: this.state.board.addGift()});
-        }
-    //}
+    if(typeof(Anki) !== "undefined" &&
+      Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
+      if(this.state.board.hasEmptyCells()) {
+        this.setState({board: this.state.board.addGift()});
+      }
+    }
   }
   undoLast(event) {
     event.preventDefault()
 
-      //if(typeof(Anki) !== "undefined") {
-        if(this.state.board.hasHistory()) {
-          this.setState({board: this.state.board.undo()});
-        }
-    //}
+    if(typeof(Anki) !== "undefined" &&
+      Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
+      if(this.state.board.hasHistory()) {
+        this.setState({board: this.state.board.undo()});
+      }
+    }
   }
   double(event) {
     event.preventDefault()
 
-      //if(typeof(Anki) !== "undefined") {
-        if(this.state.board.ableToDouble()) {
-          this.setState({board: this.state.board.double()});
-        }
-    //}
+    if(typeof(Anki) !== "undefined" &&
+      Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
+      if(this.state.board.ableToDouble()) {
+        this.setState({board: this.state.board.double()});
+      }
+    }
   }
   render() {
     // Since render is executed every time the state changes
