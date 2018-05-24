@@ -302,15 +302,19 @@ Board.prototype.removeTwos = function() {
 
 // At least one cell has to be greater than two
 Board.prototype.ableToDeleteTwos = function() {
+  var atLeastOneTwo = false;
+  var atLeastOneGreaterThanTwo = false;
   for (var r = 0; r < Board.size; ++r) {
     for (var c = 0; c < Board.size; ++c) {
       var value = this.cells[r][c].value;
-      if (value > 2) {
-        return true;
+      if (value == 2) {
+        atLeastOneTwo = true;
+      } else if (value > 2) {
+        atLeastOneGreaterThanTwo = true;
       }
     }
   }
-  return false;
+  return atLeastOneTwo && atLeastOneGreaterThanTwo;
 }
 
 Board.prototype.addGift = function() {
