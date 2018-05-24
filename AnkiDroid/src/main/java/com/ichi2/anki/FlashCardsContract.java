@@ -107,7 +107,7 @@ import android.net.Uri;
  * </table>
  */
 public class FlashCardsContract {
-    public static final String AUTHORITY = "com.ichi2.anki.flashcards";
+    public static final String AUTHORITY = AuthorityName.AUTHORITY;
     public static final String READ_WRITE_PERMISSION = "com.ichi2.anki.permission.READ_WRITE_DATABASE";
 
     /**
