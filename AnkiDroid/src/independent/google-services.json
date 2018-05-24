@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "427007683779",
+    "firebase_url": "https://ankigame2048.firebaseio.com",
+    "project_id": "ankigame2048",
+    "storage_bucket": "ankigame2048.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427007683779:android:03a2c7d9efa7b7b9",
+        "android_client_info": {
+          "package_name": "com.ichi2.anki.independent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjBxQPHy3Q_NWGBZtzbRdinNVRRrabfiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427007683779:android:bc20445799f27897",
+        "android_client_info": {
+          "package_name": "com.keemsa.ankigame2048"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjBxQPHy3Q_NWGBZtzbRdinNVRRrabfiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

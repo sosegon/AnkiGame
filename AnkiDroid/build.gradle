@@ -37,6 +37,18 @@ android {
 //        }
 
     }
+
+    flavorDimensions("mode")
+    productFlavors {
+        independent {
+            applicationId 'com.ichi2.anki.independent'
+            dimension "mode"
+        }
+        connection {
+            applicationId "com.ichi2.anki"
+            dimension "mode"
+        }
+    }
     useLibrary 'org.apache.http.legacy'
 
     dexOptions {
@@ -50,6 +62,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        independent { java.srcDirs = ['src/independent/java', 'src/independent/java/'] } 
+        connection {java.srcDirs = ['src/connection/java', 'src/connection/java/'] }
     }
 }
 
