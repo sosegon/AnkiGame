@@ -70,6 +70,7 @@ import com.ichi2.anki.FilteredDeckOptions;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.ModelBrowser;
 import com.ichi2.anki.MyAccount;
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
@@ -127,7 +128,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class DeckPicker extends BaseActivity implements DeckPickerMvpView {
+public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMvpView {
 
 
     /**

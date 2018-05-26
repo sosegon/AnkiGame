@@ -40,6 +40,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.DeckOptions;
@@ -49,7 +50,6 @@ import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.Whiteboard;
-import com.ichi2.anki.ankigame.base.BaseActivity2;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -69,7 +69,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class Reviewer extends BaseActivity2 implements ReviewerMvpView {
+public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;

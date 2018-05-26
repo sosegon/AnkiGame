@@ -20,7 +20,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -28,6 +27,7 @@ import android.view.animation.Animation;
 import android.widget.ProgressBar;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.ankigame.base.BaseActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
@@ -40,7 +40,7 @@ import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
-public class AnkiActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Collection>,
+public class AnkiActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Collection>,
         SimpleMessageDialog.SimpleMessageDialogListener {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;

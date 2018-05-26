@@ -1,6 +1,7 @@
 package com.ichi2.anki.ankigame.base;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
@@ -22,7 +23,7 @@ import timber.log.Timber;
  * across configuration changes.
  */
 
-public class BaseActivity extends NavigationDrawerActivity {
+public class BaseActivity extends AppCompatActivity {
 
     private static final String KEY_ACTIVITY_ID = "KEY_ACTIVITY_ID";
     private static final AtomicLong NEXT_ID = new AtomicLong(0);

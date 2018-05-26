@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 
-public class Game extends BaseActivity implements GameMvpView {
+public class Game extends NavigationDrawerActivity implements GameMvpView {
     // TODO: AnkiGame, Change tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
 
