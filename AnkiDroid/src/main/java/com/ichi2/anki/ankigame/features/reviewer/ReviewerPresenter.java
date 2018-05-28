@@ -44,7 +44,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
                 break;
         }
 
-        mDataManager.getPreferencesHelper().updateCoins(currentCoins);
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
 
         return mDataManager.getPreferencesHelper().retrieveCoins();
     }

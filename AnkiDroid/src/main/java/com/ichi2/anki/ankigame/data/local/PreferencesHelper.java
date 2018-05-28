@@ -35,9 +35,9 @@ public class PreferencesHelper {
      *
      * @param coins positive or negative
      */
-    public void updateCoins(int coins) {
+    public void storeCoins(int coins) {
         int current = retrieveCoins();
-        mPref.edit().putInt(KEY_COINS, current+coins).apply();
+        mPref.edit().putInt(KEY_COINS, coins).apply();
 
     }
 

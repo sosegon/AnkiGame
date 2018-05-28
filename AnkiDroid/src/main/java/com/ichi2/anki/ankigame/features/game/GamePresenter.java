@@ -22,11 +22,13 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     public void reduceCoins(int coins) {
-        mDataManager.getPreferencesHelper().updateCoins(-coins);
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        mDataManager.getPreferencesHelper().storeCoins(totalCoins - coins);
     }
 
     public void increaseCoins(int coins) {
-        mDataManager.getPreferencesHelper().updateCoins(coins);
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        mDataManager.getPreferencesHelper().storeCoins(totalCoins + coins);
     }
 
     public String initUser() {
