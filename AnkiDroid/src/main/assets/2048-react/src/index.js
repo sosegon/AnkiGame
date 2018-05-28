@@ -240,29 +240,17 @@ class BestScore extends React.Component {
 
 var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('boardDiv'));
 
-// Types of logs in Android
-// NONE = 0;
-// START_GAME = 1;
-// END_GAME = 2;
-// USE_TRICK = 3;
-// SELECT_GAME_MODE = 4;
-// CHECK_LEADERBOARD = 5;
-// RESTART_GAME = 6;
-// GO_TO_ANKI = 7;
-// GO_TO_GAME = 8;
-// TAKE_QUIZZ = 9;
-
 // To be called from Android
-var restartGame = function() {
+var restartGame = function(logCode) {
   if(typeof(Anki) !== "undefined") {
-    Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), 6);
+    Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), logCode);
     BoardViewRendered.restartGame();
   }
 }
 
-var goToAnki = function () {
+var goToAnki = function (logCode) {
   if(typeof(Anki) !== "undefined") {
-    Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), 7)
+    Anki.getBoardState(BoardViewRendered.getBoardStateAsString(), logCode);
   }
 }
 

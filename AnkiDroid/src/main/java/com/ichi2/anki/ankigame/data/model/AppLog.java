@@ -46,4 +46,8 @@ public abstract class AppLog {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public int getLogType() {
+        return logType;
+    }
 }

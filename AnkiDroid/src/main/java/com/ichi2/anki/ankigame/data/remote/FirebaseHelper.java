@@ -47,9 +47,10 @@ public class FirebaseHelper {
     }
 
     public DatabaseReference storeLog(AppLog appLog) {
-        DatabaseReference logRef = mLogsDatabaseReference.push();
-        logRef.setValue(appLog);
-        return logRef;
+        //DatabaseReference logRef = mLogsDatabaseReference.push();
+        DatabaseReference logTypeRef = mLogsDatabaseReference.child(String.valueOf(appLog.getLogType())).push();
+        logTypeRef.setValue(appLog);
+        return logTypeRef;
     }
 
     public DatabaseReference retrieveUser(String userId) {
