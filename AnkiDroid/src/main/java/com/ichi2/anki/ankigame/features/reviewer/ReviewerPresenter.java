@@ -60,4 +60,14 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setSelectDeck(deckName, cardNumbers, totalCoins);
         mDataManager.getFirebaseHelper().storeLog(ankiLog);
     }
+
+    public void logDisplayAnswerCard(String cardInfo, String cardAnswer, long elapsedTime, String deckInfo, String dueDeck) {
+        AnkiLog ankiLog = AnkiLog.logBase();
+        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        ankiLog.setUserId(userId);
+
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        ankiLog.setDisplayAnswerCard(cardInfo, cardAnswer, totalCoins, (int)(elapsedTime / 1000), deckInfo, dueDeck);
+        mDataManager.getFirebaseHelper().storeLog(ankiLog);
+    }
 }

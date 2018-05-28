@@ -112,7 +112,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     }
 
     // ANKIGAME
-    private void logSelectDeck() {
+    private Sched.DeckDueTreeNode getDueDeck() {
         long did = -1l;
 
         try {
@@ -121,7 +121,6 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
             //TODO: AnkiGame, log the error
         }
 
-        String deckInfo = getCol().getDecks().current().toString();
         List<Sched.DeckDueTreeNode> decks = getCol().getSched().deckDueList();
         Sched.DeckDueTreeNode dueDeck = null;
         for(Sched.DeckDueTreeNode deck : decks) {
@@ -130,7 +129,33 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
             }
         }
 
+        return dueDeck;
+    }
+
+    // ANKIGAME
+    private void logSelectDeck() {
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        String deckInfo = getCol().getDecks().current().toString();
+
         mReviewerPresenter.logSelectDeck(deckInfo, dueDeck != null ? dueDeck.toString() : "");
+    }
+
+    //ANKIGAME
+    @Override
+    public void logDisplayCardAnswer() {
+        super.logDisplayCardAnswer();
+
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        String deckInfo = getCol().getDecks().current().toString();
+
+        String cardInfo = mCurrentCard.toString();
+        String cardAnswer = mCurrentCard.a();
+        cardAnswer = getCol().getMedia().escapeImages(cardAnswer);
+        long elapsedTime = System.currentTimeMillis() - mElapsedTime;
+
+        mReviewerPresenter.logDisplayAnswerCard(cardInfo, cardAnswer, elapsedTime, deckInfo, dueDeck != null ? dueDeck.toString() : "");
+
+        mElapsedTime = System.currentTimeMillis();
     }
 
     // ANKIGAME
@@ -218,6 +243,8 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         if (mPrefFullscreenReview) {
             CompatHelper.getCompat().setFullScreen(this);
         }
+
+        mElapsedTime = System.currentTimeMillis();
     }
 
 
