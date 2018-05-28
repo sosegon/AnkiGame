@@ -60,7 +60,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
     @Inject GamePresenter mGamePresenter;
 
-    GameJsInterface mGameJsInterface;
+    Handler mHandler;
 
     @BindView(R.id.lbl_coins_game)
     TextView mLblCoins;
@@ -151,7 +151,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
         ButterKnife.bind(this);
 
-        mGameJsInterface = new GameJsInterface(new Handler(), this, mGamePresenter);
+        mHandler = new Handler();
 
         mGamePresenter.attachView(this);
 
@@ -189,6 +189,11 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
         // Inflate the menu; this adds items to the action bar if it is present.
         // getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void postRunnable(Runnable runnable) {
+        mHandler.post(runnable);
     }
 
     /**
@@ -298,7 +303,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
         // Load webview with game
         // mWebMain = (WebView) findViewById(R.id.web_main);
-        mWebMain.addJavascriptInterface(mGameJsInterface, "Anki");
+        mWebMain.addJavascriptInterface(mGamePresenter, "Anki");
         WebSettings settings = mWebMain.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
