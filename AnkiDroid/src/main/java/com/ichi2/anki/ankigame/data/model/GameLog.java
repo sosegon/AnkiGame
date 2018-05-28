@@ -16,15 +16,11 @@ public class GameLog extends AppLog {
 
     // Fields in log
     public int bestScore;
-    public int gameMode;
-    public int leaderboardPosition;
     public int currentScore;
     public String usedTricks;
     public String trickType;
     public boolean trickExecuted;
     public String boardValues;
-    public int moves;
-    public int selectedGameMode;
 
     public static GameLog logBase() {
         Date date = new Date();
@@ -41,85 +37,51 @@ public class GameLog extends AppLog {
         super(date, time);
     }
 
-    public void setStartGame(int bestScore, int totalCoins, int gameMode, int leaderboardPosition) {
-        this.bestScore = bestScore;
-        this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
-        this.logType = START_GAME;
+    public int getBestScore() {
+        return bestScore;
     }
 
-    public void setEndGame(int bestScore, int totalCoins, int gameMode, int leaderboardPosition, int currentScore, int usedCoins, int[] usedTricks) {
+    public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
-        this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
-        //this.usedTricks = usedTricks;
-        this.logType = END_GAME;
     }
 
-    // TODO: AnkiGame, Implement the commented fields
-    public void setUseTrick(Board board, int totalCoins, String trickType, boolean trickExecuted) {
-        this.bestScore = board.getBestScore();
-        this.currentScore = board.getScore();
-        this.usedTricks = board.getUsedTricksAsString();
-        this.boardValues = board.getBoardValuesAsString();
-        this.totalCoins = totalCoins;
-        // this.gameMode = gameMode;
-        // this.leaderboardPosition = leaderboardPosition;
+    public String getUsedTricks() {
+        return usedTricks;
+    }
+
+    public void setUsedTricks(String usedTricks) {
+        this.usedTricks = usedTricks;
+    }
+
+    public String getTrickType() {
+        return trickType;
+    }
+
+    public void setTrickType(String trickType) {
         this.trickType = trickType;
-        //this.boardValues = boardValues;
-        //this.moves = moves;
+    }
+
+    public boolean isTrickExecuted() {
+        return trickExecuted;
+    }
+
+    public void setTrickExecuted(boolean trickExecuted) {
         this.trickExecuted = trickExecuted;
-
-        this.logType = USE_TRICK;
     }
 
-    public void setSelectGameMode(int bestScore, int totalCoins, int gameMode, int leaderboardPosition, int currentScore, int[][] boardState, int selectedGameMode) {
-        this.bestScore = bestScore;
-        this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
-        this.currentScore = currentScore;
-        //this.boardValues = boardValues;
-        this.selectedGameMode = selectedGameMode;
-        this.logType = SELECT_GAME_MODE;
+    public String getBoardValues() {
+        return boardValues;
     }
 
-    public void setCheckLeaderboard(int bestScore, int totalCoins, int gameMode, int leaderboardPosition, int currentScore, int[][] boardState) {
-        this.bestScore = bestScore;
-        this.totalCoins = totalCoins;
-        this.gameMode = gameMode;
-        this.leaderboardPosition = leaderboardPosition;
-        this.currentScore = currentScore;
-        //this.boardValues = boardValues;
-        this.logType = CHECK_LEADERBOARD;
-    }
-
-    // TODO: AnkiGame, Implement the commented fields
-    public void setRestartGame(Board board, int totalCoins) {
-        this.bestScore = board.getBestScore();
-        this.currentScore = board.getScore();
-        this.usedTricks = board.getUsedTricksAsString();
-        this.boardValues = board.getBoardValuesAsString();
-        this.totalCoins = totalCoins;
-        //this.gameMode = gameMode;
-        //this.leaderboardPosition = leaderboardPosition;
-
-        this.logType = RESTART_GAME;
-    }
-
-    // TODO: AnkiGame, Implement the commented fields
-    public void setGoToAnki(Board board, int totalCoins) {
-        this.bestScore = board.getBestScore();
-        this.currentScore = board.getScore();
-        this.usedTricks = board.getUsedTricksAsString();
-        this.boardValues = board.getBoardValuesAsString();
-        this.totalCoins = totalCoins;
-        //this.gameMode = gameMode;
-        //this.leaderboardPosition = leaderboardPosition;
-
-        this.logType = GO_TO_ANKI;
+    public void setBoardValues(String boardValues) {
+        this.boardValues = boardValues;
     }
 }

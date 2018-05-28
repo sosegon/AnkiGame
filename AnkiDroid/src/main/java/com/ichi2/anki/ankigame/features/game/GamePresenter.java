@@ -61,23 +61,6 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         mDataManager.logBehaviour(gameLog);
     }
 
-    public void logUseTrick(Board board, String trickName, boolean trickExecuted) {
-        GameLog gameLog = GameLog.logBase();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        gameLog.setUserId(userId);
-
-        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-
-        gameLog.setUseTrick(
-                board,
-                totalCoins,
-                trickName,
-                trickExecuted
-        );
-
-        mDataManager.logBehaviour(gameLog);
-    }
-
     @JavascriptInterface
     public boolean hasMoneyForTrick(String trickName, String jsonString) {
         boolean r = false;
@@ -166,29 +149,45 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
 
     private GameLog logGoToAnki(Board board) {
         GameLog gameLog = GameLog.logBase();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        gameLog.setUserId(userId);
-
-        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        gameLog.setGoToAnki(
-                board,
-                totalCoins
-        );
+        gameLog.setLogType(GameLog.GO_TO_ANKI);
+        gameLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
+        gameLog.setBestScore(board.getBestScore());
+        gameLog.setCurrentScore(board.getScore());
+        gameLog.setUsedTricks(board.getUsedTricksAsString());
+        gameLog.setBoardValues(board.getBoardValuesAsString());
+        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        // TODO: AnkiGame Add leaderboard position
 
         return gameLog;
     }
 
     private GameLog logRestartGame(Board board) {
         GameLog gameLog = GameLog.logBase();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        gameLog.setUserId(userId);
-
-        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        gameLog.setRestartGame(
-                board,
-                totalCoins
-        );
+        gameLog.setLogType(GameLog.RESTART_GAME);
+        gameLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
+        gameLog.setBestScore(board.getBestScore());
+        gameLog.setCurrentScore(board.getScore());
+        gameLog.setUsedTricks(board.getUsedTricksAsString());
+        gameLog.setBoardValues(board.getBoardValuesAsString());
+        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        // TODO: AnkiGame Add leaderboard position
 
         return gameLog;
     }
+
+    private void logUseTrick(Board board, String trickName, boolean trickExecuted) {
+        GameLog gameLog = GameLog.logBase();
+        gameLog.setLogType(GameLog.USE_TRICK);
+        gameLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
+        gameLog.setBestScore(board.getBestScore());
+        gameLog.setCurrentScore(board.getScore());
+        gameLog.setUsedTricks(board.getUsedTricksAsString());
+        gameLog.setBoardValues(board.getBoardValuesAsString());
+        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        gameLog.setTrickType(trickName);
+        gameLog.setTrickExecuted(trickExecuted);
+
+        mDataManager.logBehaviour(gameLog);
+    }
+
 }
