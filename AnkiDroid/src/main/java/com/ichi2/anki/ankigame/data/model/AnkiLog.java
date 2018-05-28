@@ -8,8 +8,11 @@ public class AnkiLog extends AppLog{
     // Types of logs
     public static final int GO_TO_GAME = 201;
     public static final int TAKE_QUIZZ = 202;
+    public static final int SELECT_DECK = 203;
 
     // Fields in log
+    public String dueDeckInfo;
+    public String deckInfo;
     public int earnedCoins;
     public int revisedCards;
     public int correctAnswers;
@@ -27,6 +30,13 @@ public class AnkiLog extends AppLog{
 
     public AnkiLog(String date, String time) {
         super(date, time);
+    }
+
+    public void setSelectDeck(String deckInfo, String dueDeckInfo, int totalCoins) {
+        this.deckInfo = deckInfo;
+        this.dueDeckInfo = dueDeckInfo;
+        this.totalCoins = totalCoins;
+        this.logType = SELECT_DECK;
     }
 
     public void setGoToGame(int totalCoins, int earnedCoins) {

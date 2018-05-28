@@ -32,6 +32,7 @@ public abstract class AppLog {
     public int logType;
     public String date;
     public String time;
+    public int totalCoins;
 
     public AppLog(String date, String time) {
         this.date = date;

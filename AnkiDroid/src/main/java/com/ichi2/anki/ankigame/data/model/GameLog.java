@@ -16,7 +16,6 @@ public class GameLog extends AppLog {
 
     // Fields in log
     public int bestScore;
-    public int totalCoins;
     public int gameMode;
     public int leaderboardPosition;
     public int currentScore;

@@ -117,6 +117,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -196,6 +197,18 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
     private long mFocusedDeck;
 
 
+    // ANKIGAME
+    private void logSelectDeck(long did) {
+        String name = getCol().getDecks().current().toString();
+        List<Sched.DeckDueTreeNode> decks = getCol().getSched().deckDueList();
+        Sched.DeckDueTreeNode dueDeck = null;
+        for(Sched.DeckDueTreeNode deck : decks) {
+            if(deck.did == did) {
+                dueDeck = deck;
+            }
+        }
+        mDeckPickerPresenter.logSelectDeck(name, dueDeck != null ? dueDeck.toString() : "");
+    }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -222,6 +235,8 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
                 mActionsMenu.collapse();
             }
             handleDeckSelection(deckId, false);
+            //ANKIGAME log
+            logSelectDeck(deckId);
             if (mFragmented || !CompatHelper.isLollipop()) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
