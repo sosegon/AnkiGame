@@ -17,10 +17,7 @@ public class AnkiLog extends AppLog{
     public String cardInfo;
     public String cardAnswer;
     public int elapsedTime;
-
-    public int earnedCoins;
-    public int revisedCards;
-    public int correctAnswers;
+    public boolean isFavCard;
 
     public static AnkiLog logBase() {
         Date date = new Date();
@@ -37,7 +34,7 @@ public class AnkiLog extends AppLog{
         super(date, time);
     }
 
-    public void setSelectDeck(String deckInfo, String dueDeckInfo, int totalCoins) {
+   /* public void setSelectDeck(String deckInfo, String dueDeckInfo, int totalCoins) {
         this.deckInfo = deckInfo;
         this.dueDeckInfo = dueDeckInfo;
         this.totalCoins = totalCoins;
@@ -53,18 +50,53 @@ public class AnkiLog extends AppLog{
         this.dueDeckInfo = dueDeckInfo;
         this.logType = DISPLAY_ANSWER_CARD;
 
+    }*/
+
+    public String getDueDeckInfo() {
+        return dueDeckInfo;
     }
 
-    public void setGoToGame(int totalCoins, int earnedCoins) {
-        // TODO: AnkiGame, finish implementation
-        this.earnedCoins = earnedCoins;
-        this.logType = GO_TO_GAME;
+    public void setDueDeckInfo(String dueDeckInfo) {
+        this.dueDeckInfo = dueDeckInfo;
     }
 
-    public void setTakeQuizz(int revisedCards, int correctAnswers) {
-        this.revisedCards = revisedCards;
-        this.correctAnswers = correctAnswers;
-        this.logType = TAKE_QUIZZ;
+    public String getDeckInfo() {
+        return deckInfo;
     }
 
+    public void setDeckInfo(String deckInfo) {
+        this.deckInfo = deckInfo;
+    }
+
+    public String getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(String cardInfo) {
+        this.cardInfo = cardInfo;
+    }
+
+    public String getCardAnswer() {
+        return cardAnswer;
+    }
+
+    public void setCardAnswer(String cardAnswer) {
+        this.cardAnswer = cardAnswer;
+    }
+
+    public int getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(int elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    public boolean isFavCard() {
+        return isFavCard;
+    }
+
+    public void setFavCard(boolean favCard) {
+        isFavCard = favCard;
+    }
 }

@@ -55,6 +55,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -149,11 +150,20 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         String deckInfo = getCol().getDecks().current().toString();
 
         String cardInfo = mCurrentCard.toString();
+        //String cardInfo = mCurrentCard.note().toString();
         String cardAnswer = mCurrentCard.a();
         cardAnswer = getCol().getMedia().escapeImages(cardAnswer);
         long elapsedTime = System.currentTimeMillis() - mElapsedTime;
 
-        mReviewerPresenter.logDisplayAnswerCard(cardInfo, cardAnswer, elapsedTime, deckInfo, dueDeck != null ? dueDeck.toString() : "");
+        Note note  = mCurrentCard.note();
+        boolean isFavCard = note.hasTag("marked");
+
+        mReviewerPresenter.logDisplayAnswerCard(cardInfo,
+                cardAnswer,
+                elapsedTime,
+                isFavCard,
+                deckInfo,
+                dueDeck != null ? dueDeck.toString() : "");
 
         mElapsedTime = System.currentTimeMillis();
     }

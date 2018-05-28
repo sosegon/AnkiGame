@@ -7,26 +7,6 @@ public abstract class AppLog {
     // Types of logs
     public static final int NONE = 0;
 
-    // Keys for fields in log
-    public static final String KEY_USER_ID = "userId";
-    public static final String KEY_LOG_TYPE = "logType";
-    public static final String KEY_DATE = "date";
-    public static final String KEY_TIME = "time";
-    public static final String KEY_BEST_SCORE = "bestScore";
-    public static final String KEY_TOTAL_COINS = "totalCoins";
-    public static final String KEY_GAME_MODE = "gameMode";
-    public static final String KEY_LEADERBOARD_POSITION = "loaderboardPosition";
-    public static final String KEY_CURRENT_SCORE= "currentScore";
-    public static final String KEY_USED_TRICKS= "usedTricks";
-    public static final String KEY_TRICK_EXECUTED= "trickExecuted";
-    public static final String KEY_TRICK_TYPE= "trickType";
-    public static final String KEY_BOARD_VALUES= "boardValues";
-    public static final String KEY_MOVES= "moves";
-    public static final String KEY_SELECTED_GAME_MODE= "selectedGameMode";
-    public static final String KEY_EARNED_COINS= "earnedCoins";
-    public static final String KEY_REVISED_CARDS= "revisedCards";
-    public static final String KEY_CORRECT_ANSWERS= "correctAnswers";
-
     // Information to be stored in the logs
     public String userId;
     public int logType;
@@ -50,5 +30,33 @@ public abstract class AppLog {
 
     public int getLogType() {
         return logType;
+    }
+
+    public void setLogType(int logType) {
+        this.logType = logType;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getTotalCoins() {
+        return totalCoins;
+    }
+
+    public void setTotalCoins(int totalCoins) {
+        this.totalCoins = totalCoins;
     }
 }

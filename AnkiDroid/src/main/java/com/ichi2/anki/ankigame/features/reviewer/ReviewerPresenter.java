@@ -51,23 +51,29 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return mDataManager.getPreferencesHelper().retrieveCoins();
     }
 
-    public void logSelectDeck(String deckName, String cardNumbers) {
+    public void logSelectDeck(String deckInfo, String dueDeckInfo) {
         AnkiLog ankiLog = AnkiLog.logBase();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        ankiLog.setUserId(userId);
+        ankiLog.setLogType(AnkiLog.SELECT_DECK);
+        ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
+        ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        ankiLog.setDeckInfo(deckInfo);
+        ankiLog.setDueDeckInfo(dueDeckInfo);
 
-        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        ankiLog.setSelectDeck(deckName, cardNumbers, totalCoins);
         mDataManager.getFirebaseHelper().storeLog(ankiLog);
     }
 
-    public void logDisplayAnswerCard(String cardInfo, String cardAnswer, long elapsedTime, String deckInfo, String dueDeck) {
+    public void logDisplayAnswerCard(String cardInfo, String cardAnswer, long elapsedTime, boolean isFavCard, String deckInfo, String dueDeckInfo) {
         AnkiLog ankiLog = AnkiLog.logBase();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        ankiLog.setUserId(userId);
+        ankiLog.setLogType(AnkiLog.DISPLAY_ANSWER_CARD);
+        ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
+        ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        ankiLog.setCardAnswer(cardAnswer);
+        ankiLog.setCardInfo(cardInfo);
+        ankiLog.setElapsedTime((int)(elapsedTime / 1000));
+        ankiLog.setFavCard(isFavCard);
+        ankiLog.setDeckInfo(deckInfo);
+        ankiLog.setDueDeckInfo(dueDeckInfo);
 
-        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        ankiLog.setDisplayAnswerCard(cardInfo, cardAnswer, totalCoins, (int)(elapsedTime / 1000), deckInfo, dueDeck);
         mDataManager.getFirebaseHelper().storeLog(ankiLog);
     }
 }
