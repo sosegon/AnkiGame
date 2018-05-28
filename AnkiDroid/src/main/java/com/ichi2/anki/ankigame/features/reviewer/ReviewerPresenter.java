@@ -59,7 +59,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setDeckInfo(deckInfo);
         ankiLog.setDueDeckInfo(dueDeckInfo);
 
-        mDataManager.getFirebaseHelper().storeLog(ankiLog);
+        mDataManager.logBehaviour(ankiLog);
     }
 
     public void logDisplayAnswerCard(String cardInfo, String cardAnswer, long elapsedTime, boolean isFavCard, String deckInfo, String dueDeckInfo) {
@@ -74,6 +74,6 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setDeckInfo(deckInfo);
         ankiLog.setDueDeckInfo(dueDeckInfo);
 
-        mDataManager.getFirebaseHelper().storeLog(ankiLog);
+        mDataManager.logBehaviour(ankiLog);
     }
 }
