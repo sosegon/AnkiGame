@@ -2,8 +2,8 @@ package com.ichi2.anki.ankigame.features.game;
 
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
-import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.data.model.Board;
+import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
@@ -42,64 +42,64 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     public void log(Board board, int logType) {
-        AnkiLog ankiLog = AnkiLog.logBase();
+        GameLog gameLog = GameLog.logBase();
 
         switch (logType) {
-            case AnkiLog.GO_TO_ANKI:
-                ankiLog = logGoToAnki(board);
+            case GameLog.GO_TO_ANKI:
+                gameLog = logGoToAnki(board);
                 break;
-            case AnkiLog.RESTART_GAME:
-                ankiLog = logRestartGame(board);
+            case GameLog.RESTART_GAME:
+                gameLog = logRestartGame(board);
                 break;
             default:
                 break;
         }
 
-        mDataManager.logBehaviour(ankiLog);
+        mDataManager.logBehaviour(gameLog);
     }
 
     public void logUseTrick(Board board, String trickName, boolean trickExecuted) {
-        AnkiLog ankiLog = AnkiLog.logBase();
+        GameLog gameLog = GameLog.logBase();
         String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        ankiLog.setUserId(userId);
+        gameLog.setUserId(userId);
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
 
-        ankiLog.setUseTrick(
+        gameLog.setUseTrick(
                 board,
                 totalCoins,
                 trickName,
                 trickExecuted
         );
 
-        mDataManager.logBehaviour(ankiLog);
+        mDataManager.logBehaviour(gameLog);
     }
 
-    private AnkiLog logGoToAnki(Board board) {
-        AnkiLog ankiLog = AnkiLog.logBase();
+    private GameLog logGoToAnki(Board board) {
+        GameLog gameLog = GameLog.logBase();
         String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        ankiLog.setUserId(userId);
+        gameLog.setUserId(userId);
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        ankiLog.setGoToAnki(
+        gameLog.setGoToAnki(
                 board,
                 totalCoins
         );
 
-        return ankiLog;
+        return gameLog;
     }
 
-    private AnkiLog logRestartGame(Board board) {
-        AnkiLog ankiLog = AnkiLog.logBase();
+    private GameLog logRestartGame(Board board) {
+        GameLog gameLog = GameLog.logBase();
         String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        ankiLog.setUserId(userId);
+        gameLog.setUserId(userId);
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        ankiLog.setRestartGame(
+        gameLog.setRestartGame(
                 board,
                 totalCoins
         );
 
-        return ankiLog;
+        return gameLog;
     }
 }

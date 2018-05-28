@@ -3,6 +3,7 @@ package com.ichi2.anki.ankigame.data;
 import com.google.firebase.database.DatabaseReference;
 import com.ichi2.anki.ankigame.data.local.PreferencesHelper;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
+import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
 import com.ichi2.anki.ankigame.util.RxEventBus;
@@ -51,7 +52,7 @@ public class DataManager {
         return userId;
     }
 
-    public void logBehaviour(AnkiLog log) {
+    public void logBehaviour(AppLog log) {
         if(log != null) {
             DatabaseReference logRef = mFirebaseHelper.storeLog(log);
 

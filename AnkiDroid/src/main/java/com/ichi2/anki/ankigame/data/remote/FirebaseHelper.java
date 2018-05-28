@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
+import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 
 import javax.inject.Singleton;
@@ -45,9 +46,9 @@ public class FirebaseHelper {
         return userRef;
     }
 
-    public DatabaseReference storeLog(AnkiLog ankiLog) {
+    public DatabaseReference storeLog(AppLog appLog) {
         DatabaseReference logRef = mLogsDatabaseReference.push();
-        logRef.setValue(ankiLog);
+        logRef.setValue(appLog);
         return logRef;
     }
 
