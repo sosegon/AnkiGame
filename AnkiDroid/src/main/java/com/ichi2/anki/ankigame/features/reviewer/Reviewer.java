@@ -55,6 +55,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
@@ -107,6 +108,29 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         ButterKnife.bind(this);
         activityComponent().inject(this);
         updateLblGameCoins(mReviewerPresenter.getCoins());
+        logSelectDeck();
+    }
+
+    // ANKIGAME
+    private void logSelectDeck() {
+        long did = -1l;
+
+        try {
+            did = getCol().getDecks().current().getLong("id");
+        } catch (JSONException e) {
+            //TODO: AnkiGame, log the error
+        }
+
+        String deckInfo = getCol().getDecks().current().toString();
+        List<Sched.DeckDueTreeNode> decks = getCol().getSched().deckDueList();
+        Sched.DeckDueTreeNode dueDeck = null;
+        for(Sched.DeckDueTreeNode deck : decks) {
+            if(deck.did == did) {
+                dueDeck = deck;
+            }
+        }
+
+        mReviewerPresenter.logSelectDeck(deckInfo, dueDeck != null ? dueDeck.toString() : "");
     }
 
     // ANKIGAME

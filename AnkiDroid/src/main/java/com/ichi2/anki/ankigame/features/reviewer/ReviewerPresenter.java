@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.data.model.AnkiLog;
 
 import javax.inject.Inject;
 
@@ -48,5 +49,15 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
 
         return mDataManager.getPreferencesHelper().retrieveCoins();
+    }
+
+    public void logSelectDeck(String deckName, String cardNumbers) {
+        AnkiLog ankiLog = AnkiLog.logBase();
+        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        ankiLog.setUserId(userId);
+
+        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
+        ankiLog.setSelectDeck(deckName, cardNumbers, totalCoins);
+        mDataManager.getFirebaseHelper().storeLog(ankiLog);
     }
 }

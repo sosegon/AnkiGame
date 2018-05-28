@@ -20,13 +20,4 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         return mDataManager.getPreferencesHelper().retrieveCoins();
     }
 
-    public void logSelectDeck(String deckName, String cardNumbers) {
-        AnkiLog ankiLog = AnkiLog.logBase();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
-        ankiLog.setUserId(userId);
-
-        int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
-        ankiLog.setSelectDeck(deckName, cardNumbers, totalCoins);
-        mDataManager.getFirebaseHelper().storeLog(ankiLog);
-    }
 }
