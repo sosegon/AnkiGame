@@ -17,6 +17,10 @@
         {
           "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -39,12 +43,16 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:427007683779:android:bc20445799f27897",
+        "mobilesdk_app_id": "1:427007683779:android:aa5f1d2622b9c0eb",
         "android_client_info": {
-          "package_name": "com.keemsa.ankigame2048"
+          "package_name": "com.ichi2.anki.independent"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
           "client_type": 3
