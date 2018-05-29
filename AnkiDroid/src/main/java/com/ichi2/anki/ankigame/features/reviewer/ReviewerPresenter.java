@@ -9,12 +9,16 @@ import com.ichi2.anki.ankigame.data.model.AnkiLog;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_1;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 
 public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
+    private static final String LOG_TAG = ReviewerPresenter.class.getSimpleName();
+
     private final DataManager mDataManager;
     private String mDeckInfo;
     private String mDueDeckInfo;
@@ -26,6 +30,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private long mElapsedTime;
     private int mCoinsInCard;
     private int mCardEase;
+
+    private int mElapsedTimeToAnswer;
 
     @Inject
     public ReviewerPresenter(DataManager dataManager) {
@@ -45,15 +51,20 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
                 currentCoins += 1;
                 break;
             case EASE_2:
-                currentCoins += 2;
+                currentCoins += 1;
                 break;
             case EASE_3:
-                currentCoins += 3;
+                currentCoins += 1;
                 break;
             case EASE_4:
-                currentCoins += 4;
+                currentCoins += 1;
                 break;
         }
+
+        // Add coins based on elapsed time
+        Timber.d(LOG_TAG + ": elapsed time to answer: " + mElapsedTimeToAnswer);
+        Timber.d(LOG_TAG + ": coins based on time: " + calcCoins(mElapsedTimeToAnswer));
+        currentCoins += calcCoins(mElapsedTimeToAnswer);
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
@@ -80,6 +91,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
         ankiLog.setCardAnswer(mCardAnswer);
         ankiLog.setCardInfo(mCardInfo);
+        mElapsedTimeToAnswer = (int)((System.currentTimeMillis() - mElapsedTime)/ 1000);
         ankiLog.setElapsedTime((int)((System.currentTimeMillis() - mElapsedTime)/ 1000));
         ankiLog.setFavCard(mIsFavCard);
         ankiLog.setDeckInfo(mDeckInfo);
@@ -103,6 +115,18 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setDueDeckInfo(mDueDeckInfo);
 
         mDataManager.logBehaviour(ankiLog);
+    }
+
+    private int calcCoins(int elapsedTime) {
+        if(elapsedTime <= 5) {
+            return elapsedTime;
+        } else if (elapsedTime > 5 && elapsedTime <= 10) {
+            return 5;
+        } else if (elapsedTime > 5 && elapsedTime <= 15) {
+            return 15 - elapsedTime;
+        } else {
+            return 0;
+        }
     }
 
     public void setDeckInfo(String mDeckInfo) {
