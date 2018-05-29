@@ -554,6 +554,7 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
                 addNote();
             }
         });
+        // ANKIGAME
         addGameButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -916,7 +917,9 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
+    // ANKIGAME
     public void addGame() {
+        mDeckPickerPresenter.logGoToGame();
         Intent intent = new Intent(DeckPicker.this, Game.class);
         startActivityForResultWithAnimation(intent, GO_GAME, ActivityTransitionAnimation.LEFT);
     }
