@@ -112,6 +112,14 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         logSelectDeck();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // ANKIGAME To avoid invalid long elapsed times.
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
+    }
+
     // ANKIGAME
     private Sched.DeckDueTreeNode getDueDeck() {
         long did = -1l;
