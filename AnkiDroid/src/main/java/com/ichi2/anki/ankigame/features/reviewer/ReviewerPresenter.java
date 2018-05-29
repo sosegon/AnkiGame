@@ -16,6 +16,14 @@ import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 
 public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private final DataManager mDataManager;
+    private String mDeckInfo;
+    private String mDueDeckInfo;
+    private boolean mIsFavCard;
+    private String mCardInfo;
+    private String mCardAnswer;
+    // Used to record time between watching a question and answering it
+    // Also used to record time between answering a question and assesing it
+    private long mElapsedTime;
 
     @Inject
     public ReviewerPresenter(DataManager dataManager) {
@@ -51,29 +59,53 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return mDataManager.getPreferencesHelper().retrieveCoins();
     }
 
-    public void logSelectDeck(String deckInfo, String dueDeckInfo) {
+    public void logSelectDeck() {
         AnkiLog ankiLog = AnkiLog.logBase();
         ankiLog.setLogType(AnkiLog.SELECT_DECK);
         ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
-        ankiLog.setDeckInfo(deckInfo);
-        ankiLog.setDueDeckInfo(dueDeckInfo);
+        ankiLog.setDeckInfo(mDeckInfo);
+        ankiLog.setDueDeckInfo(mDueDeckInfo);
 
         mDataManager.logBehaviour(ankiLog);
     }
 
-    public void logDisplayAnswerCard(String cardInfo, String cardAnswer, long elapsedTime, boolean isFavCard, String deckInfo, String dueDeckInfo) {
+    public void logDisplayAnswerCard() {
         AnkiLog ankiLog = AnkiLog.logBase();
         ankiLog.setLogType(AnkiLog.DISPLAY_ANSWER_CARD);
         ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
-        ankiLog.setCardAnswer(cardAnswer);
-        ankiLog.setCardInfo(cardInfo);
-        ankiLog.setElapsedTime((int)(elapsedTime / 1000));
-        ankiLog.setFavCard(isFavCard);
-        ankiLog.setDeckInfo(deckInfo);
-        ankiLog.setDueDeckInfo(dueDeckInfo);
+        ankiLog.setCardAnswer(mCardAnswer);
+        ankiLog.setCardInfo(mCardInfo);
+        ankiLog.setElapsedTime((int)((System.currentTimeMillis() - mElapsedTime)/ 1000));
+        ankiLog.setFavCard(mIsFavCard);
+        ankiLog.setDeckInfo(mDeckInfo);
+        ankiLog.setDueDeckInfo(mDueDeckInfo);
 
         mDataManager.logBehaviour(ankiLog);
+    }
+
+    public void setDeckInfo(String mDeckInfo) {
+        this.mDeckInfo = mDeckInfo;
+    }
+
+    public void setDueDeckInfo(String mDueDeckInfo) {
+        this.mDueDeckInfo = mDueDeckInfo;
+    }
+
+    public void setElapsedTime(long mElapsedTime) {
+        this.mElapsedTime = mElapsedTime;
+    }
+
+    public void setIsFavCard(boolean mIsFavCard) {
+        this.mIsFavCard = mIsFavCard;
+    }
+
+    public void setCardInfo(String mCardInfo) {
+        this.mCardInfo = mCardInfo;
+    }
+
+    public void setCardAnswer(String mCardAnswer) {
+        this.mCardAnswer = mCardAnswer;
     }
 }

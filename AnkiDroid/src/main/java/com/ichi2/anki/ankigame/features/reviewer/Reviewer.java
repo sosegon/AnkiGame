@@ -135,10 +135,13 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
 
     // ANKIGAME
     private void logSelectDeck() {
-        Sched.DeckDueTreeNode dueDeck = getDueDeck();
         String deckInfo = getCol().getDecks().current().toString();
+        mReviewerPresenter.setDeckInfo(deckInfo);
 
-        mReviewerPresenter.logSelectDeck(deckInfo, dueDeck != null ? dueDeck.toString() : "");
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        mReviewerPresenter.setDueDeckInfo(dueDeck != null ? dueDeck.toString() : "");
+
+        mReviewerPresenter.logSelectDeck();
     }
 
     //ANKIGAME
@@ -146,26 +149,26 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     public void logDisplayCardAnswer() {
         super.logDisplayCardAnswer();
 
-        Sched.DeckDueTreeNode dueDeck = getDueDeck();
         String deckInfo = getCol().getDecks().current().toString();
+        mReviewerPresenter.setDeckInfo(deckInfo);
 
-        String cardInfo = mCurrentCard.toString();
-        //String cardInfo = mCurrentCard.note().toString();
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        mReviewerPresenter.setDueDeckInfo(dueDeck != null ? dueDeck.toString() : "");
+
+        mReviewerPresenter.setCardInfo(mCurrentCard.toString());
+
         String cardAnswer = mCurrentCard.a();
         cardAnswer = getCol().getMedia().escapeImages(cardAnswer);
-        long elapsedTime = System.currentTimeMillis() - mElapsedTime;
+        mReviewerPresenter.setCardAnswer(cardAnswer);
 
         Note note  = mCurrentCard.note();
         boolean isFavCard = note.hasTag("marked");
+        mReviewerPresenter.setIsFavCard(isFavCard);
 
-        mReviewerPresenter.logDisplayAnswerCard(cardInfo,
-                cardAnswer,
-                elapsedTime,
-                isFavCard,
-                deckInfo,
-                dueDeck != null ? dueDeck.toString() : "");
+        mReviewerPresenter.logDisplayAnswerCard();
 
-        mElapsedTime = System.currentTimeMillis();
+        // Set elapsed time for assessing card
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
     }
 
     // ANKIGAME
@@ -254,7 +257,8 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
             CompatHelper.getCompat().setFullScreen(this);
         }
 
-        mElapsedTime = System.currentTimeMillis();
+        // ANKIGAME Elapsed time for first card
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
     }
 
 
