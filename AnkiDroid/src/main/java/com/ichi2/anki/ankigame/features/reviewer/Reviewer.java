@@ -108,7 +108,6 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         // ANKIGAME
         ButterKnife.bind(this);
         activityComponent().inject(this);
-        updateLblGameCoins(mReviewerPresenter.getCoins());
         logSelectDeck();
     }
 
@@ -118,6 +117,21 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
 
         // ANKIGAME To avoid invalid long elapsed times.
         mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
+
+        // ANKIGAME
+        if(!mReviewerPresenter.isViewAttached()) {
+            mReviewerPresenter.attachView(this);
+        }
+        updateLblGameCoins(mReviewerPresenter.getCoins());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // ANKIGAME
+        if(mReviewerPresenter.isViewAttached()) {
+            mReviewerPresenter.detachView();
+        }
     }
 
     // ANKIGAME
