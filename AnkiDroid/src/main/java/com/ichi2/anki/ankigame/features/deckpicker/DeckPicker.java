@@ -403,9 +403,6 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
         activityComponent().inject(this);
         mDeckPickerPresenter.attachView(this);
 
-        updateLblGameCoins(mDeckPickerPresenter.getCoins());
-
-
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         // set protected variable from NavigationDrawerActivity
