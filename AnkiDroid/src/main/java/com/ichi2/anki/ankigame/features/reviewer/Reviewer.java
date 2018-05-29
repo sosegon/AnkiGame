@@ -174,8 +174,29 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     // ANKIGAME
     @Override
     public void onCardIsAnswered() {
-        int coins = mReviewerPresenter.increaseCoins(mCurrentEase);
-        updateLblGameCoins(coins);
+        mReviewerPresenter.increaseCoins(mCurrentEase); // also updates mCoinsInCard and mCardEase
+        updateLblGameCoins(mReviewerPresenter.getCoins());
+
+        String deckInfo = getCol().getDecks().current().toString();
+        mReviewerPresenter.setDeckInfo(deckInfo);
+
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        mReviewerPresenter.setDueDeckInfo(dueDeck != null ? dueDeck.toString() : "");
+
+        mReviewerPresenter.setCardInfo(mCurrentCard.toString());
+
+        String cardAnswer = mCurrentCard.a();
+        cardAnswer = getCol().getMedia().escapeImages(cardAnswer);
+        mReviewerPresenter.setCardAnswer(cardAnswer);
+
+        Note note  = mCurrentCard.note();
+        boolean isFavCard = note.hasTag("marked");
+        mReviewerPresenter.setIsFavCard(isFavCard);
+
+        mReviewerPresenter.logAssessCard();
+
+        // Set elapsed time for next card
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
     }
 
     private void selectDeckFromExtra() {

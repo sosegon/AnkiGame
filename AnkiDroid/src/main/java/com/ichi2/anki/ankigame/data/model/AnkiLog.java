@@ -10,6 +10,7 @@ public class AnkiLog extends AppLog{
     public static final int TAKE_QUIZZ = 202;
     public static final int SELECT_DECK = 203;
     public static final int DISPLAY_ANSWER_CARD = 204;
+    public static final int ASSESS_CARD = 205;
 
     // Fields in log
     public String dueDeckInfo;
@@ -18,6 +19,8 @@ public class AnkiLog extends AppLog{
     public String cardAnswer;
     public int elapsedTime;
     public boolean isFavCard;
+    public int coinsInCard;
+    public int cardEase;
 
     public static AnkiLog logBase() {
         Date date = new Date();
@@ -33,24 +36,6 @@ public class AnkiLog extends AppLog{
     public AnkiLog(String date, String time) {
         super(date, time);
     }
-
-   /* public void setSelectDeck(String deckInfo, String dueDeckInfo, int totalCoins) {
-        this.deckInfo = deckInfo;
-        this.dueDeckInfo = dueDeckInfo;
-        this.totalCoins = totalCoins;
-        this.logType = SELECT_DECK;
-    }
-
-    public void setDisplayAnswerCard(String cardInfo, String cardAnswer, int totalCoins, int elapsedTime, String deckInfo, String dueDeckInfo) {
-        this.cardInfo = cardInfo;
-        this.cardAnswer = cardAnswer;
-        this.totalCoins = totalCoins;
-        this.elapsedTime = elapsedTime;
-        this.deckInfo = deckInfo;
-        this.dueDeckInfo = dueDeckInfo;
-        this.logType = DISPLAY_ANSWER_CARD;
-
-    }*/
 
     public String getDueDeckInfo() {
         return dueDeckInfo;
@@ -98,5 +83,21 @@ public class AnkiLog extends AppLog{
 
     public void setFavCard(boolean favCard) {
         isFavCard = favCard;
+    }
+
+    public int getCoinsInCard() {
+        return coinsInCard;
+    }
+
+    public void setCoinsInCard(int coinsInCard) {
+        this.coinsInCard = coinsInCard;
+    }
+
+    public int getCardEase() {
+        return cardEase;
+    }
+
+    public void setCardEase(int cardEase) {
+        this.cardEase = cardEase;
     }
 }

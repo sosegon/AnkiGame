@@ -24,6 +24,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     // Used to record time between watching a question and answering it
     // Also used to record time between answering a question and assesing it
     private long mElapsedTime;
+    private int mCoinsInCard;
+    private int mCardEase;
 
     @Inject
     public ReviewerPresenter(DataManager dataManager) {
@@ -34,7 +36,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return mDataManager.getPreferencesHelper().retrieveCoins();
     }
 
-    public int increaseCoins(int ease) {
+    public void increaseCoins(int ease) {
         int currentCoins = 0;
 
         // TODO: ANKIGAME, Double check the values
@@ -56,7 +58,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
 
-        return mDataManager.getPreferencesHelper().retrieveCoins();
+        mCoinsInCard = currentCoins;
+        mCardEase = ease;
     }
 
     public void logSelectDeck() {
@@ -78,6 +81,23 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setCardAnswer(mCardAnswer);
         ankiLog.setCardInfo(mCardInfo);
         ankiLog.setElapsedTime((int)((System.currentTimeMillis() - mElapsedTime)/ 1000));
+        ankiLog.setFavCard(mIsFavCard);
+        ankiLog.setDeckInfo(mDeckInfo);
+        ankiLog.setDueDeckInfo(mDueDeckInfo);
+
+        mDataManager.logBehaviour(ankiLog);
+    }
+
+    public void logAssessCard() {
+        AnkiLog ankiLog = AnkiLog.logBase();
+        ankiLog.setLogType(AnkiLog.ASSESS_CARD);
+        ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
+        ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        ankiLog.setCoinsInCard(mCoinsInCard);
+        ankiLog.setCardAnswer(mCardAnswer);
+        ankiLog.setCardInfo(mCardInfo);
+        ankiLog.setElapsedTime((int)((System.currentTimeMillis() - mElapsedTime)/ 1000));
+        ankiLog.setCardEase(mCardEase);
         ankiLog.setFavCard(mIsFavCard);
         ankiLog.setDeckInfo(mDeckInfo);
         ankiLog.setDueDeckInfo(mDueDeckInfo);
@@ -107,5 +127,13 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
 
     public void setCardAnswer(String mCardAnswer) {
         this.mCardAnswer = mCardAnswer;
+    }
+
+    public void setCoinsInCard(int mCoinsInCard) {
+        this.mCoinsInCard = mCoinsInCard;
+    }
+
+    public void setCardEase(int mCardEase) {
+        this.mCardEase = mCardEase;
     }
 }

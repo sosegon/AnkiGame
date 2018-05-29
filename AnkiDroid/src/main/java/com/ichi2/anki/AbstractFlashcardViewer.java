@@ -272,10 +272,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private long mLastClickTime;
 
-    // ANKIGAME
-    // Used to record time between watching a question and answering it
-    // Also used to record time between answering a question and assesing it
-    protected long mElapsedTime;
 
 
 
