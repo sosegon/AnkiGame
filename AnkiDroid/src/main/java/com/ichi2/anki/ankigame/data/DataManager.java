@@ -2,9 +2,9 @@ package com.ichi2.anki.ankigame.data;
 
 import com.google.firebase.database.DatabaseReference;
 import com.ichi2.anki.ankigame.data.local.PreferencesHelper;
-import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
+import com.ichi2.anki.ankigame.data.remote.Analytics;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
@@ -19,12 +19,14 @@ public class DataManager {
     private static final String LOG_TAG = DataManager.class.getSimpleName();
     private final PreferencesHelper mPreferencesHelper;
     private final FirebaseHelper mFirebaseHelper;
+    private final Analytics mAnalytics;
     private final RxEventBus mEventBus;
 
     @Inject
-    public DataManager(PreferencesHelper preferencesHelper, RxEventBus eventBus) {
+    public DataManager(PreferencesHelper preferencesHelper, Analytics analytics, RxEventBus eventBus) {
         mPreferencesHelper = preferencesHelper;
         mFirebaseHelper = new FirebaseHelper(); // Does not depend on anything
+        mAnalytics = analytics;
         mEventBus = eventBus;
         initBus();
     }
@@ -35,6 +37,10 @@ public class DataManager {
 
     public FirebaseHelper getFirebaseHelper() {
         return mFirebaseHelper;
+    }
+
+    public Analytics getAnalytics() {
+        return mAnalytics;
     }
 
     public String initUser() {
