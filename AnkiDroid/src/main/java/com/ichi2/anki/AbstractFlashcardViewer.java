@@ -74,6 +74,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.ankigame.features.CoinsGameActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
@@ -108,7 +109,7 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
+public abstract class AbstractFlashcardViewer extends CoinsGameActivity {
 
     /**
      * Whether to save the content of the card in the file system.

@@ -86,14 +86,6 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     @Inject
     ReviewerPresenter mReviewerPresenter;
 
-    @BindView(R.id.lbl_coins)
-    TextView lblCoins;
-
-    @Override
-    public void updateLblGameCoins(int coins) {
-        lblCoins.setText(String.valueOf(coins));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -108,6 +100,8 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         // ANKIGAME
         ButterKnife.bind(this);
         activityComponent().inject(this);
+        initCoinsBar(findViewById(android.R.id.content));
+        updateLblGameCoins(mReviewerPresenter.getCoins());
         logSelectDeck();
     }
 
