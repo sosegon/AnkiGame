@@ -1,13 +1,17 @@
 package com.ichi2.anki.ankigame.data.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public abstract class AppLog {
     // Types of logs
-    public static final String NONE = "none";
+    public static final String TYPE_NONE = "none";
 
-    // Information to be stored in the logs
+    // Name of params
+    public static final String PARAM_USER_ID = "userId";
+    public static final String PARAM_LOG_TYPE = "logType";
+    public static final String PARAM_DATE = "date";
+    public static final String PARAM_TIME = "time";
+    public static final String PARAM_TOTAL_COINS = "totalCoins";
+
+    // Params in logEvent
     public String userId;
     public String logType;
     public String date;
@@ -17,7 +21,7 @@ public abstract class AppLog {
     public AppLog(String date, String time) {
         this.date = date;
         this.time = time;
-        this.logType = NONE;
+        this.logType = TYPE_NONE;
     }
 
     public String getUserId() {

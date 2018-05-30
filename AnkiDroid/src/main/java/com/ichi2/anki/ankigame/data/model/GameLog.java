@@ -6,11 +6,19 @@ import java.util.Date;
 public class GameLog extends AppLog {
 
     // Types of logs
-    public static final String USE_TRICK = "useTrick";
-    public static final String RESTART_GAME = "restartGame";
-    public static final String GO_TO_ANKI = "goToAnki";
+    public static final String TYPE_USE_TRICK = "useTrick";
+    public static final String TYPE_RESTART_GAME = "restartGame";
+    public static final String TYPE_GO_TO_ANKI = "goToAnki";
 
-    // Fields in log
+    // Name of params
+    public static final String PARAM_BEST_SCORE = "bestScore";
+    public static final String PARAM_CURRENT_SCORE = "currentScore";
+    public static final String PARAM_USED_TRICKS = "usedTricks";
+    public static final String PARAM_TRICK_TYPE = "trickType";
+    public static final String PARAM_TRICK_EXECUTED = "trickExecuted";
+    public static final String PARAM_BOARD_VALUES = "boardValues";
+
+    // Params in logEvent
     public int bestScore;
     public int currentScore;
     public String usedTricks;

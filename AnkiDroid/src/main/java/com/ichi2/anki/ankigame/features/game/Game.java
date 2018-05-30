@@ -27,7 +27,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
-import com.ichi2.anki.ankigame.base.BaseActivity;
 import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 
@@ -106,7 +105,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
     public void earnCoins() {
         mFabGameMenu.collapse();
         Intent intent = new Intent(Game.this, DeckPicker.class);
-        String logCode = GameLog.GO_TO_ANKI;
+        String logCode = GameLog.TYPE_GO_TO_ANKI;
         mWebMain.loadUrl("javascript:goToAnki(\"" + logCode + "\")");
         startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
@@ -118,7 +117,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
         }
         mFabGameMenu.collapse();
 
-        String logCode = GameLog.RESTART_GAME;
+        String logCode = GameLog.TYPE_RESTART_GAME;
         new AlertDialog.Builder(this)
         .setMessage(sRestart)
         .setPositiveButton(R.string.dialog_ok,

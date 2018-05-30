@@ -22,9 +22,9 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
 
     public void logGoToGame() {
         AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
-        ankiLog.setLogType(AnkiLog.GO_TO_GAME);
+        ankiLog.setLogType(AnkiLog.TYPE_GO_TO_GAME);
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
-        // TODO: AnkiGame, add logic to log the earned coins as well.
+        // TODO: AnkiGame, add logic to logEvent the earned coins as well.
         mDataManager.logBehaviour(ankiLog);
     }
 

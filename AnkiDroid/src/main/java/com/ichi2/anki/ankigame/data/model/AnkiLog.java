@@ -6,12 +6,22 @@ import java.util.Date;
 public class AnkiLog extends AppLog{
 
     // Types of logs
-    public static final String GO_TO_GAME = "goToGame";
-    public static final String SELECT_DECK = "selectDeck";
-    public static final String DISPLAY_ANSWER_CARD = "displayAnswerCard";
-    public static final String ASSESS_CARD = "assessCard";
+    public static final String TYPE_GO_TO_GAME = "goToGame";
+    public static final String TYPE_SELECT_DECK = "selectDeck";
+    public static final String TYPE_DISPLAY_ANSWER_CARD = "displayAnswerCard";
+    public static final String TYPE_ASSESS_CARD = "assessCard";
 
-    // Fields in log
+    // Name of params
+    public static final String PARAM_DUE_DECK_INFO = "dueDeckInfo";
+    public static final String PARAM_DECK_INFO = "deckInfo";
+    public static final String PARAM_CARD_INFO = "cardInfo";
+    public static final String PARAM_CARD_ANSWER = "cardAnswer";
+    public static final String PARAM_ELAPSED_TIME = "elapsedTime";
+    public static final String PARAM_IS_FAV_CARD = "isFavCard";
+    public static final String PARAM_COINS_IN_CARD = "coinsInCard";
+    public static final String PARAM_CARD_EASE = "cardEase";
+
+    // Params in logEvent
     public String dueDeckInfo;
     public String deckInfo;
     public String cardInfo;
