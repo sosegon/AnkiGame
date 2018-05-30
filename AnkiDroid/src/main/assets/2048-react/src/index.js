@@ -67,7 +67,7 @@ class BoardView extends React.Component {
     event.preventDefault();
     
     if(this.state.board.ableToDeleteTwos()){
-      if(Anki.hasMoneyForTrick("bomb", this.getBoardStateAsString())) {
+      if(Anki.hasMoneyForTrick("bomb", 30, this.getBoardStateAsString())) {
         this.setState({board: this.state.board.removeTwos()});
       }
     } else {
@@ -79,7 +79,7 @@ class BoardView extends React.Component {
     event.preventDefault();
 
     if(this.state.board.hasEmptyCells()) {
-      if(Anki.hasMoneyForTrick("gift", this.getBoardStateAsString())) {
+      if(Anki.hasMoneyForTrick("gift", 10, this.getBoardStateAsString())) {
         this.setState({board: this.state.board.addGift()});
       }
     } else {
@@ -91,7 +91,7 @@ class BoardView extends React.Component {
     event.preventDefault()
 
     if(this.state.board.hasHistory()) {
-      if(Anki.hasMoneyForTrick("undo", this.getBoardStateAsString())) {
+      if(Anki.hasMoneyForTrick("undo", 40, this.getBoardStateAsString())) {
         this.setState({board: this.state.board.undo()});
       }
     } else {
@@ -103,7 +103,7 @@ class BoardView extends React.Component {
     event.preventDefault()
 
     if(this.state.board.ableToDouble()) {
-      if(Anki.hasMoneyForTrick("double", this.getBoardStateAsString())) {
+      if(Anki.hasMoneyForTrick("double", 20, this.getBoardStateAsString())) {
         this.setState({board: this.state.board.double()});
       }
     } else {

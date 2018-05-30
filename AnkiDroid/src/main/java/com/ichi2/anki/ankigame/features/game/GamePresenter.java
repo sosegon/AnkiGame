@@ -14,11 +14,6 @@ import javax.inject.Inject;
 @ConfigPersistent
 public class GamePresenter extends BasePresenter<GameMvpView> {
 
-    public static final String TRICK_BOMB = "bomb";
-    public static final String TRICK_GIFT = "gift";
-    public static final String TRICK_UNDO = "undo";
-    public static final String TRICK_DOUBLE = "double";
-
     private final DataManager mDataManager;
 
     @Inject
@@ -57,26 +52,14 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
-    public boolean hasMoneyForTrick(String trickName, String jsonString) {
+    public boolean hasMoneyForTrick(String trickName, int requiredCoins, String jsonString) {
         boolean r = false;
         Board board = Board.parseJSON(jsonString);
         int coins =  getCoins();
-        int requiredCoins = -1;
 
         if(BuildConfig.FLAVOR.contentEquals("independent")) {
             logUseTrick(board, trickName, true);
             return true;
-        }
-
-        // TODO: AnkiGame, Review the required coins for each trick
-        if(trickName.contentEquals(TRICK_BOMB)) {
-            requiredCoins = 10;
-        } else if(trickName.contentEquals(TRICK_GIFT)) {
-            requiredCoins = 10;
-        } else if(trickName.contentEquals(TRICK_UNDO)) {
-            requiredCoins = 10;
-        } else if(trickName.contentEquals(TRICK_DOUBLE)) {
-            requiredCoins = 10;
         }
 
         if(requiredCoins > 0 && coins >= requiredCoins) {
@@ -97,7 +80,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
                 @Override
                 public void run () {
                     // TODO: AnkiGame, Fix this not working toast
-                    getMvpView().showNoCoinsToast();
+                    getMvpView().showNoCoinsToast(requiredCoins - coins);
                     logUseTrick(board, trickName, false);
                 }
             });

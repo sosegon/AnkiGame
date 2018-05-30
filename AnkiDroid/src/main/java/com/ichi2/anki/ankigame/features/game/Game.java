@@ -255,8 +255,8 @@ public class Game extends CoinsGameActivity implements GameMvpView {
     }
 
     @Override
-    public void showNoCoinsToast() {
-        Toast.makeText(this, "Not enough coins", Toast.LENGTH_SHORT).show();
+    public void showNoCoinsToast(int requiredCoins) {
+        Toast.makeText(this, getString(R.string.not_enough_coins, requiredCoins), Toast.LENGTH_SHORT).show();
     }
 
     private void initScreenSettings() {
