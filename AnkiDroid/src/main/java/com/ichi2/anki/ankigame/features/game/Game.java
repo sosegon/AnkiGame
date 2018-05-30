@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.data.model.GameLog;
@@ -64,15 +67,6 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
     @BindView(R.id.lbl_coins_game)
     TextView mLblCoins;
 
-    @BindView(R.id.btn_add_coins)
-    Button btnCoins;
-
-    @OnClick(R.id.btn_add_coins)
-    public void addCoins() {
-        mGamePresenter.increaseCoins(10);
-        updateLblGameCoins(mGamePresenter.getCoins());
-    }
-
     @BindView(R.id.game_menu)
     FloatingActionsMenu mFabGameMenu;
 
@@ -81,6 +75,9 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
     @BindView(R.id.web_main)
     WebView mWebMain;
+
+    @BindView(R.id.root_layout)
+    CoordinatorLayout rootLayout;
 
     // Set fullscreen toggle on webview LongClick
     @OnTouch(R.id.web_main)
@@ -144,7 +141,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
         activityComponent().inject(this);
 
-        initScreenSettings();
+        //initScreenSettings();
 
         setContentView(R.layout.game);
 
@@ -155,6 +152,13 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
         mGamePresenter.attachView(this);
 
         updateLblGameCoins(mGamePresenter.getCoins());
+
+        Toolbar toolbar = (Toolbar) rootLayout.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         initFabGameMenu();
 
@@ -251,7 +255,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
     @Override
     public void updateLblGameCoins(int coins) {
-        mLblCoins.setText(String.valueOf(coins));
+        mLblCoins.setText(getString(R.string.coins, coins));
     }
 
     @Override
