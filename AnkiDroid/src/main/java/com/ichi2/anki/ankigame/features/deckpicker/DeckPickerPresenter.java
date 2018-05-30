@@ -1,13 +1,13 @@
 package com.ichi2.anki.ankigame.features.deckpicker;
 
-import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
-import com.ichi2.anki.ankigame.features.game.GameMvpView;
+import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
 
+@ConfigPersistent
 public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
     private final DataManager mDataManager;
 

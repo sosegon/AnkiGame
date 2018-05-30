@@ -1,11 +1,9 @@
 package com.ichi2.anki.ankigame.features.reviewer;
 
-import android.support.v4.content.ContextCompat;
-
-import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
+import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
 
@@ -16,6 +14,7 @@ import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 
+@ConfigPersistent
 public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private static final String LOG_TAG = ReviewerPresenter.class.getSimpleName();
 
