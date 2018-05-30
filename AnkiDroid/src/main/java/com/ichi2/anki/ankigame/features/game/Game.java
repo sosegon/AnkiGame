@@ -31,6 +31,7 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.data.model.GameLog;
+import com.ichi2.anki.ankigame.features.CoinsGameActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 
 import java.util.Locale;
@@ -43,7 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 
-public class Game extends NavigationDrawerActivity implements GameMvpView {
+public class Game extends CoinsGameActivity implements GameMvpView {
     // TODO: AnkiGame, Change tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
 
@@ -150,7 +151,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
         mGamePresenter.attachView(this);
 
-        mLblCoins = rootLayout.findViewById(R.id.lbl_coins_game);
+        initCoinsBar(rootLayout);
         updateLblGameCoins(mGamePresenter.getCoins());
 
         Toolbar toolbar = (Toolbar) rootLayout.findViewById(R.id.toolbar);
@@ -251,11 +252,6 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
             pressBackToast.cancel();
             super.finishWithAnimation(ActivityTransitionAnimation.DOWN);
         }
-    }
-
-    @Override
-    public void updateLblGameCoins(int coins) {
-        mLblCoins.setText(getString(R.string.coins, coins));
     }
 
     @Override
