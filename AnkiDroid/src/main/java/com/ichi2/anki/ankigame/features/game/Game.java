@@ -256,8 +256,7 @@ public class Game extends CoinsGameActivity implements GameMvpView {
 
     @Override
     public void showNoCoinsToast() {
-        // TODO: AnkiGame, Fix this, toast not displayed
-        Toast.makeText(this, "Not enough coins", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "Not enough coins", Toast.LENGTH_SHORT).show();
     }
 
     private void initScreenSettings() {
