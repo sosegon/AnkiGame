@@ -259,6 +259,11 @@ public class Game extends CoinsGameActivity implements GameMvpView {
         Toast.makeText(this, getString(R.string.not_enough_coins, requiredCoins), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showUnableToDoTrickToast(String trickName) {
+        Toast.makeText(this, getString(R.string.unable_trick, trickName), Toast.LENGTH_SHORT).show();
+    }
+
     private void initScreenSettings() {
 
         // Don't show an action bar or title

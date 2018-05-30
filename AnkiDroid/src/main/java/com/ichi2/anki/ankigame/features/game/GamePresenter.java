@@ -3,6 +3,7 @@ package com.ichi2.anki.ankigame.features.game;
 import android.webkit.JavascriptInterface;
 
 import com.ichi2.anki.BuildConfig;
+import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.Board;
@@ -120,10 +121,12 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         getMvpView().postRunnable(new Runnable(){
             @Override
             public void run () {
+                getMvpView().showUnableToDoTrickToast(trickName);
                 logUseTrick(board, trickName, false);
             }
         });
     }
+
 
     private GameLog logGoToAnki(Board board) {
         GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());

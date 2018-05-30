@@ -58,6 +58,7 @@
     <string name="restart_game">Restart game</string>
     <string name="coins">Coins: %1$d ⛁</string>
     <string name="not_enough_coins">Not enough coins. You need %1$d more coins for this trick</string>
+    <string name="unable_trick">Board state does not allow to use trick %1$s at the moment</string>
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>

@@ -7,4 +7,5 @@ public interface GameMvpView extends MvpView {
                                         // the presenter can invoke it from the interface
     void showNoCoinsToast(int requiredCoins);
     void postRunnable(Runnable runnable);
+    void showUnableToDoTrickToast(String trickName);
 }
