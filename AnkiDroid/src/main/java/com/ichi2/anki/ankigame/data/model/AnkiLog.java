@@ -6,11 +6,10 @@ import java.util.Date;
 public class AnkiLog extends AppLog{
 
     // Types of logs
-    public static final int GO_TO_GAME = 201;
-    public static final int TAKE_QUIZZ = 202;
-    public static final int SELECT_DECK = 203;
-    public static final int DISPLAY_ANSWER_CARD = 204;
-    public static final int ASSESS_CARD = 205;
+    public static final String GO_TO_GAME = "goToGame";
+    public static final String SELECT_DECK = "selectDeck";
+    public static final String DISPLAY_ANSWER_CARD = "displayAnswerCard";
+    public static final String ASSESS_CARD = "assessCard";
 
     // Fields in log
     public String dueDeckInfo;

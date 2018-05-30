@@ -44,18 +44,13 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return mDataManager.initUser();
     }
 
-    public void log(Board board, int logType) {
+    public void log(Board board, String logType) {
         GameLog gameLog = GameLog.logBase();
 
-        switch (logType) {
-            case GameLog.GO_TO_ANKI:
-                gameLog = logGoToAnki(board);
-                break;
-            case GameLog.RESTART_GAME:
-                gameLog = logRestartGame(board);
-                break;
-            default:
-                break;
+        if(logType.contentEquals(GameLog.GO_TO_ANKI)) {
+            gameLog = logGoToAnki(board);
+        } else if (logType.contentEquals(GameLog.RESTART_GAME)) {
+            gameLog = logRestartGame(board);
         }
 
         mDataManager.logBehaviour(gameLog);
@@ -68,7 +63,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         int coins =  getCoins();
         int requiredCoins = -1;
 
-        if(BuildConfig.FLAVOR == "independent") {
+        if(BuildConfig.FLAVOR.contentEquals("independent")) {
             logUseTrick(board, trickName, true);
             return true;
         }
@@ -112,7 +107,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
-    public void getBoardState(String jsonString, int logType) {
+    public void getBoardState(String jsonString, String logType) {
         getMvpView().postRunnable(new Runnable(){
             @Override
             public void run () {

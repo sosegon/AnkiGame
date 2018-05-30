@@ -106,8 +106,8 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
     public void earnCoins() {
         mFabGameMenu.collapse();
         Intent intent = new Intent(Game.this, DeckPicker.class);
-        String logCode = String.valueOf(GameLog.GO_TO_ANKI);
-        mWebMain.loadUrl("javascript:goToAnki(" + logCode + ")");
+        String logCode = GameLog.GO_TO_ANKI;
+        mWebMain.loadUrl("javascript:goToAnki(\"" + logCode + "\")");
         startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 
@@ -118,11 +118,11 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
         }
         mFabGameMenu.collapse();
 
-        String logCode = String.valueOf(GameLog.RESTART_GAME);
+        String logCode = GameLog.RESTART_GAME;
         new AlertDialog.Builder(this)
         .setMessage(sRestart)
         .setPositiveButton(R.string.dialog_ok,
-                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(" + logCode + ")"))
+                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")"))
         .setNegativeButton(R.string.dialog_cancel,
                 (dialog, which) ->  {})
         .create()

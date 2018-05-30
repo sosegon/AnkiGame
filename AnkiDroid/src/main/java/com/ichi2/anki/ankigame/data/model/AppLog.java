@@ -5,11 +5,11 @@ import java.util.Date;
 
 public abstract class AppLog {
     // Types of logs
-    public static final int NONE = 0;
+    public static final String NONE = "none";
 
     // Information to be stored in the logs
     public String userId;
-    public int logType;
+    public String logType;
     public String date;
     public String time;
     public int totalCoins;
@@ -28,11 +28,11 @@ public abstract class AppLog {
         this.userId = userId;
     }
 
-    public int getLogType() {
+    public String getLogType() {
         return logType;
     }
 
-    public void setLogType(int logType) {
+    public void setLogType(String logType) {
         this.logType = logType;
     }
 

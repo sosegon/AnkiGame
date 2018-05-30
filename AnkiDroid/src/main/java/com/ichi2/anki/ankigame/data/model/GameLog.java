@@ -6,13 +6,9 @@ import java.util.Date;
 public class GameLog extends AppLog {
 
     // Types of logs
-    public static final int START_GAME = 101;
-    public static final int END_GAME = 102;
-    public static final int USE_TRICK = 103;
-    public static final int SELECT_GAME_MODE = 104;
-    public static final int CHECK_LEADERBOARD = 105;
-    public static final int RESTART_GAME = 106;
-    public static final int GO_TO_ANKI = 107;
+    public static final String USE_TRICK = "useTrick";
+    public static final String RESTART_GAME = "restartGame";
+    public static final String GO_TO_ANKI = "goToAnki";
 
     // Fields in log
     public int bestScore;
