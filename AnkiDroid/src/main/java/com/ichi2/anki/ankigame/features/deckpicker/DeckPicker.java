@@ -73,6 +73,7 @@ import com.ichi2.anki.MyAccount;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
+import com.ichi2.anki.ankigame.features.CoinsGameActivity;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.StudyOptionsFragment;
@@ -129,7 +130,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMvpView {
+public class DeckPicker extends CoinsGameActivity implements DeckPickerMvpView {
 
 
     /**
@@ -372,14 +373,6 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
 
     @Inject DeckPickerPresenter mDeckPickerPresenter;
 
-    @BindView(R.id.lbl_coins)
-    TextView lblCoins;
-
-    @Override
-    public void updateLblGameCoins(int coins) {
-        lblCoins.setText(String.valueOf(coins));
-    }
-
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -402,6 +395,8 @@ public class DeckPicker extends NavigationDrawerActivity implements DeckPickerMv
         ButterKnife.bind(this);
         activityComponent().inject(this);
         mDeckPickerPresenter.attachView(this);
+        initCoinsBar(mainView);
+        updateLblGameCoins(mDeckPickerPresenter.getCoins());
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);

@@ -14,6 +14,4 @@ public interface DeckPickerMvpView extends MvpView,
         StudyOptionsFragment.StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
-
-    void updateLblGameCoins(int coins);
 }

@@ -11,12 +11,17 @@
 
         <include layout="@layout/toolbar" />
 
+        <include layout="@layout/coinsbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"/>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/pull_to_sync_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/today_stats_text_view"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/coinsbar">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/files"
@@ -38,12 +43,6 @@
             android:layout_marginBottom="4dp"
             android:gravity="center"/>
     </RelativeLayout>
-    <TextView
-        android:id="@+id/lbl_coins"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:textColor="@color/black"
-        android:background="@color/white"/>
     <include layout="@layout/anki_progress"/>
     <include layout="@layout/floating_add_button"/>
 </android.support.design.widget.CoordinatorLayout>
