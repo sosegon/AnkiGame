@@ -73,9 +73,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     }
 
     public void logSelectDeck() {
-        AnkiLog ankiLog = AnkiLog.logBase();
+        AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setLogType(AnkiLog.SELECT_DECK);
-        ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
         ankiLog.setDeckInfo(mDeckInfo);
         ankiLog.setDueDeckInfo(mDueDeckInfo);
@@ -84,9 +83,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     }
 
     public void logDisplayAnswerCard() {
-        AnkiLog ankiLog = AnkiLog.logBase();
+        AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setLogType(AnkiLog.DISPLAY_ANSWER_CARD);
-        ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
         ankiLog.setCardAnswer(mCardAnswer);
         ankiLog.setCardInfo(mCardInfo);
@@ -100,9 +98,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     }
 
     public void logAssessCard() {
-        AnkiLog ankiLog = AnkiLog.logBase();
+        AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setLogType(AnkiLog.ASSESS_CARD);
-        ankiLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
         ankiLog.setCoinsInCard(mCoinsInCard);
         ankiLog.setCardAnswer(mCardAnswer);

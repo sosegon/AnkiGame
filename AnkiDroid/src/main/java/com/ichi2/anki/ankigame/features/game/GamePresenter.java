@@ -45,7 +45,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     public void log(Board board, String logType) {
-        GameLog gameLog = GameLog.logBase();
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
 
         if(logType.contentEquals(GameLog.GO_TO_ANKI)) {
             gameLog = logGoToAnki(board);
@@ -143,9 +143,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     private GameLog logGoToAnki(Board board) {
-        GameLog gameLog = GameLog.logBase();
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setLogType(GameLog.GO_TO_ANKI);
-        gameLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setBestScore(board.getBestScore());
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());
@@ -157,9 +156,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     private GameLog logRestartGame(Board board) {
-        GameLog gameLog = GameLog.logBase();
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setLogType(GameLog.RESTART_GAME);
-        gameLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setBestScore(board.getBestScore());
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());
@@ -171,9 +169,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     private void logUseTrick(Board board, String trickName, boolean trickExecuted) {
-        GameLog gameLog = GameLog.logBase();
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setLogType(GameLog.USE_TRICK);
-        gameLog.setUserId(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setBestScore(board.getBestScore());
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());

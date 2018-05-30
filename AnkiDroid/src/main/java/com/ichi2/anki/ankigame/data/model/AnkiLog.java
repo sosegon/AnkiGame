@@ -21,7 +21,7 @@ public class AnkiLog extends AppLog{
     public int coinsInCard;
     public int cardEase;
 
-    public static AnkiLog logBase() {
+    public static AnkiLog logBase(String userId) {
         Date date = new Date();
         Date newDate = new Date(date.getTime());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -29,7 +29,10 @@ public class AnkiLog extends AppLog{
         String sDate = dateFormat.format(newDate);
         String sTime = timeFormat.format(newDate);
 
-        return new AnkiLog(sDate, sTime);
+        AnkiLog ankiLog = new AnkiLog(sDate, sTime);
+        ankiLog.setUserId(userId);
+
+        return ankiLog;
     }
 
     public AnkiLog(String date, String time) {

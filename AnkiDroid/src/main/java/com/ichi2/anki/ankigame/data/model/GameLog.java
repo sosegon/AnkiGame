@@ -18,7 +18,7 @@ public class GameLog extends AppLog {
     public boolean trickExecuted;
     public String boardValues;
 
-    public static GameLog logBase() {
+    public static GameLog logBase(String userId) {
         Date date = new Date();
         Date newDate = new Date(date.getTime());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -26,7 +26,10 @@ public class GameLog extends AppLog {
         String sDate = dateFormat.format(newDate);
         String sTime = timeFormat.format(newDate);
 
-        return new GameLog(sDate, sTime);
+        GameLog gameLog = new GameLog(sDate, sTime);
+        gameLog.setUserId(userId);
+
+        return gameLog;
     }
 
     public GameLog(String date, String time) {
