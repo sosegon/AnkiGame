@@ -64,7 +64,6 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
     Handler mHandler;
 
-    @BindView(R.id.lbl_coins_game)
     TextView mLblCoins;
 
     @BindView(R.id.game_menu)
@@ -151,6 +150,7 @@ public class Game extends NavigationDrawerActivity implements GameMvpView {
 
         mGamePresenter.attachView(this);
 
+        mLblCoins = rootLayout.findViewById(R.id.lbl_coins_game);
         updateLblGameCoins(mGamePresenter.getCoins());
 
         Toolbar toolbar = (Toolbar) rootLayout.findViewById(R.id.toolbar);
