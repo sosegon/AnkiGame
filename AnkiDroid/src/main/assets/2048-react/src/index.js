@@ -1,3 +1,33 @@
+//Uncomment just for testing purposes
+// var Anki = {
+//   hasPointsForTrick: function(requiredPoints) {
+//     console.log("required points: " + requiredPoints);
+//     return true;
+//   },
+//   noPointsForTrick: function(trickName) {
+//     console.log("no points for trick: " + trickName);
+//   },
+//   hasMoneyForTrick: function(requiredCoins) {
+//     console.log("required coins: " + requiredCoins);
+//     return true;
+//   },
+//   noMoneyForTrick: function(trickName) {
+//     console.log("no money for trick: " + trickName);
+//   },
+//   unableTrick: function(trickName) {
+//     console.log("unable to do " + trickName);
+//   },
+//   doTrick: function(trickName) {
+//     console.log("do trick " + trickName)
+//   },
+//   updateBestScore: function(score) {
+//     console.log("best score " + score);
+//   },
+//   getAnkiPoints: function() {
+//     return 10;
+//   }
+// }
+
 class BoardView extends React.Component {
   constructor(props) {
     super(props);
@@ -8,8 +38,8 @@ class BoardView extends React.Component {
     var previousState = this.storageManager.getGameState();
     var bestScore = this.storageManager.getBestScore();
     var history = this.storageManager.getHistory();
-    console.log(history);
     this.state = {board: new Board(previousState, bestScore, history)};
+    this.points = Anki.getAnkiPoints();
   }
   restartGame() {
     // Do not restart the best score
@@ -17,6 +47,7 @@ class BoardView extends React.Component {
     this.setState({board: new Board(undefined, bestScore, undefined)});
     this.storageManager.clearGameState();
     this.storageManager.clearHistory();
+    this.points = Anki.getAnkiPoints();
   }
   getBoardStateAsString() {
     return this.state.board.asString();
@@ -168,6 +199,8 @@ class BoardView extends React.Component {
     this.storageManager.setBestScore(this.state.board.bestScore);
     this.storageManager.setHistory(this.state.board.history);
 
+    var points = this.points;
+
     var bestScore = this.state.board.bestScore;
     var bestScoreElem = (
       <BestScore bestScore={bestScore} />
@@ -199,10 +232,10 @@ class BoardView extends React.Component {
           {tiles}
         </div>
         <div>
-          <span className='trick trickGift' onClick={this.addGift.bind(this)}>{''}</span>
-          <span className='trick trickDouble' onClick={this.double.bind(this)}>{''}</span>
-          <span className='trick trickBomb' onClick={this.removeTwos.bind(this)}>{''}</span>
-          <span className='trick trickUndo' onClick={this.undoLast.bind(this)}>{''}</span>
+          <span className={'trick ' + (points >= 100 ? 'trickGift' : 'trickBlocked')} onClick={this.addGift.bind(this)}>{''}</span>
+          <span className={'trick ' + (points >= 1000 ? 'trickDouble' : 'trickBlocked')} onClick={this.double.bind(this)}>{''}</span>
+          <span className={'trick ' + (points >= 5000 ? 'trickBomb' : 'trickBlocked')} onClick={this.removeTwos.bind(this)}>{''}</span>
+          <span className={'trick ' + (points >= 10000 ? 'trickUndo' : 'trickBlocked')} onClick={this.undoLast.bind(this)}>{''}</span>
         </div>
         <div>
           <span className="trickPrice">10⛁</span>
@@ -316,29 +349,3 @@ var goToAnki = function (logCode) {
   }
 }
 
-//Uncomment just for testing purposes
-// var Anki = {
-//   hasPointsForTrick: function(requiredPoints) {
-//     console.log("required points: " + requiredPoints);
-//     return true;
-//   },
-//   noPointsForTrick: function(trickName) {
-//     console.log("no points for trick: " + trickName);
-//   },
-//   hasMoneyForTrick: function(requiredCoins) {
-//     console.log("required coins: " + requiredCoins);
-//     return true;
-//   },
-//   noMoneyForTrick: function(trickName) {
-//     console.log("no money for trick: " + trickName);
-//   },
-//   unableTrick: function(trickName) {
-//     console.log("unable to do " + trickName);
-//   },
-//   doTrick: function(trickName) {
-//     console.log("do trick " + trickName)
-//   },
-//   updateBestScore: function(score) {
-//     console.log("best score " + score);
-//   }
-// }

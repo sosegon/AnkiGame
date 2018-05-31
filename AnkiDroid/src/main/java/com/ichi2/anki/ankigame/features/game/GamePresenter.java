@@ -167,6 +167,11 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         });
     }
 
+    @JavascriptInterface
+    public int getAnkiPoints() {
+        return getPoints();
+    }
+
     private GameLog logGoToAnki(Board board) {
         GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setLogType(GameLog.TYPE_GO_TO_ANKI);

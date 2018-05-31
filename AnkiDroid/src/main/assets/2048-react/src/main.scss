@@ -93,6 +93,11 @@ body {
 }
 
 /*TODO: AnkiGame, Update the icons properly*/
+.trickBlocked {
+  background-color: #c6c0ab;
+  background-image: url("../img/block_icon.png");
+}
+
 .trickBomb {
   background-color: #eec022;
   background-image: url("../img/bomb_icon.png");
