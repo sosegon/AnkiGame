@@ -52,13 +52,16 @@
         <item quantity="other">Studied %1$d cards in %2$s today</item>
     </plurals>
 
-    <!-- Game.java -->
+    <!-- ANKIGAME -->
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="earn_coins">Earn coins</string>
     <string name="restart_game">Restart game</string>
     <string name="coins">Coins: %1$d ⛁</string>
+    <string name="points">Anki points: %1$d ⚡</string>
     <string name="not_enough_coins">Not enough coins. You need %1$d more coins for this trick</string>
     <string name="unable_trick">Board state does not allow to use trick %1$s at the moment</string>
+    <string name="menu_options">Options</string>
+    <string name="menu_game">Game</string>
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
@@ -79,8 +82,6 @@
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="menu_add">Add</string>
-    <string name="menu_options">Options</string>
-    <string name="menu_game">Game</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account">Sync account</string>
     <string name="menu_dismiss_note">Hide / delete</string>

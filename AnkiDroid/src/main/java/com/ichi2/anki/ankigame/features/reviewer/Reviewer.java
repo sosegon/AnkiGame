@@ -37,7 +37,6 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -67,7 +66,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -100,8 +98,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         // ANKIGAME
         ButterKnife.bind(this);
         activityComponent().inject(this);
-        initCoinsBar(findViewById(android.R.id.content));
-        updateLblGameCoins(mReviewerPresenter.getCoins());
+        initCounters(findViewById(android.R.id.content));
         logSelectDeck();
     }
 
@@ -117,6 +114,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
             mReviewerPresenter.attachView(this);
         }
         updateLblGameCoins(mReviewerPresenter.getCoins());
+        updateLblPoints(mReviewerPresenter.getPoints());
     }
 
     @Override
@@ -190,8 +188,9 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     // ANKIGAME
     @Override
     public void onCardIsAnswered() {
-        mReviewerPresenter.increaseCoins(mCurrentEase); // also updates mCoinsInCard and mCardEase
+        mReviewerPresenter.increaseCoinsAndPoints(mCurrentEase); // also updates mCoinsInCard and mCardEase
         updateLblGameCoins(mReviewerPresenter.getCoins());
+        updateLblPoints(mReviewerPresenter.getPoints());
 
         String deckInfo = getCol().getDecks().current().toString();
         mReviewerPresenter.setDeckInfo(deckInfo);

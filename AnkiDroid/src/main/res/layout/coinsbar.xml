@@ -13,10 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
         android:textColor="@color/black"
         android:background="@color/white"
-        android:text="@string/menu_game"/>
+        android:text=""/>
+    <TextView
+        android:id="@+id/lbl_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/lbl_coins_game"
+        android:paddingLeft="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:text=""/>
 </RelativeLayout>

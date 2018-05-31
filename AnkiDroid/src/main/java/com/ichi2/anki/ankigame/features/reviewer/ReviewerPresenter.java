@@ -41,7 +41,11 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return mDataManager.getPreferencesHelper().retrieveCoins();
     }
 
-    public void increaseCoins(int ease) {
+    public int getPoints() {
+        return mDataManager.getPreferencesHelper().retrievePoints();
+    }
+
+    public void increaseCoinsAndPoints(int ease) {
         int currentCoins = 0;
 
         // TODO: ANKIGAME, Double check the values
@@ -61,12 +65,17 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         }
 
         // Add coins based on elapsed time
+        int extraCoins = calcCoins(mElapsedTimeToAnswer);
+        currentCoins += extraCoins;
         Timber.d(LOG_TAG + ": elapsed time to answer: " + mElapsedTimeToAnswer);
-        Timber.d(LOG_TAG + ": coins based on time: " + calcCoins(mElapsedTimeToAnswer));
-        currentCoins += calcCoins(mElapsedTimeToAnswer);
+        Timber.d(LOG_TAG + ": coins based on time: " + extraCoins);
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
+
+        int extraPoints = calcPoints(mElapsedTimeToAnswer);
+        int totalPoints = mDataManager.getPreferencesHelper().retrievePoints();
+        mDataManager.getPreferencesHelper().storePoints(totalPoints + extraPoints);
 
         mCoinsInCard = currentCoins;
         mCardEase = ease;
@@ -123,6 +132,10 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         } else {
             return 0;
         }
+    }
+
+    private int calcPoints(int elapsedTime) {
+        return Math.max((int)(10 * Math.log10(elapsedTime)), 1);
     }
 
     public void setDeckInfo(String mDeckInfo) {

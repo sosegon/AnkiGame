@@ -13,6 +13,7 @@ public class PreferencesHelper {
     public static final String PREF_FILE_NAME = "ankigame_pref_file";
 
     public static final String KEY_COINS = "prf_coins";
+    public static final String KEY_POINTS = "prf_points";
     public static final String KEY_USER_ID = "prf_user_id";
     public static final String KEY_BEST_SCORE = "prf_best_score";
 
@@ -31,14 +32,16 @@ public class PreferencesHelper {
         return mPref.getInt(KEY_COINS, 10);
     }
 
-    /**
-     *
-     * @param coins positive or negative
-     */
     public void storeCoins(int coins) {
-        int current = retrieveCoins();
         mPref.edit().putInt(KEY_COINS, coins).apply();
+    }
 
+    public int retrievePoints() {
+        return mPref.getInt(KEY_POINTS, 0);
+    }
+
+    public void storePoints(int points) {
+        mPref.edit().putInt(KEY_POINTS, points).apply();
     }
 
     public String retrieveUserId() {

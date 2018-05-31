@@ -21,17 +21,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.data.model.GameLog;
-import com.ichi2.anki.ankigame.features.CoinsGameActivity;
+import com.ichi2.anki.ankigame.features.CountersActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 
 import java.util.Locale;
@@ -44,7 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 
-public class Game extends CoinsGameActivity implements GameMvpView {
+public class Game extends CountersActivity implements GameMvpView {
     // TODO: AnkiGame, Change tag
     private static final String MAIN_ACTIVITY_TAG = "2048_MainActivity";
 
@@ -151,8 +148,7 @@ public class Game extends CoinsGameActivity implements GameMvpView {
 
         mGamePresenter.attachView(this);
 
-        initCoinsBar(rootLayout);
-        updateLblGameCoins(mGamePresenter.getCoins());
+        initCounters(rootLayout);
 
         Toolbar toolbar = (Toolbar) rootLayout.findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -178,6 +174,7 @@ public class Game extends CoinsGameActivity implements GameMvpView {
             mGamePresenter.attachView(this);
         }
         updateLblGameCoins(mGamePresenter.getCoins());
+        updateLblPoints(mGamePresenter.getPoints());
     }
 
     @Override

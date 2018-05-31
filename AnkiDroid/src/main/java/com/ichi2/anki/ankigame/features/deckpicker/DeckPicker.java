@@ -70,15 +70,13 @@ import com.ichi2.anki.FilteredDeckOptions;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.ModelBrowser;
 import com.ichi2.anki.MyAccount;
-import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
-import com.ichi2.anki.ankigame.features.CoinsGameActivity;
+import com.ichi2.anki.ankigame.features.CountersActivity;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.ankigame.base.BaseActivity;
 import com.ichi2.anki.ankigame.features.game.Game;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -118,7 +116,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -126,11 +123,10 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class DeckPicker extends CoinsGameActivity implements DeckPickerMvpView {
+public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
 
 
     /**
@@ -395,8 +391,7 @@ public class DeckPicker extends CoinsGameActivity implements DeckPickerMvpView {
         ButterKnife.bind(this);
         activityComponent().inject(this);
         mDeckPickerPresenter.attachView(this);
-        initCoinsBar(mainView);
-        updateLblGameCoins(mDeckPickerPresenter.getCoins());
+        initCounters(mainView);
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -770,6 +765,7 @@ public class DeckPicker extends CoinsGameActivity implements DeckPickerMvpView {
             mDeckPickerPresenter.attachView(this);
         }
         updateLblGameCoins(mDeckPickerPresenter.getCoins());
+        updateLblPoints(mDeckPickerPresenter.getPoints());
     }
 
 
