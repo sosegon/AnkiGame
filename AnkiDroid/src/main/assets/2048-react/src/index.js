@@ -1,4 +1,4 @@
-//Uncomment just for testing purposes
+// Uncomment just for testing purposes
 // var Anki = {
 //   hasPointsForTrick: function(requiredPoints) {
 //     console.log("required points: " + requiredPoints);
@@ -7,11 +7,11 @@
 //   noPointsForTrick: function(trickName) {
 //     console.log("no points for trick: " + trickName);
 //   },
-//   hasMoneyForTrick: function(requiredCoins) {
+//   hasCoinsForTrick: function(requiredCoins) {
 //     console.log("required coins: " + requiredCoins);
 //     return true;
 //   },
-//   noMoneyForTrick: function(trickName) {
+//   noCoinsForTrick: function(trickName) {
 //     console.log("no money for trick: " + trickName);
 //   },
 //   unableTrick: function(trickName) {
@@ -103,8 +103,8 @@ class BoardView extends React.Component {
       return;
     }
     
-    if(!Anki.hasMoneyForTrick(requiredCoins)) {
-      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    if(!Anki.hasCoinsForTrick(requiredCoins)) {
+      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
     }
 
@@ -128,8 +128,8 @@ class BoardView extends React.Component {
       return;
     }
 
-    if(!Anki.hasMoneyForTrick(requiredCoins)) {
-      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    if(!Anki.hasCoinsForTrick(requiredCoins)) {
+      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
     }
 
@@ -153,8 +153,8 @@ class BoardView extends React.Component {
       return;
     }
     
-    if(!Anki.hasMoneyForTrick(requiredCoins)) {
-      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    if(!Anki.hasCoinsForTrick(requiredCoins)) {
+      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
     }
 
@@ -178,8 +178,8 @@ class BoardView extends React.Component {
       return;
     }
 
-    if(!Anki.hasMoneyForTrick(requiredCoins)) {
-      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    if(!Anki.hasCoinsForTrick(requiredCoins)) {
+      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
     }
 

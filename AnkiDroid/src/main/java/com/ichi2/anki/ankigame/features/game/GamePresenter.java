@@ -85,7 +85,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
-    public boolean hasMoneyForTrick(int requiredCoins) {
+    public boolean hasCoinsForTrick(int requiredCoins) {
         int coins =  getCoins();
 
         if(BuildConfig.FLAVOR.contentEquals("independent")) {
@@ -100,7 +100,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
-    public void noMoneyForTrick(String trickName, int requiredCoins, String jsonString) {
+    public void noCoinsForTrick(String trickName, int requiredCoins, String jsonString) {
         int coins =  getCoins();
         Board board = Board.parseJSON(jsonString);
 
