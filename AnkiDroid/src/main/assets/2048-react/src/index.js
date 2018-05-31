@@ -58,59 +58,85 @@ class BoardView extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown.bind(this));
   }
-  showMessage(message) {
-
-  }
   // This function has to be bound when assigning it to the child's
   // prop, otherwise, it won't work.
-  removeTwos(event) {
-    event.preventDefault();
-    
-    if(this.state.board.ableToDeleteTwos()){
-      if(Anki.hasMoneyForTrick("bomb", 30, this.getBoardStateAsString())) {
-        this.setState({board: this.state.board.removeTwos()});
-      }
-    } else {
-      // TODO: AnkiGame, Display message
-      Anki.unableToDoTrick("bomb", this.getBoardStateAsString());
-    }
-  }
   addGift(event) {
     event.preventDefault();
 
-    if(this.state.board.hasEmptyCells()) {
-      if(Anki.hasMoneyForTrick("gift", 10, this.getBoardStateAsString())) {
-        this.setState({board: this.state.board.addGift()});
-      }
-    } else {
-      // TODO: AnkiGame, Display message
-      Anki.unableToDoTrick("gift", this.getBoardStateAsString());
+    var requiredCoins = 10;
+    var trickName = "gift";
+    
+    if(!Anki.hasMoneyForTrick(requiredCoins)) {
+      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+      return;
     }
-  }
-  undoLast(event) {
-    event.preventDefault()
 
-    if(this.state.board.hasHistory()) {
-      if(Anki.hasMoneyForTrick("undo", 40, this.getBoardStateAsString())) {
-        this.setState({board: this.state.board.undo()});
-      }
-    } else {
-      // TODO: AnkiGame, Display message
-      Anki.unableToDoTrick("undo", this.getBoardStateAsString());
+    if(!this.state.board.hasEmptyCells()){
+      Anki.unableTrick(trickName, this.getBoardStateAsString());
+      return;
     }
+
+    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    this.setState({board: this.state.board.addGift()});
   }
   double(event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    if(this.state.board.ableToDouble()) {
-      if(Anki.hasMoneyForTrick("double", 20, this.getBoardStateAsString())) {
-        this.setState({board: this.state.board.double()});
-      }
-    } else {
-      // TODO: AnkiGame, Display message
-      Anki.unableToDoTrick("double", this.getBoardStateAsString());
+    var requiredCoins = 20;
+    var trickName = "double";
+    
+    if(!Anki.hasMoneyForTrick(requiredCoins)) {
+      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+      return;
     }
+
+    if(!this.state.board.ableToDouble()){
+      Anki.unableTrick(trickName, this.getBoardStateAsString());
+      return;
+    }
+
+    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    this.setState({board: this.state.board.double()});
   }
+  removeTwos(event) {
+    event.preventDefault();
+
+    var requiredCoins = 30;
+    var trickName = "bomb";
+    
+    if(!Anki.hasMoneyForTrick(requiredCoins)) {
+      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+      return;
+    }
+
+    if(!this.state.board.ableToDeleteTwos()){
+      Anki.unableTrick(trickName, this.getBoardStateAsString());
+      return;
+    }
+
+    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    this.setState({board: this.state.board.removeTwos()});
+  }
+  undoLast(event) {
+    event.preventDefault();
+
+    var requiredCoins = 40;
+    var trickName = "undo";
+    
+    if(!Anki.hasMoneyForTrick(requiredCoins)) {
+      Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
+      return;
+    }
+
+    if(!this.state.board.hasHistory()){
+      Anki.unableTrick(trickName, this.getBoardStateAsString());
+      return;
+    }
+
+    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
+    this.setState({board: this.state.board.undo()});
+  }
+  
   render() {
     // Since render is executed every time the state changes
     // Here we store the state of the game and the best score
@@ -260,13 +286,20 @@ var goToAnki = function (logCode) {
   }
 }
 
-// Uncomment just for testing purposes
+//Uncomment just for testing purposes
 // var Anki = {
-//   hasMoneyForTrick: function() {
+//   hasMoneyForTrick: function(requiredCoins) {
+//     console.log("required coins: " + requiredCoins);
 //     return true;
 //   },
-//   unableToDoTrick: function(trickName) {
+//   noMoneyForTrick: function(trickName) {
+//     console.log("no money for trick: " + trickName);
+//   },
+//   unableTrick: function(trickName) {
 //     console.log("unable to do " + trickName);
+//   },
+//   doTrick: function(trickName) {
+//     console.log("do trick " + trickName)
 //   },
 //   updateBestScore: function(score) {
 //     console.log("best score " + score);

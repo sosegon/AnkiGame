@@ -56,41 +56,61 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
-    public boolean hasMoneyForTrick(String trickName, int requiredCoins, String jsonString) {
-        boolean r = false;
-        Board board = Board.parseJSON(jsonString);
+    public boolean hasMoneyForTrick(int requiredCoins) {
         int coins =  getCoins();
 
         if(BuildConfig.FLAVOR.contentEquals("independent")) {
-            logUseTrick(board, trickName, true);
             return true;
         }
 
         if(requiredCoins > 0 && coins >= requiredCoins) {
-            r = true;
-            reduceCoins(requiredCoins);
-            // WebView has its own threads, therefore, updates in the UI has to be done accordingly
-            // The following line has to be executed in a handler created in the activity
-            // mGameView.updateLblGameCoins(mGamePresenter.getCoins());
-            getMvpView().postRunnable(new Runnable(){
-                @Override
-                public void run () {
-                    getMvpView().updateLblGameCoins(getCoins());
-                    logUseTrick(board, trickName, true);
-                }
-            });
-        } else {
-            getMvpView().postRunnable(new Runnable(){
-                @Override
-                public void run () {
-                    // TODO: AnkiGame, Fix this not working toast
-                    getMvpView().showNoCoinsToast(requiredCoins - coins);
-                    logUseTrick(board, trickName, false);
-                }
-            });
+            return true;
         }
 
-        return r;
+        return false;
+    }
+
+    @JavascriptInterface
+    public void noMoneyForTrick(String trickName, int requiredCoins, String jsonString) {
+        int coins =  getCoins();
+        Board board = Board.parseJSON(jsonString);
+
+        getMvpView().postRunnable(new Runnable(){
+            @Override
+            public void run () {
+                getMvpView().showNoCoinsToast(requiredCoins - coins);
+                logUseTrick(board, trickName, false);
+            }
+        });
+    }
+
+    @JavascriptInterface
+    public void unableTrick(String trickName, String jsonString) {
+        Board board = Board.parseJSON(jsonString);
+        getMvpView().postRunnable(new Runnable(){
+            @Override
+            public void run () {
+                getMvpView().showUnableToDoTrickToast(trickName);
+                logUseTrick(board, trickName, false);
+            }
+        });
+    }
+
+    @JavascriptInterface
+    public void doTrick(String trickName, int requiredCoins, String jsonString) {
+        Board board = Board.parseJSON(jsonString);
+
+        reduceCoins(requiredCoins);
+        // WebView has its own threads, therefore, updates in the UI has to be done accordingly
+        // The following line has to be executed in a handler created in the activity
+        // mGameView.updateLblGameCoins(mGamePresenter.getCoins());
+        getMvpView().postRunnable(new Runnable(){
+            @Override
+            public void run () {
+                getMvpView().updateLblGameCoins(getCoins());
+                logUseTrick(board, trickName, true);
+            }
+        });
     }
 
     @JavascriptInterface
@@ -117,19 +137,6 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
             }
         });
     }
-
-    @JavascriptInterface
-    public void unableToDoTrick(String trickName, String jsonString) {
-        Board board = Board.parseJSON(jsonString);
-        getMvpView().postRunnable(new Runnable(){
-            @Override
-            public void run () {
-                getMvpView().showUnableToDoTrickToast(trickName);
-                logUseTrick(board, trickName, false);
-            }
-        });
-    }
-
 
     private GameLog logGoToAnki(Board board) {
         GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
