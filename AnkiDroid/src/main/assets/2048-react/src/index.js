@@ -65,6 +65,12 @@ class BoardView extends React.Component {
 
     var requiredCoins = 10;
     var trickName = "gift";
+    var requiredPoints = 100;
+
+    if(!Anki.hasPointsForTrick(requiredPoints)) {
+      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
+      return;
+    }
     
     if(!Anki.hasMoneyForTrick(requiredCoins)) {
       Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
@@ -84,7 +90,13 @@ class BoardView extends React.Component {
 
     var requiredCoins = 20;
     var trickName = "double";
+    var requiredPoints = 1000;
     
+    if(!Anki.hasPointsForTrick(requiredPoints)) {
+      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
+      return;
+    }
+
     if(!Anki.hasMoneyForTrick(requiredCoins)) {
       Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
@@ -103,6 +115,12 @@ class BoardView extends React.Component {
 
     var requiredCoins = 30;
     var trickName = "bomb";
+    var requiredPoints = 5000;
+    
+    if(!Anki.hasPointsForTrick(requiredPoints)) {
+      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
+      return;
+    }
     
     if(!Anki.hasMoneyForTrick(requiredCoins)) {
       Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
@@ -122,7 +140,13 @@ class BoardView extends React.Component {
 
     var requiredCoins = 40;
     var trickName = "undo";
+    var requiredPoints = 10000;
     
+    if(!Anki.hasPointsForTrick(requiredPoints)) {
+      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
+      return;
+    }
+
     if(!Anki.hasMoneyForTrick(requiredCoins)) {
       Anki.noMoneyForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
@@ -185,6 +209,12 @@ class BoardView extends React.Component {
           <span className="trickPrice">20⛁</span>
           <span className="trickPrice">30⛁</span>
           <span className="trickPrice">40⛁</span>
+        </div>
+        <div>
+          <span className="trickPrice">100★</span>
+          <span className="trickPrice">1000★</span>
+          <span className="trickPrice">5000★</span>
+          <span className="trickPrice">10000★</span>
         </div>
       </div>
     );
@@ -288,6 +318,13 @@ var goToAnki = function (logCode) {
 
 //Uncomment just for testing purposes
 // var Anki = {
+//   hasPointsForTrick: function(requiredPoints) {
+//     console.log("required points: " + requiredPoints);
+//     return true;
+//   },
+//   noPointsForTrick: function(trickName) {
+//     console.log("no points for trick: " + trickName);
+//   },
 //   hasMoneyForTrick: function(requiredCoins) {
 //     console.log("required coins: " + requiredCoins);
 //     return true;

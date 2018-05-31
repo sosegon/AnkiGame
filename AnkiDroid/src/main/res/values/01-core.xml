@@ -57,9 +57,10 @@
     <string name="earn_coins">Earn coins</string>
     <string name="restart_game">Restart game</string>
     <string name="coins">Coins: %1$d ⛁</string>
-    <string name="points">Anki points: %1$d ⚡</string>
-    <string name="not_enough_coins">Not enough coins. You need %1$d more coins for this trick</string>
-    <string name="unable_trick">Board state does not allow to use trick %1$s at the moment</string>
+    <string name="points">Anki points: %1$d ★</string>
+    <string name="not_enough_coins">Not enough coins. You need %1$d more coins for this trick.</string>
+    <string name="blocked_trick">Not enough points. You need %1$d more anki points to unblock this trick.</string>
+    <string name="unable_trick">Board state does not allow to use trick %1$s at the moment.</string>
     <string name="menu_options">Options</string>
     <string name="menu_game">Game</string>
 

@@ -261,6 +261,11 @@ public class Game extends CountersActivity implements GameMvpView {
         Toast.makeText(this, getString(R.string.unable_trick, trickName), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showBlockedTrickToast(int requiredPoints) {
+        Toast.makeText(this, getString(R.string.blocked_trick, requiredPoints), Toast.LENGTH_SHORT).show();
+    }
+
     private void initScreenSettings() {
 
         // Don't show an action bar or title

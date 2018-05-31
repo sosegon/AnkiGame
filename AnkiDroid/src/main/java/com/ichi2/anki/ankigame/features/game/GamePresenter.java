@@ -56,6 +56,35 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
+    public boolean hasPointsForTrick(int requiredPoints) {
+        int points =  getPoints();
+
+        if(BuildConfig.FLAVOR.contentEquals("independent")) {
+            return true;
+        }
+
+        if(requiredPoints > 0 && points >= requiredPoints) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @JavascriptInterface
+    public void noPointsForTrick(String trickName, int requiredPoints, String jsonString) {
+        int points =  getPoints();
+        Board board = Board.parseJSON(jsonString);
+
+        getMvpView().postRunnable(new Runnable(){
+            @Override
+            public void run () {
+                getMvpView().showBlockedTrickToast(requiredPoints - points);
+                logUseTrick(board, trickName, false);
+            }
+        });
+    }
+
+    @JavascriptInterface
     public boolean hasMoneyForTrick(int requiredCoins) {
         int coins =  getCoins();
 
