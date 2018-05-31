@@ -31,15 +31,16 @@
 class BoardView extends React.Component {
   constructor(props) {
     super(props);
-    this.storageManager = new LocalStorageManager;
     this.setup();
   }
   setup() {
+    this.storageManager = new LocalStorageManager;
     var previousState = this.storageManager.getGameState();
     var bestScore = this.storageManager.getBestScore();
     var history = this.storageManager.getHistory();
     this.state = {board: new Board(previousState, bestScore, history)};
     this.points = Anki.getAnkiPoints();
+    this.coins = Anki.getAnkiCoins();
   }
   restartGame() {
     // Do not restart the best score
@@ -48,6 +49,7 @@ class BoardView extends React.Component {
     this.storageManager.clearGameState();
     this.storageManager.clearHistory();
     this.points = Anki.getAnkiPoints();
+    this.coins = Anki.getAnkiCoins();
   }
   getBoardStateAsString() {
     return this.state.board.asString();
@@ -115,6 +117,7 @@ class BoardView extends React.Component {
 
     Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
     this.setState({board: this.state.board.addGift()});
+    this.coins = Anki.getAnkiCoins();
   }
   double(event) {
     event.preventDefault();
@@ -140,6 +143,7 @@ class BoardView extends React.Component {
 
     Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
     this.setState({board: this.state.board.double()});
+    this.coins = Anki.getAnkiCoins();
   }
   removeTwos(event) {
     event.preventDefault();
@@ -165,6 +169,7 @@ class BoardView extends React.Component {
 
     Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
     this.setState({board: this.state.board.removeTwos()});
+    this.coins = Anki.getAnkiCoins();
   }
   undoLast(event) {
     event.preventDefault();
@@ -190,6 +195,7 @@ class BoardView extends React.Component {
 
     Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
     this.setState({board: this.state.board.undo()});
+    this.coins = Anki.getAnkiCoins();
   }
   
   render() {
@@ -200,6 +206,26 @@ class BoardView extends React.Component {
     this.storageManager.setHistory(this.state.board.history);
 
     var points = this.points;
+    var coins = this.coins;
+
+    var generateTrickClass = function(mainClass, values) {
+      var trickClass = 'trick';
+      var requiredPoints = values[0];
+      var availablePoints = values[1];
+      var requiredCoins = values[2];
+      var availableCoins = values[3];
+
+      if(availablePoints >= requiredPoints){
+        trickClass += ' ' + mainClass;
+        if(availableCoins < requiredCoins) {
+          trickClass += ' trickDisabled';
+        }
+      } else {
+        trickClass += ' trickBlocked'
+      }
+
+      return trickClass;
+    }
 
     var bestScore = this.state.board.bestScore;
     var bestScoreElem = (
@@ -232,10 +258,10 @@ class BoardView extends React.Component {
           {tiles}
         </div>
         <div>
-          <span className={'trick ' + (points >= 100 ? 'trickGift' : 'trickBlocked')} onClick={this.addGift.bind(this)}>{''}</span>
-          <span className={'trick ' + (points >= 1000 ? 'trickDouble' : 'trickBlocked')} onClick={this.double.bind(this)}>{''}</span>
-          <span className={'trick ' + (points >= 5000 ? 'trickBomb' : 'trickBlocked')} onClick={this.removeTwos.bind(this)}>{''}</span>
-          <span className={'trick ' + (points >= 10000 ? 'trickUndo' : 'trickBlocked')} onClick={this.undoLast.bind(this)}>{''}</span>
+          <span className={generateTrickClass('trickGift', [100, points, 10, coins])} onClick={this.addGift.bind(this)} />
+          <span className={generateTrickClass('trickDouble', [1000, points, 20, coins])} onClick={this.double.bind(this)} />
+          <span className={generateTrickClass('trickBomb', [5000, points, 30, coins])} onClick={this.removeTwos.bind(this)} />
+          <span className={generateTrickClass('trickUndo', [10000, points, 40, coins])} onClick={this.undoLast.bind(this)} />
         </div>
         <div>
           <span className="trickPrice">10⛁</span>

@@ -175,7 +175,18 @@ public class Game extends CountersActivity implements GameMvpView {
         }
         updateLblGameCoins(mGamePresenter.getCoins());
         updateLblPoints(mGamePresenter.getPoints());
+        // To update the visual of the tricks based on the coins and points
+        mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Remove the web page to avoid wrong state when coming back to the activity
+        // This is because the visual of the page depends on the coins and points
+        mWebMain.loadUrl("about:blank");
+    }
+
 
     @Override
     public void onDestroy() {
@@ -319,13 +330,13 @@ public class Game extends CountersActivity implements GameMvpView {
         settings.setUseWideViewPort(true);
 
         // If there is a previous instance restore it in the webview
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             // TODO: If app was minimized and Locale language was changed, we need to reload webview with changed language
             mWebMain.restoreState(savedInstanceState);
         } else {
             // Load webview with current Locale language
             mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
-        }
+        }*/
 
         // TODO: AnkiGame, Remove this code if needed
         //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();

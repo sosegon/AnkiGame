@@ -93,6 +93,11 @@ body {
 }
 
 /*TODO: AnkiGame, Update the icons properly*/
+.trickDisabled {
+  background-color: #c6c0ab !important;
+  opacity: 0.5;
+}
+
 .trickBlocked {
   background-color: #c6c0ab;
   background-image: url("../img/block_icon.png");
