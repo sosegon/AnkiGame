@@ -10,22 +10,23 @@ public class GameLog extends AppLog {
     public static final String TYPE_RESTART_GAME = "restartGame";
     public static final String TYPE_GO_TO_ANKI = "goToAnki";
     public static final String TYPE_LOST_GAME = "lostGame";
+    public static final String TYPE_FAIL_TRICK = "failTrick";
 
     // Name of params
     public static final String PARAM_BEST_SCORE = "bestScore";
     public static final String PARAM_CURRENT_SCORE = "currentScore";
     public static final String PARAM_USED_TRICKS = "usedTricks";
     public static final String PARAM_TRICK_TYPE = "trickType";
-    public static final String PARAM_TRICK_EXECUTED = "trickExecuted";
     public static final String PARAM_BOARD_VALUES = "boardValues";
+    public static final String PARAM_FAIL_TRICK_TYPE = "failTrickType";
 
     // Params in logEvent
     public int bestScore;
     public int currentScore;
     public String usedTricks;
     public String trickType;
-    public boolean trickExecuted;
     public String boardValues;
+    public String failTrickType;
 
     public static GameLog logBase(String userId) {
         Date date = new Date();
@@ -77,19 +78,19 @@ public class GameLog extends AppLog {
         this.trickType = trickType;
     }
 
-    public boolean isTrickExecuted() {
-        return trickExecuted;
-    }
-
-    public void setTrickExecuted(boolean trickExecuted) {
-        this.trickExecuted = trickExecuted;
-    }
-
     public String getBoardValues() {
         return boardValues;
     }
 
     public void setBoardValues(String boardValues) {
         this.boardValues = boardValues;
+    }
+
+    public String getFailTrickType() {
+        return failTrickType;
+    }
+
+    public void setFailTrickType(String failTrickType) {
+        this.failTrickType = failTrickType;
     }
 }

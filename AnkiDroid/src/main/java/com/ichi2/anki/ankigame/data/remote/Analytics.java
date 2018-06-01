@@ -34,6 +34,8 @@ public class Analytics {
             params = logAssessCard(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_USE_TRICK)){
             params = logUseTrick(appLog);
+        } else if(appLog.getLogType().contentEquals(GameLog.TYPE_FAIL_TRICK)){
+            params = logFailTrick(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_RESTART_GAME)){
             params = logRestartGame(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_LOST_GAME)){
@@ -108,7 +110,21 @@ public class Analytics {
             params.putString(GameLog.PARAM_USED_TRICKS, ((GameLog)appLog).getUsedTricks());
             params.putString(GameLog.PARAM_BOARD_VALUES, ((GameLog)appLog).getBoardValues());
             params.putString(GameLog.PARAM_TRICK_TYPE, ((GameLog)appLog).getTrickType());
-            params.putBoolean(GameLog.PARAM_TRICK_EXECUTED, ((GameLog)appLog).isTrickExecuted());
+        }
+
+        return params;
+    }
+
+    private Bundle logFailTrick(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
+
+        if(appLog instanceof GameLog) {
+            params.putInt(GameLog.PARAM_BEST_SCORE, ((GameLog)appLog).getBestScore());
+            params.putInt(GameLog.PARAM_CURRENT_SCORE, ((GameLog)appLog).getCurrentScore());
+            params.putString(GameLog.PARAM_USED_TRICKS, ((GameLog)appLog).getUsedTricks());
+            params.putString(GameLog.PARAM_BOARD_VALUES, ((GameLog)appLog).getBoardValues());
+            params.putString(GameLog.PARAM_TRICK_TYPE, ((GameLog)appLog).getTrickType());
+            params.putString(GameLog.PARAM_FAIL_TRICK_TYPE, ((GameLog)appLog).getFailTrickType());
         }
 
         return params;

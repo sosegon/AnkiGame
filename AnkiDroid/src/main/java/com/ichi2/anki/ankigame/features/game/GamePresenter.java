@@ -7,6 +7,7 @@ import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.Board;
 import com.ichi2.anki.ankigame.data.model.GameLog;
+import com.ichi2.anki.ankigame.data.model.Trick;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
@@ -81,7 +82,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
             @Override
             public void run () {
                 getMvpView().showBlockedTrickToast(requiredPoints - points);
-                logUseTrick(board, trickName, false);
+                logFailTrick(board, trickName, Trick.TRICK_FAIL_BLOCKED);
             }
         });
     }
@@ -110,7 +111,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
             @Override
             public void run () {
                 getMvpView().showNoCoinsToast(requiredCoins - coins);
-                logUseTrick(board, trickName, false);
+                logFailTrick(board, trickName, Trick.TRICK_FAIL_DISABLED);
             }
         });
     }
@@ -122,7 +123,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
             @Override
             public void run () {
                 getMvpView().showUnableToDoTrickToast(trickName);
-                logUseTrick(board, trickName, false);
+                logFailTrick(board, trickName, Trick.TRICK_FAIL_NOT_PERMITTED);
             }
         });
     }
@@ -139,7 +140,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
             @Override
             public void run () {
                 getMvpView().updateLblGameCoins(getCoins());
-                logUseTrick(board, trickName, true);
+                logUseTrick(board, trickName);
             }
         });
     }
@@ -231,7 +232,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return gameLog;
     }
 
-    private void logUseTrick(Board board, String trickName, boolean trickExecuted) {
+    private void logUseTrick(Board board, String trickName) {
         GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         gameLog.setLogType(GameLog.TYPE_USE_TRICK);
         gameLog.setBestScore(board.getBestScore());
@@ -241,7 +242,21 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         gameLog.setTotalCoins(getCoins());
         gameLog.setTotalPoints(getPoints());
         gameLog.setTrickType(trickName);
-        gameLog.setTrickExecuted(trickExecuted);
+
+        mDataManager.logBehaviour(gameLog);
+    }
+
+    private void logFailTrick(Board board, String trickName, String failTrickType) {
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        gameLog.setLogType(GameLog.TYPE_FAIL_TRICK);
+        gameLog.setBestScore(board.getBestScore());
+        gameLog.setCurrentScore(board.getScore());
+        gameLog.setUsedTricks(board.getUsedTricksAsString());
+        gameLog.setBoardValues(board.getBoardValuesAsString());
+        gameLog.setTotalCoins(getCoins());
+        gameLog.setTotalPoints(getPoints());
+        gameLog.setTrickType(trickName);
+        gameLog.setFailTrickType(failTrickType);
 
         mDataManager.logBehaviour(gameLog);
     }
