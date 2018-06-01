@@ -10,6 +10,7 @@ public abstract class AppLog {
     public static final String PARAM_DATE = "date";
     public static final String PARAM_TIME = "time";
     public static final String PARAM_TOTAL_COINS = "totalCoins";
+    public static final String PARAM_TOTAL_POINTS = "totalPoints";
 
     // Params in logEvent
     public String userId;
@@ -17,6 +18,7 @@ public abstract class AppLog {
     public String date;
     public String time;
     public int totalCoins;
+    public int totalPoints;
 
     public AppLog(String date, String time) {
         this.date = date;
@@ -62,5 +64,13 @@ public abstract class AppLog {
 
     public void setTotalCoins(int totalCoins) {
         this.totalCoins = totalCoins;
+    }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
     }
 }

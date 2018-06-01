@@ -145,6 +145,7 @@ public class Analytics {
         params.putString(AppLog.PARAM_DATE, log.getDate());
         params.putString(AppLog.PARAM_TIME, log.getTime());
         params.putInt(AppLog.PARAM_TOTAL_COINS, log.getTotalCoins());
+        params.putInt(AppLog.PARAM_TOTAL_POINTS, log.getTotalPoints());
 
         return params;
     }

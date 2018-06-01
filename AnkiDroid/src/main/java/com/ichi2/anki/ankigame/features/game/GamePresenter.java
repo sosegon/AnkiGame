@@ -200,7 +200,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());
         gameLog.setBoardValues(board.getBoardValuesAsString());
-        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        gameLog.setTotalCoins(getCoins());
+        gameLog.setTotalPoints(getPoints());
         // TODO: AnkiGame Add leaderboard position
 
         return gameLog;
@@ -213,7 +214,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());
         gameLog.setBoardValues(board.getBoardValuesAsString());
-        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        gameLog.setTotalCoins(getCoins());
+        gameLog.setTotalPoints(getPoints());
         // TODO: AnkiGame Add leaderboard position
 
         return gameLog;
@@ -226,7 +228,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());
         gameLog.setBoardValues(board.getBoardValuesAsString());
-        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        gameLog.setTotalCoins(getCoins());
+        gameLog.setTotalPoints(getPoints());
         // TODO: AnkiGame Add leaderboard position
 
         return gameLog;
@@ -239,7 +242,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         gameLog.setCurrentScore(board.getScore());
         gameLog.setUsedTricks(board.getUsedTricksAsString());
         gameLog.setBoardValues(board.getBoardValuesAsString());
-        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        gameLog.setTotalCoins(getCoins());
+        gameLog.setTotalPoints(getPoints());
         gameLog.setTrickType(trickName);
         gameLog.setTrickExecuted(trickExecuted);
 
