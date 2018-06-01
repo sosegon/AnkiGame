@@ -36,6 +36,8 @@ public class Analytics {
             params = logUseTrick(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_RESTART_GAME)){
             params = logRestartGame(appLog);
+        } else if(appLog.getLogType().contentEquals(GameLog.TYPE_LOST_GAME)){
+            params = logLostGame(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_GO_TO_ANKI)){
             params = logGoToAnki(appLog);
         } else {
@@ -113,6 +115,19 @@ public class Analytics {
     }
 
     private Bundle logRestartGame(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
+
+        if(appLog instanceof GameLog) {
+            params.putInt(GameLog.PARAM_BEST_SCORE, ((GameLog)appLog).getBestScore());
+            params.putInt(GameLog.PARAM_CURRENT_SCORE, ((GameLog)appLog).getCurrentScore());
+            params.putString(GameLog.PARAM_USED_TRICKS, ((GameLog)appLog).getUsedTricks());
+            params.putString(GameLog.PARAM_BOARD_VALUES, ((GameLog)appLog).getBoardValues());
+        }
+
+        return params;
+    }
+
+    private Bundle logLostGame(AppLog appLog) {
         Bundle params = getAppLogParams(appLog);
 
         if(appLog instanceof GameLog) {
