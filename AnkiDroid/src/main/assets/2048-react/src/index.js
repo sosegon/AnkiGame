@@ -24,7 +24,10 @@
 //     console.log("best score " + score);
 //   },
 //   getAnkiPoints: function() {
-//     return 10;
+//     return 1000;
+//   },
+//   getAnkiCoins: function() {
+//     return 40;
 //   }
 // }
 
@@ -165,21 +168,26 @@ class BoardView extends React.Component {
 
     var points = this.points;
     var coins = this.coins;
+    var tricks = this.tricks;
 
-    var generateTrickClass = function(mainClass, values) {
+    var generateTrickClass = function(trickName) {
+      var trick = tricks[trickName];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+
+      var requiredCoins = trick['coins'];
+      var availableCoins = coins;
+
       var trickClass = 'trick';
-      var requiredPoints = values[0];
-      var availablePoints = values[1];
-      var requiredCoins = values[2];
-      var availableCoins = values[3];
 
       if(availablePoints >= requiredPoints){
-        trickClass += ' ' + mainClass;
+        trickClass += ' trick_' + trickName;
         if(availableCoins < requiredCoins) {
-          trickClass += ' trickDisabled';
+          trickClass += ' trick_disabled';
         }
       } else {
-        trickClass += ' trickBlocked'
+        trickClass += ' trick_blocked';
       }
 
       return trickClass;
@@ -216,22 +224,22 @@ class BoardView extends React.Component {
           {tiles}
         </div>
         <div>
-          <span className={generateTrickClass('trickGift', [100, points, 10, coins])} onClick={this.tryTrick.bind(this, 'gift')} />
-          <span className={generateTrickClass('trickDouble', [1000, points, 20, coins])} onClick={this.tryTrick.bind(this, 'double')} />
-          <span className={generateTrickClass('trickBomb', [5000, points, 30, coins])} onClick={this.tryTrick.bind(this, 'bomb')} />
-          <span className={generateTrickClass('trickUndo', [10000, points, 40, coins])} onClick={this.tryTrick.bind(this, 'undo')} />
+          <span className={generateTrickClass('gift')} onClick={this.tryTrick.bind(this, 'gift')} />
+          <span className={generateTrickClass('double')} onClick={this.tryTrick.bind(this, 'double')} />
+          <span className={generateTrickClass('bomb')} onClick={this.tryTrick.bind(this, 'bomb')} />
+          <span className={generateTrickClass('undo')} onClick={this.tryTrick.bind(this, 'undo')} />
         </div>
         <div>
-          <span className="trickPrice">10⛁</span>
-          <span className="trickPrice">20⛁</span>
-          <span className="trickPrice">30⛁</span>
-          <span className="trickPrice">40⛁</span>
+          <span className="trickPrice">{this.tricks['gift']['coins']}⛁</span>
+          <span className="trickPrice">{this.tricks['double']['coins']}⛁</span>
+          <span className="trickPrice">{this.tricks['bomb']['coins']}⛁</span>
+          <span className="trickPrice">{this.tricks['undo']['coins']}⛁</span>
         </div>
         <div>
-          <span className="trickPrice">100★</span>
-          <span className="trickPrice">1000★</span>
-          <span className="trickPrice">5000★</span>
-          <span className="trickPrice">10000★</span>
+          <span className="trickPrice">{this.tricks['gift']['points']}★</span>
+          <span className="trickPrice">{this.tricks['double']['points']}★</span>
+          <span className="trickPrice">{this.tricks['bomb']['points']}★</span>
+          <span className="trickPrice">{this.tricks['undo']['points']}★</span>
         </div>
       </div>
     );

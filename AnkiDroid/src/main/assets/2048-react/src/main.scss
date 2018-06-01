@@ -93,32 +93,32 @@ body {
 }
 
 /*TODO: AnkiGame, Update the icons properly*/
-.trickDisabled {
+.trick_disabled {
   background-color: #c6c0ab !important;
   opacity: 0.5;
 }
 
-.trickBlocked {
+.trick_blocked {
   background-color: #c6c0ab;
   background-image: url("../img/block_icon.png");
 }
 
-.trickBomb {
+.trick_bomb {
   background-color: #eec022;
   background-image: url("../img/bomb_icon.png");
 }
 
-.trickGift {
+.trick_gift {
   background-color: #22caee;
   background-image: url("../img/gift_icon.png");
 }
 
-.trickUndo {
+.trick_undo {
   background-color: #22ee98;
   background-image: url("../img/undo_icon.png");
 }
 
-.trickDouble {
+.trick_double {
   background-color: #ee9c22;
   background-image: url("../img/double_icon.png");
 }
