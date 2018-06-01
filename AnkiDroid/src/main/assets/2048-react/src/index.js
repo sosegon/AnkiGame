@@ -24,10 +24,10 @@
 //     console.log("best score " + score);
 //   },
 //   getAnkiPoints: function() {
-//     return 1000;
+//     return 5000;
 //   },
 //   getAnkiCoins: function() {
-//     return 40;
+//     return 20;
 //   }
 // }
 
@@ -193,6 +193,41 @@ class BoardView extends React.Component {
       return trickClass;
     }
 
+    var generateCoinsClass = function(trickName) {
+      var trick = tricks[trickName];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+
+      var requiredCoins = trick['coins'];
+      var availableCoins = coins;
+
+      var coinsClass = 'trickCoins';
+
+      if(availablePoints < requiredPoints){
+        coinsClass += ' trickCoinsBlocked';
+      } else if(availableCoins < requiredCoins) {
+        coinsClass += ' trickCoinsDisabled';
+      }
+
+      return coinsClass;
+    }
+
+    var generatePointsClass = function(trickName) {
+      var trick = tricks[trickName];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+
+      var pointsClass = 'trickPoints';
+
+      if(availablePoints < requiredPoints) {
+        pointsClass += ' trickPointsDisabled';
+      }
+
+      return pointsClass;
+    }
+
     var bestScore = this.state.board.bestScore;
     var bestScoreElem = (
       <BestScore bestScore={bestScore} />
@@ -230,16 +265,16 @@ class BoardView extends React.Component {
           <span className={generateTrickClass('undo')} onClick={this.tryTrick.bind(this, 'undo')} />
         </div>
         <div>
-          <span className="trickPrice">{this.tricks['gift']['coins']}⛁</span>
-          <span className="trickPrice">{this.tricks['double']['coins']}⛁</span>
-          <span className="trickPrice">{this.tricks['bomb']['coins']}⛁</span>
-          <span className="trickPrice">{this.tricks['undo']['coins']}⛁</span>
+          <span className={generateCoinsClass('gift')}>{this.tricks['gift']['coins']}⛁</span>
+          <span className={generateCoinsClass('double')}>{this.tricks['double']['coins']}⛁</span>
+          <span className={generateCoinsClass('bomb')}>{this.tricks['bomb']['coins']}⛁</span>
+          <span className={generateCoinsClass('undo')}>{this.tricks['undo']['coins']}⛁</span>
         </div>
         <div>
-          <span className="trickPrice">{this.tricks['gift']['points']}★</span>
-          <span className="trickPrice">{this.tricks['double']['points']}★</span>
-          <span className="trickPrice">{this.tricks['bomb']['points']}★</span>
-          <span className="trickPrice">{this.tricks['undo']['points']}★</span>
+          <span className={generatePointsClass('gift')}>{this.tricks['gift']['points']}★</span>
+          <span className={generatePointsClass('double')}>{this.tricks['double']['points']}★</span>
+          <span className={generatePointsClass('bomb')}>{this.tricks['bomb']['points']}★</span>
+          <span className={generatePointsClass('undo')}>{this.tricks['undo']['points']}★</span>
         </div>
       </div>
     );

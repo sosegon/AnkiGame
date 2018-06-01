@@ -84,12 +84,20 @@ body {
   background-color: #dcb;
 }
 
-.trickPrice {
+.trickCoins, .trickPoints {
   width: 100px;
   height: 15px;
   text-align: center;
   margin: 5px;
   float: left;
+}
+
+.trickCoinsBlocked {
+  opacity: 0;
+}
+
+.trickCoinsDisabled, .trickPointsDisabled {
+  opacity: 0.5;
 }
 
 /*TODO: AnkiGame, Update the icons properly*/
