@@ -9,6 +9,7 @@ public class GameLog extends AppLog {
     public static final String TYPE_USE_TRICK = "useTrick";
     public static final String TYPE_RESTART_GAME = "restartGame";
     public static final String TYPE_GO_TO_ANKI = "goToAnki";
+    public static final String TYPE_LOST_GAME = "lostGame";
 
     // Name of params
     public static final String PARAM_BEST_SCORE = "bestScore";

@@ -55,7 +55,9 @@
     <!-- ANKIGAME -->
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="earn_coins">Earn coins</string>
-    <string name="restart_game">Restart game</string>
+    <string name="restart_game">Restart game?</string>
+    <string name="has_lost_game">You lose!</string>
+    <string name="trick_available">You can use a trick.</string>
     <string name="coins">Coins: %1$d ⛁</string>
     <string name="points">Anki points: %1$d ★</string>
     <string name="not_enough_coins">Not enough coins. You need %1$d more coins for this trick.</string>

@@ -131,6 +131,12 @@ public class Game extends CountersActivity implements GameMvpView {
     @BindString(R.string.restart_game)
     String sRestart;
 
+    @BindString(R.string.has_lost_game)
+    String sHasLost;
+
+    @BindString(R.string.trick_available)
+    String sTrickAvailable;
+
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,6 +281,25 @@ public class Game extends CountersActivity implements GameMvpView {
     @Override
     public void showBlockedTrickToast(int requiredPoints) {
         Toast.makeText(this, getString(R.string.blocked_trick, requiredPoints), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showTrickAvailableToast() {
+        Toast.makeText(this, sTrickAvailable, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showHasLostDialog() {
+        String logCode = GameLog.TYPE_LOST_GAME;
+        new AlertDialog.Builder(this)
+                .setTitle(sHasLost)
+                .setMessage(sRestart)
+                .setPositiveButton(R.string.dialog_ok,
+                        (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")"))
+                .setNegativeButton(R.string.dialog_cancel,
+                        (dialog, which) ->  {})
+                .create()
+                .show();
     }
 
     private void initScreenSettings() {

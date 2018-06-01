@@ -24,10 +24,17 @@
 //     console.log("best score " + score);
 //   },
 //   getAnkiPoints: function() {
-//     return 5000;
+//     return 50000;
 //   },
 //   getAnkiCoins: function() {
 //     return 20;
+//   },
+//   hasLost: function(trickAvailable) {
+//     if(trickAvailable) {
+//       console.log("trick available");
+//     } else {
+//       console.log("lost");
+//     }
 //   }
 // }
 
@@ -92,6 +99,9 @@ class BoardView extends React.Component {
       event.preventDefault();
       var direction = event.keyCode - 37;
       this.setState({board: this.state.board.move(direction)});
+      if(this.state.board.hasLost()) {
+        Anki.hasLost(this.ableToDoAnyTrick());
+      }
     }
   }
   handleTouchStart(event) {
@@ -116,6 +126,9 @@ class BoardView extends React.Component {
     }
     if (direction != -1) {
       this.setState({board: this.state.board.move(direction)});
+      if(this.state.board.hasLost()) {
+        Anki.hasLost(this.ableToDoAnyTrick());
+      }
     }
   }
   componentDidMount() {
@@ -151,13 +164,43 @@ class BoardView extends React.Component {
       Anki.unableTrick(trickName, this.getBoardStateAsString());
       return;
     }
-
+    // TODO: AnkiGame, Executing the double trick can make end the game. Handle that
     Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
     this.setState({board: execute.apply(this.state.board)});
 
     // After applying a trick, the number of coins changed. Update the variable
     // since the visual of the tricks depends on that value
     this.coins = Anki.getAnkiCoins();
+  }
+  ableToDoAnyTrick() {
+    var tricks = this.tricks;
+    var board = this.state.board;
+    var points = this.points;
+    var coins = this.coins;
+
+    var t = Object.keys(tricks).filter(function(key, index) {
+      var trick = tricks[key];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+      if(availablePoints < requiredPoints) {
+        return false;
+      }
+
+      var requiredCoins = trick['coins'];
+      var availableCoins = coins;
+      if(availableCoins < requiredCoins) {
+        return false;
+      }
+
+      if(!trick['isPermitted'].apply(board)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    return t.length > 0;
   }
   render() {
     // Since render is executed every time the state changes
