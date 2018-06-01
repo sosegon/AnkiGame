@@ -166,67 +166,13 @@ class BoardView extends React.Component {
     this.storageManager.setBestScore(this.state.board.bestScore);
     this.storageManager.setHistory(this.state.board.history);
 
-    var points = this.points;
-    var coins = this.coins;
     var tricks = this.tricks;
-
-    var generateTrickClass = function(trickName) {
-      var trick = tricks[trickName];
-
-      var requiredPoints = trick['points'];
-      var availablePoints = points;
-
-      var requiredCoins = trick['coins'];
-      var availableCoins = coins;
-
-      var trickClass = 'trick';
-
-      if(availablePoints >= requiredPoints){
-        trickClass += ' trick_' + trickName;
-        if(availableCoins < requiredCoins) {
-          trickClass += ' trick_disabled';
-        }
-      } else {
-        trickClass += ' trick_blocked';
-      }
-
-      return trickClass;
-    }
-
-    var generateCoinsClass = function(trickName) {
-      var trick = tricks[trickName];
-
-      var requiredPoints = trick['points'];
-      var availablePoints = points;
-
-      var requiredCoins = trick['coins'];
-      var availableCoins = coins;
-
-      var coinsClass = 'trickCoins';
-
-      if(availablePoints < requiredPoints){
-        coinsClass += ' trickCoinsBlocked';
-      } else if(availableCoins < requiredCoins) {
-        coinsClass += ' trickCoinsDisabled';
-      }
-
-      return coinsClass;
-    }
-
-    var generatePointsClass = function(trickName) {
-      var trick = tricks[trickName];
-
-      var requiredPoints = trick['points'];
-      var availablePoints = points;
-
-      var pointsClass = 'trickPoints';
-
-      if(availablePoints < requiredPoints) {
-        pointsClass += ' trickPointsDisabled';
-      }
-
-      return pointsClass;
-    }
+    var currentBoard = this;
+    var trickElements = Object.keys(tricks).map(function(key, index){
+      return (
+        <Trick Board={currentBoard} trickName={key} />
+      );
+    });
 
     var bestScore = this.state.board.bestScore;
     var bestScoreElem = (
@@ -258,24 +204,7 @@ class BoardView extends React.Component {
           {cells}
           {tiles}
         </div>
-        <div>
-          <span className={generateTrickClass('gift')} onClick={this.tryTrick.bind(this, 'gift')} />
-          <span className={generateTrickClass('double')} onClick={this.tryTrick.bind(this, 'double')} />
-          <span className={generateTrickClass('bomb')} onClick={this.tryTrick.bind(this, 'bomb')} />
-          <span className={generateTrickClass('undo')} onClick={this.tryTrick.bind(this, 'undo')} />
-        </div>
-        <div>
-          <span className={generateCoinsClass('gift')}>{this.tricks['gift']['coins']}⛁</span>
-          <span className={generateCoinsClass('double')}>{this.tricks['double']['coins']}⛁</span>
-          <span className={generateCoinsClass('bomb')}>{this.tricks['bomb']['coins']}⛁</span>
-          <span className={generateCoinsClass('undo')}>{this.tricks['undo']['coins']}⛁</span>
-        </div>
-        <div>
-          <span className={generatePointsClass('gift')}>{this.tricks['gift']['points']}★</span>
-          <span className={generatePointsClass('double')}>{this.tricks['double']['points']}★</span>
-          <span className={generatePointsClass('bomb')}>{this.tricks['bomb']['points']}★</span>
-          <span className={generatePointsClass('undo')}>{this.tricks['undo']['points']}★</span>
-        </div>
+        {trickElements}
       </div>
     );
   }
@@ -355,6 +284,89 @@ class BestScore extends React.Component {
     return (
       <div className="best-container">
         <span>{bestScore}</span>
+      </div>
+    )
+  }
+}
+
+class Trick extends React.Component {
+  render() {
+    var Board = this.props.Board;
+    var points = Board.points;
+    var coins = Board.coins;
+    var tricks = Board.tricks;
+
+    var trickName = this.props.trickName;
+
+    var generateTrickClass = function(trickName) {
+      var trick = tricks[trickName];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+
+      var requiredCoins = trick['coins'];
+      var availableCoins = coins;
+
+      var trickClass = 'trick';
+
+      if(availablePoints >= requiredPoints){
+        trickClass += ' trick_' + trickName;
+        if(availableCoins < requiredCoins) {
+          trickClass += ' trick_disabled';
+        }
+      } else {
+        trickClass += ' trick_blocked';
+      }
+
+      return trickClass;
+    }
+
+    var generateCoinsClass = function(trickName) {
+      var trick = tricks[trickName];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+
+      var requiredCoins = trick['coins'];
+      var availableCoins = coins;
+
+      var coinsClass = 'trickCoins';
+
+      if(availablePoints < requiredPoints){
+        coinsClass += ' trickCoinsBlocked';
+      } else if(availableCoins < requiredCoins) {
+        coinsClass += ' trickCoinsDisabled';
+      }
+
+      return coinsClass;
+    }
+
+    var generatePointsClass = function(trickName) {
+      var trick = tricks[trickName];
+
+      var requiredPoints = trick['points'];
+      var availablePoints = points;
+
+      var pointsClass = 'trickPoints';
+
+      if(availablePoints < requiredPoints) {
+        pointsClass += ' trickPointsDisabled';
+      }
+
+      return pointsClass;
+    }
+
+    return (
+      <div className="trickContainer">
+        <div>
+          <span className={generateTrickClass(trickName)} onClick={Board.tryTrick.bind(Board, trickName)}/>
+        </div>
+        <div>
+          <span className={generateCoinsClass(trickName)}>{tricks[trickName]['coins']}⛁</span>
+        </div>
+        <div>
+          <span className={generatePointsClass(trickName)}>{tricks[trickName]['points']}★</span>
+        </div>
       </div>
     )
   }
