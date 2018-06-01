@@ -41,6 +41,36 @@ class BoardView extends React.Component {
     this.state = {board: new Board(previousState, bestScore, history)};
     this.points = Anki.getAnkiPoints();
     this.coins = Anki.getAnkiCoins();
+    this.tricks = {
+      gift: {
+        name: 'gift',
+        coins: 10,
+        points: 100,
+        isPermitted: this.state.board.hasEmptyCells,
+        execute: this.state.board.addGift
+      },
+      double: {
+        name: 'double',
+        coins: 20,
+        points: 1000,
+        isPermitted: this.state.board.ableToDouble,
+        execute: this.state.board.double
+      },
+      bomb: {
+        name: 'bomb',
+        coins: 30,
+        points: 5000,
+        isPermitted: this.state.board.ableToDeleteTwos,
+        execute: this.state.board.removeTwos
+      },
+      undo: {
+        name: 'undo',
+        coins: 40,
+        points: 10000,
+        isPermitted: this.state.board.hasHistory,
+        execute: this.state.board.undo
+      }
+    };
   }
   restartGame() {
     // Do not restart the best score
@@ -93,12 +123,15 @@ class BoardView extends React.Component {
   }
   // This function has to be bound when assigning it to the child's
   // prop, otherwise, it won't work.
-  addGift(event) {
+  tryTrick(trickName, event) {
     event.preventDefault();
 
-    var requiredCoins = 10;
-    var trickName = "gift";
-    var requiredPoints = 100;
+    var trick = this.tricks[trickName];
+    var requiredCoins = trick["coins"];
+    var trickName = trick["name"];
+    var requiredPoints = trick["points"];
+    var isPermitted = trick["isPermitted"];
+    var execute = trick["execute"];
 
     if(!Anki.hasPointsForTrick(requiredPoints)) {
       Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
@@ -110,94 +143,19 @@ class BoardView extends React.Component {
       return;
     }
 
-    if(!this.state.board.hasEmptyCells()){
+    // Use apply to bind the object
+    if(!isPermitted.apply(this.state.board)){
       Anki.unableTrick(trickName, this.getBoardStateAsString());
       return;
     }
 
     Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
-    this.setState({board: this.state.board.addGift()});
+    this.setState({board: execute.apply(this.state.board)});
+
+    // After applying a trick, the number of coins changed. Update the variable
+    // since the visual of the tricks depends on that value
     this.coins = Anki.getAnkiCoins();
   }
-  double(event) {
-    event.preventDefault();
-
-    var requiredCoins = 20;
-    var trickName = "double";
-    var requiredPoints = 1000;
-    
-    if(!Anki.hasPointsForTrick(requiredPoints)) {
-      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
-      return;
-    }
-
-    if(!Anki.hasCoinsForTrick(requiredCoins)) {
-      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
-      return;
-    }
-
-    if(!this.state.board.ableToDouble()){
-      Anki.unableTrick(trickName, this.getBoardStateAsString());
-      return;
-    }
-
-    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
-    this.setState({board: this.state.board.double()});
-    this.coins = Anki.getAnkiCoins();
-  }
-  removeTwos(event) {
-    event.preventDefault();
-
-    var requiredCoins = 30;
-    var trickName = "bomb";
-    var requiredPoints = 5000;
-    
-    if(!Anki.hasPointsForTrick(requiredPoints)) {
-      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
-      return;
-    }
-    
-    if(!Anki.hasCoinsForTrick(requiredCoins)) {
-      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
-      return;
-    }
-
-    if(!this.state.board.ableToDeleteTwos()){
-      Anki.unableTrick(trickName, this.getBoardStateAsString());
-      return;
-    }
-
-    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
-    this.setState({board: this.state.board.removeTwos()});
-    this.coins = Anki.getAnkiCoins();
-  }
-  undoLast(event) {
-    event.preventDefault();
-
-    var requiredCoins = 40;
-    var trickName = "undo";
-    var requiredPoints = 10000;
-    
-    if(!Anki.hasPointsForTrick(requiredPoints)) {
-      Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
-      return;
-    }
-
-    if(!Anki.hasCoinsForTrick(requiredCoins)) {
-      Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
-      return;
-    }
-
-    if(!this.state.board.hasHistory()){
-      Anki.unableTrick(trickName, this.getBoardStateAsString());
-      return;
-    }
-
-    Anki.doTrick(trickName, requiredCoins, this.getBoardStateAsString());
-    this.setState({board: this.state.board.undo()});
-    this.coins = Anki.getAnkiCoins();
-  }
-  
   render() {
     // Since render is executed every time the state changes
     // Here we store the state of the game and the best score
@@ -258,10 +216,10 @@ class BoardView extends React.Component {
           {tiles}
         </div>
         <div>
-          <span className={generateTrickClass('trickGift', [100, points, 10, coins])} onClick={this.addGift.bind(this)} />
-          <span className={generateTrickClass('trickDouble', [1000, points, 20, coins])} onClick={this.double.bind(this)} />
-          <span className={generateTrickClass('trickBomb', [5000, points, 30, coins])} onClick={this.removeTwos.bind(this)} />
-          <span className={generateTrickClass('trickUndo', [10000, points, 40, coins])} onClick={this.undoLast.bind(this)} />
+          <span className={generateTrickClass('trickGift', [100, points, 10, coins])} onClick={this.tryTrick.bind(this, 'gift')} />
+          <span className={generateTrickClass('trickDouble', [1000, points, 20, coins])} onClick={this.tryTrick.bind(this, 'double')} />
+          <span className={generateTrickClass('trickBomb', [5000, points, 30, coins])} onClick={this.tryTrick.bind(this, 'bomb')} />
+          <span className={generateTrickClass('trickUndo', [10000, points, 40, coins])} onClick={this.tryTrick.bind(this, 'undo')} />
         </div>
         <div>
           <span className="trickPrice">10⛁</span>
