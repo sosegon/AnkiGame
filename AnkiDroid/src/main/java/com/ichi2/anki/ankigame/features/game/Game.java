@@ -134,9 +134,6 @@ public class Game extends CountersActivity implements GameMvpView {
     @BindString(R.string.has_lost_game)
     String sHasLost;
 
-    @BindString(R.string.trick_available)
-    String sTrickAvailable;
-
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,11 +278,6 @@ public class Game extends CountersActivity implements GameMvpView {
     @Override
     public void showBlockedTrickToast(int requiredPoints) {
         Toast.makeText(this, getString(R.string.blocked_trick, requiredPoints), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showTrickAvailableToast() {
-        Toast.makeText(this, sTrickAvailable, Toast.LENGTH_SHORT).show();
     }
 
     @Override

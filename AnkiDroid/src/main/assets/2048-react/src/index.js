@@ -29,12 +29,8 @@
 //   getAnkiCoins: function() {
 //     return 20;
 //   },
-//   hasLost: function(trickAvailable) {
-//     if(trickAvailable) {
-//       console.log("trick available");
-//     } else {
+//   hasLost: function() {
 //       console.log("lost");
-//     }
 //   }
 // }
 
@@ -99,8 +95,8 @@ class BoardView extends React.Component {
       event.preventDefault();
       var direction = event.keyCode - 37;
       this.setState({board: this.state.board.move(direction)});
-      if(this.state.board.hasLost()) {
-        Anki.hasLost(this.ableToDoAnyTrick());
+      if(this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
+        Anki.hasLost();
       }
     }
   }
@@ -126,8 +122,8 @@ class BoardView extends React.Component {
     }
     if (direction != -1) {
       this.setState({board: this.state.board.move(direction)});
-      if(this.state.board.hasLost()) {
-        Anki.hasLost(this.ableToDoAnyTrick());
+      if(this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
+        Anki.hasLost();
       }
     }
   }
@@ -350,15 +346,18 @@ class Trick extends React.Component {
       var requiredCoins = trick['coins'];
       var availableCoins = coins;
 
+      var isPermitted = trick['isPermitted'];
+
       var trickClass = 'trick';
 
       if(availablePoints >= requiredPoints){
         trickClass += ' trick_' + trickName;
-        if(availableCoins < requiredCoins) {
-          trickClass += ' trick_disabled';
-        }
       } else {
         trickClass += ' trick_blocked';
+      }
+
+      if(availableCoins < requiredCoins || !isPermitted.apply(Board.state.board)) {
+        trickClass += ' trick_disabled';
       }
 
       return trickClass;

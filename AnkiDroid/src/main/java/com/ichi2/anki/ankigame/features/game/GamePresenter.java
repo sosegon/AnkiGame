@@ -180,15 +180,11 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     @JavascriptInterface
-    public void hasLost(boolean trickAvailable) {
+    public void hasLost() {
         getMvpView().postRunnable(new Runnable() {
             @Override
             public void run() {
-                if(trickAvailable){
-                    getMvpView().showTrickAvailableToast();
-                } else {
-                    getMvpView().showHasLostDialog();
-                }
+                getMvpView().showHasLostDialog();
             }
         });
     }
