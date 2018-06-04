@@ -1,6 +1,7 @@
 package com.ichi2.anki.ankigame.data;
 
 import com.google.firebase.database.DatabaseReference;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.ankigame.data.local.PreferencesHelper;
 import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
@@ -46,9 +47,19 @@ public class DataManager {
     public String initUser() {
         String userId = mPreferencesHelper.retrieveUserId();
 
+//        if(BuildConfig.DEBUG) {
+//            mPreferencesHelper.clear();
+//            userId = mPreferencesHelper.retrieveUserId();
+//        }
+
         // Create new user if necessary
         if(userId.equals("")) {
-            DatabaseReference userRef = mFirebaseHelper.storeUser(new User(""));
+            User newUser = new User();
+            newUser.setBestScore(mPreferencesHelper.retrieveBestScore());
+            newUser.setNickName(mPreferencesHelper.retrieveNickname());
+            newUser.setPoints(mPreferencesHelper.retrievePoints());
+
+            DatabaseReference userRef = mFirebaseHelper.storeUser(newUser);
 
             // Store the key locally
             userId = userRef.getKey();
