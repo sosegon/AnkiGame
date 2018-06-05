@@ -19,10 +19,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,7 +79,7 @@ public class Game extends CountersActivity implements GameMvpView {
     WebView mWebMain;
 
     @BindView(R.id.root_layout)
-    CoordinatorLayout rootLayout;
+    ViewGroup rootLayout;
 
     // Set fullscreen toggle on webview LongClick
     @OnTouch(R.id.web_main)
@@ -379,6 +381,11 @@ public class Game extends CountersActivity implements GameMvpView {
 
         // TODO: AnkiGame, Remove this code if needed
         //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();
+
+        // ANKIGAME hide scrollbars and blue shade
+        mWebMain.setVerticalScrollBarEnabled(false);
+        mWebMain.setHorizontalScrollBarEnabled(false);
+        mWebMain.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     private void initFabGameMenu() {
