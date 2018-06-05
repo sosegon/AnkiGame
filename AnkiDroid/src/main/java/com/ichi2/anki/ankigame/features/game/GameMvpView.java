@@ -10,4 +10,5 @@ public interface GameMvpView extends MvpView {
     void postRunnable(Runnable runnable);
     void showUnableToDoTrickToast(String trickName);
     void showHasLostDialog();
+    void showHasWonDialog();
 }

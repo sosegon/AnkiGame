@@ -53,6 +53,11 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
             gameLog = logRestartGame(board);
         } else if (logType.contentEquals(GameLog.TYPE_LOST_GAME)) {
             gameLog = logLostGame(board);
+        } else if (logType.contentEquals(GameLog.TYPE_WON_GAME)) {
+            gameLog = logWonGame(board);
+        } else {
+            // Valid for GameLog.TYPE_NONE
+            return;
         }
 
         mDataManager.logBehaviour(gameLog);
@@ -188,6 +193,32 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
                 getMvpView().showHasLostDialog();
             }
         });
+    }
+
+    @JavascriptInterface
+    public void hasWon(String jsonString) {
+        getMvpView().postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                getMvpView().showHasWonDialog();
+                Board board =  Board.parseJSON(jsonString);
+                log(board, GameLog.TYPE_WON_GAME);
+            }
+        });
+    }
+
+    private GameLog logWonGame(Board board) {
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        gameLog.setLogType(GameLog.TYPE_WON_GAME);
+        gameLog.setBestScore(board.getBestScore());
+        gameLog.setCurrentScore(board.getScore());
+        gameLog.setUsedTricks(board.getUsedTricksAsString());
+        gameLog.setBoardValues(board.getBoardValuesAsString());
+        gameLog.setTotalCoins(getCoins());
+        gameLog.setTotalPoints(getPoints());
+        // TODO: AnkiGame Add leaderboard position
+
+        return gameLog;
     }
 
     private GameLog logGoToAnki(Board board) {

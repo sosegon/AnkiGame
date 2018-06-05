@@ -88,6 +88,8 @@ var Board = function (state, bestScore, history) {
 
   this.setPositions();
   this.addition = 0;
+  this.won = false;
+  this.continueAfterWon = false;
 };
 
 Board.prototype.setTileValues = function(values) {
@@ -145,6 +147,7 @@ Board.prototype.moveLeft = function () {
         }
       }
       resultRow[target] = targetTile;
+      this.won |= (targetTile.value == 2048);
       hasChanged |= (targetTile.value != this.cells[row][target].value);
     }
     this.cells[row] = resultRow;
@@ -153,9 +156,10 @@ Board.prototype.moveLeft = function () {
   this.score += this.addition;
   if(this.score > this.bestScore) {
     this.bestScore = this.score;
-    if(typeof(Anki) !== "undefined") {
-      Anki.updateBestScore(this.bestScore);
-    }
+    Anki.updateBestScore(this.bestScore);
+  }
+  if(this.won && !this.continueAfterWon) {
+    Anki.hasWon(this.asString());
   }
   return hasChanged;
 };

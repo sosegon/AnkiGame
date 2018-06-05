@@ -178,6 +178,9 @@ public class Game extends CountersActivity implements GameMvpView {
     @BindString(R.string.has_lost_game)
     String sHasLost;
 
+    @BindString(R.string.has_won_game)
+    String sHasWon;
+
     @SuppressLint({ "SetJavaScriptEnabled", "NewApi", "ShowToast" })
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,6 +338,29 @@ public class Game extends CountersActivity implements GameMvpView {
                 .setNegativeButton(R.string.dialog_cancel,
                         (dialog, which) ->  {})
                 .create()
+                .show();
+    }
+
+    @Override
+    public void showHasWonDialog() {
+        String logCodeRestart = GameLog.TYPE_RESTART_GAME;
+
+        new MaterialDialog.Builder(Game.this)
+                .title(sHasWon)
+                .positiveText(R.string.dialog_continue)
+                .negativeText(R.string.restart_game)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        mWebMain.loadUrl("javascript:continuePlaying()");
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        mWebMain.loadUrl("javascript:restartGame(\"" + logCodeRestart + "\")");
+                    }
+                })
+
                 .show();
     }
 

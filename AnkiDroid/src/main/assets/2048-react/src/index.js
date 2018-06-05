@@ -31,6 +31,9 @@
 //   },
 //   hasLost: function() {
 //       console.log("lost");
+//   },
+//   hasWon: function(){
+//     console.log("won");
 //   }
 // }
 
@@ -197,6 +200,9 @@ class BoardView extends React.Component {
     });
 
     return t.length > 0;
+  }
+  continuePlaying() {
+    this.state.board.continueAfterWon = true;
   }
   render() {
     // Since render is executed every time the state changes
@@ -430,3 +436,6 @@ var goToAnki = function (logCode) {
   }
 }
 
+var continuePlaying = function() {
+  BoardViewRendered.continuePlaying();
+}

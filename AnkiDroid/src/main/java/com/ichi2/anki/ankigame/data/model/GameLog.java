@@ -10,6 +10,7 @@ public class GameLog extends AppLog {
     public static final String TYPE_RESTART_GAME = "restartGame";
     public static final String TYPE_GO_TO_ANKI = "goToAnki";
     public static final String TYPE_LOST_GAME = "lostGame";
+    public static final String TYPE_WON_GAME = "wonGame";
     public static final String TYPE_FAIL_TRICK = "failTrick";
     public static final String TYPE_CHECK_LEADERBOARD = "checkLeaderboard";
 
