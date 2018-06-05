@@ -18,6 +18,7 @@ public class FirebaseHelper {
     public static final String USERLOGS_KEY = "logs";
     public static final String BEST_SCORE_KEY = "bestScore";
     public static final String POINTS_KEY = "points";
+    public static final String NICK_NAME_KEY = "nickName";
 
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mLogsDatabaseReference;
@@ -67,6 +68,13 @@ public class FirebaseHelper {
         userRef.child(POINTS_KEY).setValue(points);
 
         return userRef.child(POINTS_KEY);
+    }
+
+    public DatabaseReference storeNickName(String userId, String nickName) {
+        DatabaseReference userRef = retrieveUser(userId);
+        userRef.child(NICK_NAME_KEY).setValue(nickName);
+
+        return userRef.child(NICK_NAME_KEY);
     }
 
     public DatabaseReference getUsersDatabaseReference() {

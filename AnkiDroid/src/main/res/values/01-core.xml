@@ -65,7 +65,8 @@
     <string name="unable_trick">Board state does not allow to use trick %1$s at the moment.</string>
     <string name="menu_options">Options</string>
     <string name="menu_game">Game</string>
-    <string name="you">you</string>
+    <string name="update_nick_name">Update nickname</string>
+    <string name="edit" translatable="false">✎</string>
     <string name="leaderboard_rest" translatable="false">♟</string>
     <string name="leaderboard_fifth" translatable="false">♜</string>
     <string name="leaderboard_fourth" translatable="false">♞</string>

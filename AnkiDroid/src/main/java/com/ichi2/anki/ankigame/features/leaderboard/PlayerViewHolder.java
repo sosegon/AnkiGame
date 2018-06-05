@@ -44,4 +44,8 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
         llPlayer.setBackgroundColor(color);
     }
 
+    public void setOnClickListener(View.OnClickListener listener) {
+        lblPlayerName.setOnClickListener(listener);
+    }
+
 }

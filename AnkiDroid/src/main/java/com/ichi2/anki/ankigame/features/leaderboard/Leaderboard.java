@@ -9,13 +9,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseDialogFragment;
 
@@ -75,6 +78,7 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
         getDialog().setTitle(sLeaderboard);
 
         mPresenter.attachView(this);
+        mPresenter.initAdapter(mListenerChangeNickName);
         mPresenter.updatePointsRemotely(); // So, they are updated in firebase
         mPresenter.logCheckLeaderboard();
 
@@ -103,4 +107,34 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
             mPresenter.detachView();
         }
     }
+
+    EditText mDialogEditText;
+
+    View.OnClickListener mListenerChangeNickName = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mDialogEditText = new EditText(getActivity());
+
+            int maxLength = 12;
+            InputFilter[] filters = new InputFilter[1];
+            filters[0] = new InputFilter.LengthFilter(maxLength);
+            mDialogEditText.setFilters(filters);
+
+            mDialogEditText.setSingleLine(true);
+            mDialogEditText.setText(mPresenter.getNickName());
+
+            new MaterialDialog.Builder(getActivity())
+                    .title(R.string.update_nick_name)
+                    .positiveText(R.string.dialog_ok)
+                    .customView(mDialogEditText, true)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            mPresenter.updateNickName(mDialogEditText.getText().toString());
+                        }
+                    })
+                    .negativeText(R.string.dialog_cancel)
+                    .show();
+        }
+    };
 }

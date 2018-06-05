@@ -3,6 +3,7 @@ package com.ichi2.anki.ankigame.features.leaderboard;
 //import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 import android.content.Context;
+import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
@@ -27,12 +28,11 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
     public LeaderboardPresenter(@ApplicationContext Context context, DataManager dataManager) {
         this.mContext = context;
         this.mDataManager= dataManager;
-        initAdapter();
     }
 
     public void updatePointsRemotely() {
         int points = mDataManager.getPreferencesHelper().retrievePoints();
-        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        String userId = getUserId();
         mDataManager.getFirebaseHelper().storePoints(userId, points);
     }
 
@@ -44,8 +44,21 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
         return mAdapter;
     }
 
+    public String getNickName() {
+        return mDataManager.getPreferencesHelper().retrieveNickName();
+    }
+
+    public void updateNickName(String nickName) {
+        mDataManager.getPreferencesHelper().storeNickName(nickName);
+        mDataManager.getFirebaseHelper().storeNickName(getUserId(), nickName);
+    }
+
+    private String getUserId() {
+        return mDataManager.getPreferencesHelper().retrieveUserId();
+    }
+
     private void doLogCheckLeaderboard() {
-        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        GameLog gameLog = GameLog.logBase(getUserId());
         gameLog.setLogType(GameLog.TYPE_CHECK_LEADERBOARD);
         gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
         gameLog.setTotalPoints(mDataManager.getPreferencesHelper().retrievePoints());
@@ -53,7 +66,7 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
         mDataManager.logBehaviour(gameLog);
     }
 
-    private void initAdapter() {
+    public void initAdapter(View.OnClickListener mListenerChangeNickName) {
 
        Query query = mDataManager.getFirebaseHelper().getUsersDatabaseReference()
                         .orderByChild(User.PARAM_POINTS);
@@ -63,12 +76,13 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
                R.layout.leaderboard_item,
                PlayerViewHolder.class,
                query) {
+
            @Override
            protected void populateViewHolder(PlayerViewHolder viewHolder, User model, int position) {
                String nickName = model.getNickName();
-               String nickNamePref = mDataManager.getPreferencesHelper().retrieveNickName();
-               if(nickName.contentEquals(nickNamePref)){
-                   nickName += " (" + mContext.getResources().getString(R.string.you) + ")";
+               if(getRef(position).getKey().contentEquals(getUserId())) {
+                   nickName = mContext.getResources().getString(R.string.edit) + nickName;
+                   viewHolder.setOnClickListener(mListenerChangeNickName);
                }
                viewHolder.setNickName(nickName);
                viewHolder.setPoints(model.getPoints());
