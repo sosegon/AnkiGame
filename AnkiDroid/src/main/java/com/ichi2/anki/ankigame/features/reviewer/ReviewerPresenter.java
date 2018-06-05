@@ -31,6 +31,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private int mCardEase;
 
     private int mElapsedTimeToAnswer;
+    int mZeroRange = 1; // To avoid cheating due to fast assessing of cards
+    int mIncreaseRange = 3;
 
     @Inject
     public ReviewerPresenter(DataManager dataManager) {
@@ -51,29 +53,32 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         // TODO: ANKIGAME, Double check the values
         switch (ease) {
             case EASE_1:
-                currentCoins += 1;
+                currentCoins += 0;
                 break;
             case EASE_2:
-                currentCoins += 1;
+                currentCoins += 0;
                 break;
             case EASE_3:
-                currentCoins += 1;
+                currentCoins += 0;
                 break;
             case EASE_4:
-                currentCoins += 1;
+                currentCoins += 0;
                 break;
         }
 
+        int elapsedTime = (int)((System.currentTimeMillis() - mElapsedTime)/ 1000);
+
         // Add coins based on elapsed time
-        int extraCoins = calcCoins(mElapsedTimeToAnswer);
+        int extraCoins = calcCoins((elapsedTime)) + calcCoins(mElapsedTimeToAnswer);
         currentCoins += extraCoins;
-        Timber.d(LOG_TAG + ": elapsed time to answer: " + mElapsedTimeToAnswer);
+        Timber.d(LOG_TAG + ": elapsed time to answer: " + elapsedTime);
         Timber.d(LOG_TAG + ": coins based on time: " + extraCoins);
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
 
-        int extraPoints = calcPoints(mElapsedTimeToAnswer);
+        // Add points based on elapsed time
+        int extraPoints = calcPoints(elapsedTime) + calcPoints(mElapsedTimeToAnswer);
         int totalPoints = mDataManager.getPreferencesHelper().retrievePoints();
         mDataManager.getPreferencesHelper().storePoints(totalPoints + extraPoints);
 
@@ -126,19 +131,21 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     }
 
     private int calcCoins(int elapsedTime) {
-        if(elapsedTime <= 5) {
-            return elapsedTime;
-        } else if (elapsedTime > 5 && elapsedTime <= 10) {
-            return 5;
-        } else if (elapsedTime > 5 && elapsedTime <= 15) {
-            return 15 - elapsedTime;
-        } else {
+        if(elapsedTime <= mZeroRange) {
             return 0;
+        } else if (elapsedTime > mZeroRange && elapsedTime <= mIncreaseRange) {
+            return elapsedTime - mZeroRange;
+        } else {
+            return mIncreaseRange;
         }
     }
 
     private int calcPoints(int elapsedTime) {
-        return Math.max((int)(10 * Math.log10(elapsedTime)), 1);
+        if(elapsedTime <= mZeroRange) {
+            return 0;
+        } else {
+            return Math.max((int)(10 * Math.log10(elapsedTime)), 1);
+        }
     }
 
     public void setDeckInfo(String mDeckInfo) {
