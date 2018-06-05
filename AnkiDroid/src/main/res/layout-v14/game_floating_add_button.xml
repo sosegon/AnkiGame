@@ -17,27 +17,17 @@
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:layout_behavior="com.ichi2.anki.widgets.FabBehavior">
         <!--TODO: AnkiGame, Check the size of icons from 32dp to 24dp-->
-        <!--TODO: AnkiGame, Uncomment the buttons when implementing each feature-->
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/game_mode_action"
+        <!-- TODO: ANKIGAME, update icon -->
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_howto_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/game_modes"
+            android:contentDescription="@string/how_to_play"
             fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_game_modes_32dp"
-            fab:fab_title="@string/game_modes"
+            fab:fab_icon="@drawable/ic_restart_game_32dp"
+            fab:fab_title="@string/how_to_play"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/leaderboard_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/leaderboard"
-            fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_leaderboard_32dp"
-            fab:fab_title="@string/leaderboard"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>-->
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_restart_action"
             android:layout_width="wrap_content"

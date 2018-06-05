@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +29,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
@@ -102,6 +105,9 @@ public class Game extends CountersActivity implements GameMvpView {
 
     @OnClick(R.id.fab_earn_coins_action)
     public void earnCoins() {
+        if (mFabGameMenu == null) {
+            return;
+        }
         mFabGameMenu.collapse();
         Intent intent = new Intent(Game.this, DeckPicker.class);
         String logCode = GameLog.TYPE_GO_TO_ANKI;
@@ -144,6 +150,20 @@ public class Game extends CountersActivity implements GameMvpView {
         ft.addToBackStack(null);
 
         leaderboard.show(ft, Leaderboard.FRAGMENT_TAG);
+    }
+
+    @OnClick(R.id.fab_howto_action)
+    public void showHelp() {
+        if (mFabGameMenu == null) {
+            return;
+        }
+        mFabGameMenu.collapse();
+
+        new MaterialDialog.Builder(Game.this)
+                .title(R.string.how_to_play)
+                .positiveText(R.string.close)
+                .customView(R.layout.how_to_play, true)
+                .show();
     }
 
     @BindString(R.string.press_back_again_to_exit)
