@@ -73,6 +73,7 @@ import com.ichi2.anki.MyAccount;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.features.CountersActivity;
+import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.StudyOptionsFragment;
@@ -500,6 +501,7 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
         final FloatingActionButton addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
         final FloatingActionButton addGameButton = (FloatingActionButton) findViewById(R.id.add_game_action);
+        final FloatingActionButton addLeaderboardButton = (FloatingActionButton) findViewById(R.id.add_leaderboard_action);
         addDeckButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -547,6 +549,14 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
             public void onClick(View view) {
                 mActionsMenu.collapse();
                 addGame();
+            }
+        });
+        // ANKIGAME
+        addLeaderboardButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActionsMenu.collapse();
+                addLeaderboard();
             }
         });
     }
@@ -910,6 +920,20 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         mDeckPickerPresenter.logGoToGame();
         Intent intent = new Intent(DeckPicker.this, Game.class);
         startActivityForResultWithAnimation(intent, GO_GAME, ActivityTransitionAnimation.LEFT);
+    }
+
+    // ANKIGAME
+    public void addLeaderboard() {
+        Leaderboard leaderboard = new Leaderboard();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(Leaderboard.FRAGMENT_TAG);
+        if(prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        leaderboard.show(ft, Leaderboard.FRAGMENT_TAG);
     }
 
 
