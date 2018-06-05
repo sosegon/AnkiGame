@@ -9,6 +9,7 @@ import com.google.firebase.database.Query;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
@@ -35,8 +36,21 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
         mDataManager.getFirebaseHelper().storePoints(userId, points);
     }
 
+    public void logCheckLeaderboard() {
+        doLogCheckLeaderboard();
+    }
+
     public FirebaseRecyclerAdapter<User, PlayerViewHolder> getAdapter() {
         return mAdapter;
+    }
+
+    private void doLogCheckLeaderboard() {
+        GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        gameLog.setLogType(GameLog.TYPE_CHECK_LEADERBOARD);
+        gameLog.setTotalCoins(mDataManager.getPreferencesHelper().retrieveCoins());
+        gameLog.setTotalPoints(mDataManager.getPreferencesHelper().retrievePoints());
+
+        mDataManager.logBehaviour(gameLog);
     }
 
     private void initAdapter() {

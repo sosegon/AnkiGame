@@ -42,6 +42,8 @@ public class Analytics {
             params = logLostGame(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_GO_TO_ANKI)){
             params = logGoToAnki(appLog);
+        } else if(appLog.getLogType().contentEquals(GameLog.TYPE_CHECK_LEADERBOARD)){
+            params = logCheckLeaderboard(appLog);
         } else {
             return;
         }
@@ -165,6 +167,12 @@ public class Analytics {
             params.putString(GameLog.PARAM_USED_TRICKS, ((GameLog)appLog).getUsedTricks());
             params.putString(GameLog.PARAM_BOARD_VALUES, ((GameLog)appLog).getBoardValues());
         }
+
+        return params;
+    }
+
+    private Bundle logCheckLeaderboard(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
 
         return params;
     }
