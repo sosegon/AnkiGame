@@ -17,11 +17,18 @@
             android:layout_below="@+id/toolbar"/>
 
         <!--TODO: AnkiGame, Fix the size of the webview-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
         <WebView
             android:id="@+id/web_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/coinsbar"/>
+
     </RelativeLayout>
 
     <include layout="@layout/game_floating_add_button"/>
