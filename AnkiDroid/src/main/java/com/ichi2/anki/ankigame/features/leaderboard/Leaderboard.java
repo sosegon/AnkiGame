@@ -75,6 +75,7 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
         getDialog().setTitle(sLeaderboard);
 
         mPresenter.attachView(this);
+        mPresenter.updatePointsRemotely(); // So, they are updated in firebase
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setReverseLayout(true); // reverse order

@@ -29,6 +29,12 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
         initAdapter();
     }
 
+    public void updatePointsRemotely() {
+        int points = mDataManager.getPreferencesHelper().retrievePoints();
+        String userId = mDataManager.getPreferencesHelper().retrieveUserId();
+        mDataManager.getFirebaseHelper().storePoints(userId, points);
+    }
+
     public FirebaseRecyclerAdapter<User, PlayerViewHolder> getAdapter() {
         return mAdapter;
     }
