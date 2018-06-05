@@ -1,11 +1,8 @@
 package com.ichi2.anki.ankigame.data.remote;
 
-import android.os.Debug;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ichi2.anki.BuildConfig;
-import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 
@@ -62,5 +59,9 @@ public class FirebaseHelper {
         userRef.child(BEST_SCORE_KEY).setValue(bestScore);
 
         return userRef.child(BEST_SCORE_KEY);
+    }
+
+    public DatabaseReference getUsersDatabaseReference() {
+        return mUsersDatabaseReference;
     }
 }

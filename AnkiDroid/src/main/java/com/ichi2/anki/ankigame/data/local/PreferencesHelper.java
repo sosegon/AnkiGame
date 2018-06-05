@@ -16,7 +16,7 @@ public class PreferencesHelper {
     public static final String KEY_POINTS = "prf_points";
     public static final String KEY_USER_ID = "prf_user_id";
     public static final String KEY_BEST_SCORE = "prf_best_score";
-    public static final String KEY_NICKNAME = "prf_nickname";
+    public static final String KEY_NICK_NAME = "prf_nick_name";
 
     private final SharedPreferences mPref;
 
@@ -61,12 +61,11 @@ public class PreferencesHelper {
         return mPref.getInt(KEY_BEST_SCORE, 0);
     }
 
-    public void storeNickname(String nickname) {
-        mPref.edit().putString(KEY_NICKNAME, nickname).apply();
+    public void storeNickName(String nickname) {
+        mPref.edit().putString(KEY_NICK_NAME, nickname).apply();
     }
 
-    public String retrieveNickname() {
-        String randomSuffix = String.valueOf((int)(Math.random() * 1000));
-        return mPref.getString(KEY_NICKNAME, "player" + randomSuffix);
+    public String retrieveNickName() {
+        return mPref.getString(KEY_NICK_NAME, "");
     }
 }

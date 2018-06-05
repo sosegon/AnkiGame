@@ -80,6 +80,7 @@ dependencies {
     final BUTTERKNIFE_VERSION = '8.4.0'
     final DAGGER_VERSION = '2.5'
     final FIREBASE_VERSION = '11.0.2'
+    final FIREBASEUI_VERSION = '2.1.0'
 
     implementation "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
@@ -93,6 +94,8 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$FIREBASE_VERSION"
     implementation "com.google.firebase:firebase-core:$FIREBASE_VERSION"
     implementation "com.google.firebase:firebase-messaging:$FIREBASE_VERSION"
+
+    compile "com.firebaseui:firebase-ui-database:$FIREBASEUI_VERSION"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:26.1.0'

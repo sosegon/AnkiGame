@@ -54,9 +54,14 @@ public class DataManager {
 
         // Create new user if necessary
         if(userId.equals("")) {
+
+            // Set a nickname here
+            String randomSuffix = String.valueOf((int)(Math.random() * 1000));
+            mPreferencesHelper.storeNickName("player" + randomSuffix);
+
             User newUser = new User();
             newUser.setBestScore(mPreferencesHelper.retrieveBestScore());
-            newUser.setNickName(mPreferencesHelper.retrieveNickname());
+            newUser.setNickName(mPreferencesHelper.retrieveNickName());
             newUser.setPoints(mPreferencesHelper.retrievePoints());
 
             DatabaseReference userRef = mFirebaseHelper.storeUser(newUser);

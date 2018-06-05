@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -30,6 +32,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.features.CountersActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
 
 import java.util.Locale;
 
@@ -120,6 +123,25 @@ public class Game extends CountersActivity implements GameMvpView {
                 (dialog, which) ->  {})
         .create()
         .show();
+    }
+
+    @OnClick(R.id.fab_leaderboard_action)
+    public void showLeaderboard() {
+        if (mFabGameMenu == null) {
+            return;
+        }
+        mFabGameMenu.collapse();
+
+        Leaderboard leaderboard = new Leaderboard();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(Leaderboard.FRAGMENT_TAG);
+        if(prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        leaderboard.show(ft, Leaderboard.FRAGMENT_TAG);
     }
 
     @BindString(R.string.press_back_again_to_exit)

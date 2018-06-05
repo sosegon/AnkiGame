@@ -55,6 +55,7 @@
     <!-- ANKIGAME -->
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="earn_coins">Earn coins</string>
+    <string name="leaderboard">Leaderboard</string>
     <string name="restart_game">Restart game?</string>
     <string name="has_lost_game">You lose!</string>
     <string name="coins">Coins: %1$d ⛁</string>
@@ -64,6 +65,13 @@
     <string name="unable_trick">Board state does not allow to use trick %1$s at the moment.</string>
     <string name="menu_options">Options</string>
     <string name="menu_game">Game</string>
+    <string name="you">you</string>
+    <string name="leaderboard_rest" translatable="false">♟</string>
+    <string name="leaderboard_fifth" translatable="false">♜</string>
+    <string name="leaderboard_fourth" translatable="false">♞</string>
+    <string name="leaderboard_third" translatable="false">♝</string>
+    <string name="leaderboard_second" translatable="false">♛</string>
+    <string name="leaderboard_first" translatable="false">♚</string>
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>

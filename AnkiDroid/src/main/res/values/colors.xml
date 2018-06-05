@@ -14,6 +14,14 @@
 -->
 <resources>
 
+    <!-- ANKIGAME -->
+    <color name="leaderboard_rest">#ffB3E5FC</color>
+    <color name="leaderboard_fifth">#ff81D4FA</color>
+    <color name="leaderboard_fourth">#ff4FC3F7</color>
+    <color name="leaderboard_third">#ff29B6F6</color>
+    <color name="leaderboard_second">#ff03a9f4</color>
+    <color name="leaderboard_first">#ff039be5</color>
+
     <color name="wb_fg_color">#B00000FF</color>
     <color name="wb_fg_color_inv">#0099FF</color>
     <color name="stats_young">#7c7</color>
