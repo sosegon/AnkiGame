@@ -54,17 +54,19 @@
 
     <!-- ANKIGAME -->
     <string name="press_back_again_to_exit">Press back again to exit</string>
+    <string name="earn_coins_points">Earn coins | points</string>
     <string name="earn_coins">Earn coins</string>
+    <string name="earn_points">Earn points</string>
     <string name="leaderboard">Leaderboard</string>
-    <string name="restart_game">Restart game?</string>
+    <string name="restart_game">Restart game</string>
     <string name="how_to_play">How to play</string>
     <string name="has_lost_game">You lose!</string>
     <string name="has_won_game">You won!</string>
     <string name="coins">Coins: %1$d ⛁</string>
     <string name="points">Anki points: %1$d ★</string>
-    <string name="not_enough_coins">You need %1$d extra coins to use this trick.</string>
-    <string name="blocked_trick">You need %1$d extra anki points to unblock this trick.</string>
-    <string name="unable_trick">Board state does not allow to use trick %1$s at the moment.</string>
+    <string name="insufficient_coins">You need %1$d extra coins to use this trick.</string>
+    <string name="insufficient_points">You need %1$d extra anki points to unblock this trick.</string>
+    <string name="unable_trick">Not possible to use %1$s trick at the moment.</string>
     <string name="menu_options">Options</string>
     <string name="menu_game">Game</string>
     <string name="update_nick_name">Update nickname</string>

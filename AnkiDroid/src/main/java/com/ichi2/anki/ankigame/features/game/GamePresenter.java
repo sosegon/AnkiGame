@@ -94,7 +94,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         getMvpView().postRunnable(new Runnable(){
             @Override
             public void run () {
-                getMvpView().showBlockedTrickToast(requiredPoints - points);
+                getMvpView().showInsufficientPointsMessage(requiredPoints - points);
                 logFailTrick(board, trickName, Trick.TRICK_FAIL_BLOCKED);
             }
         });
@@ -123,7 +123,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         getMvpView().postRunnable(new Runnable(){
             @Override
             public void run () {
-                getMvpView().showNoCoinsToast(requiredCoins - coins);
+                getMvpView().showInsufficientCoinsMessage(requiredCoins - coins);
                 logFailTrick(board, trickName, Trick.TRICK_FAIL_DISABLED);
             }
         });
@@ -135,7 +135,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         getMvpView().postRunnable(new Runnable(){
             @Override
             public void run () {
-                getMvpView().showUnableToDoTrickToast(trickName);
+                getMvpView().showUnableToDoTrickMessage(trickName);
                 logFailTrick(board, trickName, Trick.TRICK_FAIL_NOT_PERMITTED);
             }
         });

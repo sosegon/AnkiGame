@@ -4,10 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/root_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true" >
 
         <RelativeLayout
             android:id="@+id/game_view"
@@ -39,5 +41,5 @@
 
         <include layout="@layout/game_floating_add_button"/>
 
-    </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </android.support.v4.widget.DrawerLayout>

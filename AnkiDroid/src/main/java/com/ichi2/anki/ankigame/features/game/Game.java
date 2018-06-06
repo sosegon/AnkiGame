@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -25,15 +23,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.features.CountersActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
@@ -316,18 +313,39 @@ public class Game extends CountersActivity implements GameMvpView {
     }
 
     @Override
-    public void showNoCoinsToast(int requiredCoins) {
-        Toast.makeText(this, getString(R.string.not_enough_coins, requiredCoins), Toast.LENGTH_SHORT).show();
+    public void showInsufficientCoinsMessage(int requiredCoins) {
+        UIUtils.showSnackbar(
+                this,
+                getString(R.string.insufficient_coins, requiredCoins),
+                false,
+                R.string.earn_coins,
+                (view) -> earnCoins(),
+                findViewById(R.id.root_layout),
+                null
+        );
     }
 
     @Override
-    public void showUnableToDoTrickToast(String trickName) {
-        Toast.makeText(this, getString(R.string.unable_trick, trickName), Toast.LENGTH_SHORT).show();
+    public void showUnableToDoTrickMessage(String trickName) {
+        UIUtils.showSimpleSnackbar(
+                this,
+                getString(R.string.unable_trick, trickName),
+                false
+        );
+
     }
 
     @Override
-    public void showBlockedTrickToast(int requiredPoints) {
-        Toast.makeText(this, getString(R.string.blocked_trick, requiredPoints), Toast.LENGTH_SHORT).show();
+    public void showInsufficientPointsMessage(int requiredPoints) {
+        UIUtils.showSnackbar(
+                this,
+                getString(R.string.insufficient_points, requiredPoints),
+                false,
+                R.string.earn_points,
+                (view) -> earnCoins(),
+                findViewById(R.id.root_layout),
+                null
+        );
     }
 
     @Override

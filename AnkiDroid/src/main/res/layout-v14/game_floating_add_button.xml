@@ -42,10 +42,10 @@
             android:id="@+id/fab_earn_coins_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/earn_coins"
+            android:contentDescription="@string/earn_coins_points"
             fab:fab_colorNormal="?attr/fab_normal"
             fab:fab_icon="@drawable/ic_piggy_32dp"
-            fab:fab_title="@string/earn_coins"
+            fab:fab_title="@string/earn_coins_points"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
         <!-- TODO: ANKIGAME, update icon -->
