@@ -1,5 +1,6 @@
 package com.ichi2.anki.ankigame.injection.component;
 
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.ankigame.features.game.Game;
 import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
@@ -19,4 +20,5 @@ public interface ActivityComponent {
     void inject(DeckPicker deckPickerActivity);
     void inject(Reviewer reviewerActivity);
     void inject(Leaderboard leaderboardFragment);
+    void inject(CustomStudyDialog customStudyDialog );
 }

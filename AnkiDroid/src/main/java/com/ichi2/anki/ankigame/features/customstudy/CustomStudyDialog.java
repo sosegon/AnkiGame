@@ -37,6 +37,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
+import com.ichi2.anki.ankigame.base.BaseDialogFragment;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -53,7 +54,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class CustomStudyDialog extends DialogFragment {
+import javax.inject.Inject;
+
+public class CustomStudyDialog extends BaseDialogFragment implements CustomStudyDialogMvpView {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;
@@ -69,6 +72,10 @@ public class CustomStudyDialog extends DialogFragment {
     // Special items to put in the context menu
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
+
+    //ANKIGAME
+    @Inject
+    CustomStudyDialogPresenter mPresenter;
 
     public interface CustomStudyListener {
         void onCreateCustomStudySession();
@@ -96,6 +103,10 @@ public class CustomStudyDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // ANKIGAME
+        activityComponent().inject(this);
+        mPresenter.attachView(this);
+
         final int dialogId = getArguments().getInt("id");
         if (dialogId < 100) {
             // Select the specified deck
@@ -103,6 +114,25 @@ public class CustomStudyDialog extends DialogFragment {
             return buildContextMenu(dialogId);
         } else {
             return buildInputDialog(dialogId);
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // ANKIGAME
+        if(!mPresenter.isViewAttached()) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // ANKIGAME
+        if(mPresenter.isViewAttached()) {
+            mPresenter.detachView();
         }
     }
 
