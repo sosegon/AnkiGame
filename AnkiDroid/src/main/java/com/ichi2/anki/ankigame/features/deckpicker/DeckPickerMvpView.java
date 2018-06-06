@@ -4,7 +4,7 @@ import android.support.v4.app.ActivityCompat;
 
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.ankigame.base.MvpView;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;

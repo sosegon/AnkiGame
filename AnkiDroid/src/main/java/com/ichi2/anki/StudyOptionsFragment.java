@@ -35,7 +35,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;

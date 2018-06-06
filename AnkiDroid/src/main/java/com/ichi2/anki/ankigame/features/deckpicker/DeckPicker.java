@@ -81,7 +81,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.ankigame.features.game.Game;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;

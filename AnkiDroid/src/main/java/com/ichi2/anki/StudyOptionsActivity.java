@@ -23,7 +23,7 @@ import android.view.View;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;

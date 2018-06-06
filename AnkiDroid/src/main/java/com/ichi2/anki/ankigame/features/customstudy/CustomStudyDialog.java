@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.ankigame.features.customstudy;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -38,6 +38,8 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
+import com.ichi2.anki.dialogs.ContextMenuHelper;
+import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
