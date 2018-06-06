@@ -1,12 +1,13 @@
 package com.ichi2.anki.ankigame.data;
 
 import com.google.firebase.database.DatabaseReference;
-import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.ankigame.data.local.PreferencesHelper;
+import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.Analytics;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
+import com.ichi2.anki.ankigame.util.DeckInfoHandler;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
 import javax.inject.Inject;
@@ -76,11 +77,19 @@ public class DataManager {
 
     public void logBehaviour(AppLog log) {
         if(log != null) {
+
+            if(log instanceof AnkiLog) {
+                String deckInfo = ((AnkiLog)(log)).getDeckInfo();
+                String filterDeckInfo = DeckInfoHandler.filterDeckInfo(deckInfo);
+                ((AnkiLog)(log)).setDeckInfo(filterDeckInfo);
+            }
+
             DatabaseReference logRef = mFirebaseHelper.storeLog(log);
 
             // Store the reference of the log under user record
             DatabaseReference userRef = mFirebaseHelper.retrieveUser(log.getUserId());
             userRef.child(USERLOGS_KEY).child(logRef.getKey()).setValue(true);
+
             mAnalytics.logEvent(log);
         }
     }
