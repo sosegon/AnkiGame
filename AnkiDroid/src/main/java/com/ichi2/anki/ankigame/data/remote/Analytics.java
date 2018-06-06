@@ -97,6 +97,7 @@ public class Analytics {
 
         if(appLog instanceof AnkiLog){
             params.putInt(AnkiLog.PARAM_COINS_IN_CARD, ((AnkiLog)appLog).getCoinsInCard());
+            params.putInt(AnkiLog.PARAM_POINTS_IN_CARD, ((AnkiLog)appLog).getPointsInCard());
             params.putString(AnkiLog.PARAM_CARD_ANSWER, ((AnkiLog)appLog).getCardAnswer());
             params.putString(AnkiLog.PARAM_CARD_INFO, ((AnkiLog)appLog).getCardInfo());
             params.putInt(AnkiLog.PARAM_ELAPSED_TIME, ((AnkiLog)appLog).getElapsedTime());

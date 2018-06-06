@@ -28,6 +28,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     // Also used to record time between answering a question and assesing it
     private long mElapsedTime;
     private int mCoinsInCard;
+    private int mPointsInCard;
     private int mCardEase;
 
     private int mElapsedTimeToAnswer;
@@ -86,6 +87,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         increaseEarnedCoins(extraCoins);
 
         mCoinsInCard = currentCoins;
+        mPointsInCard = extraPoints;
         mCardEase = ease;
     }
 
@@ -122,6 +124,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setTotalCoins(getCoins());
         ankiLog.setTotalPoints(getPoints());
         ankiLog.setCoinsInCard(mCoinsInCard);
+        ankiLog.setPointsInCard(mPointsInCard);
         ankiLog.setCardAnswer(mCardAnswer);
         ankiLog.setCardInfo(mCardInfo);
         ankiLog.setElapsedTime((int)((System.currentTimeMillis() - mElapsedTime)/ 1000));

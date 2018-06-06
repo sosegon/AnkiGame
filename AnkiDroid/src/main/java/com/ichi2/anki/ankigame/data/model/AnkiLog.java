@@ -20,6 +20,7 @@ public class AnkiLog extends AppLog{
     public static final String PARAM_ELAPSED_TIME = "elapsedTime";
     public static final String PARAM_IS_FAV_CARD = "isFavCard";
     public static final String PARAM_COINS_IN_CARD = "coinsInCard";
+    public static final String PARAM_POINTS_IN_CARD = "pointsInCard";
     public static final String PARAM_CARD_EASE = "cardEase";
     public static final String PARAM_CUSTOM_STUDY_OPTION = "customStudyOption";
     public static final String PARAM_EARNED_COINS= "earnedCoins";
@@ -33,6 +34,7 @@ public class AnkiLog extends AppLog{
     public int elapsedTime;
     public boolean isFavCard;
     public int coinsInCard;
+    public int pointsInCard;
     public int cardEase;
     public String customStudyOption;
     public int earnedCoins;
@@ -110,6 +112,14 @@ public class AnkiLog extends AppLog{
 
     public void setCoinsInCard(int coinsInCard) {
         this.coinsInCard = coinsInCard;
+    }
+
+    public int getPointsInCard() {
+        return pointsInCard;
+    }
+
+    public void setPointsInCard(int pointsInCard) {
+        this.pointsInCard = pointsInCard;
     }
 
     public int getCardEase() {
