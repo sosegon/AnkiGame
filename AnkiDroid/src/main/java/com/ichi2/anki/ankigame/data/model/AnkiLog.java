@@ -10,6 +10,7 @@ public class AnkiLog extends AppLog{
     public static final String TYPE_SELECT_DECK = "selectDeck";
     public static final String TYPE_DISPLAY_ANSWER_CARD = "displayAnswerCard";
     public static final String TYPE_ASSESS_CARD = "assessCard";
+    public static final String TYPE_CUSTOM_STUDY = "customStudy";
 
     // Name of params
     public static final String PARAM_DUE_DECK_INFO = "dueDeckInfo";
@@ -20,6 +21,7 @@ public class AnkiLog extends AppLog{
     public static final String PARAM_IS_FAV_CARD = "isFavCard";
     public static final String PARAM_COINS_IN_CARD = "coinsInCard";
     public static final String PARAM_CARD_EASE = "cardEase";
+    public static final String PARAM_CUSTOM_STUDY_OPTION = "customStudyOption";
 
     // Params in logEvent
     public String dueDeckInfo;
@@ -30,6 +32,7 @@ public class AnkiLog extends AppLog{
     public boolean isFavCard;
     public int coinsInCard;
     public int cardEase;
+    public String customStudyOption;
 
     public static AnkiLog logBase(String userId) {
         Date date = new Date();
@@ -111,5 +114,13 @@ public class AnkiLog extends AppLog{
 
     public void setCardEase(int cardEase) {
         this.cardEase = cardEase;
+    }
+
+    public String getCustomStudyOption() {
+        return customStudyOption;
+    }
+
+    public void setCustomStudyOption(String customStudyOption) {
+        this.customStudyOption = customStudyOption;
     }
 }

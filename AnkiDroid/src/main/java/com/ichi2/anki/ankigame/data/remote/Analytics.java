@@ -32,6 +32,8 @@ public class Analytics {
             params = logDisplayAnswerCard(appLog);
         } else if(appLog.getLogType().contentEquals(AnkiLog.TYPE_ASSESS_CARD)){
             params = logAssessCard(appLog);
+        } else if(appLog.getLogType().contentEquals(AnkiLog.TYPE_CUSTOM_STUDY)){
+            params = logCustomStudy(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_USE_TRICK)){
             params = logUseTrick(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_FAIL_TRICK)){
@@ -104,6 +106,20 @@ public class Analytics {
 
         return params;
     }
+
+    private Bundle logCustomStudy(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
+
+        if(appLog instanceof AnkiLog){
+            // TODO: Process info from due deck to avoid missing it
+            // Do it in the log class. Max number of chars in event value is 100
+            params.putString(AnkiLog.PARAM_CUSTOM_STUDY_OPTION, ((AnkiLog)appLog).getCustomStudyOption());
+            params.putString(AnkiLog.PARAM_DECK_INFO, ((AnkiLog)appLog).getDeckInfo());
+        }
+
+        return params;
+    }
+
 
     private Bundle logUseTrick(AppLog appLog) {
         Bundle params = getAppLogParams(appLog);

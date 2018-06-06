@@ -62,13 +62,13 @@ public class CustomStudyDialog extends BaseDialogFragment implements CustomStudy
     public static final int CONTEXT_MENU_LIMITS = 1;
     public static final int CONTEXT_MENU_EMPTY_SCHEDULE = 2;
     // Standard custom study options to show in the context menu
-    private static final int CUSTOM_STUDY_NEW = 100;
-    private static final int CUSTOM_STUDY_REV = 101;
-    private static final int CUSTOM_STUDY_FORGOT = 102;
-    private static final int CUSTOM_STUDY_AHEAD = 103;
-    private static final int CUSTOM_STUDY_RANDOM = 104;
-    private static final int CUSTOM_STUDY_PREVIEW = 105;
-    private static final int CUSTOM_STUDY_TAGS = 106;
+    public static final int CUSTOM_STUDY_NEW = 100;
+    public static final int CUSTOM_STUDY_REV = 101;
+    public static final int CUSTOM_STUDY_FORGOT = 102;
+    public static final int CUSTOM_STUDY_AHEAD = 103;
+    public static final int CUSTOM_STUDY_RANDOM = 104;
+    public static final int CUSTOM_STUDY_PREVIEW = 105;
+    public static final int CUSTOM_STUDY_TAGS = 106;
     // Special items to put in the context menu
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
@@ -106,6 +106,10 @@ public class CustomStudyDialog extends BaseDialogFragment implements CustomStudy
         // ANKIGAME
         activityComponent().inject(this);
         mPresenter.attachView(this);
+
+        //ANKIGAME
+        String sDeckInfo = CollectionHelper.getInstance().getCol(getActivity()).getDecks().current().toString();
+        mPresenter.setDeckInfo(sDeckInfo);
 
         final int dialogId = getArguments().getInt("id");
         if (dialogId < 100) {
@@ -210,6 +214,10 @@ public class CustomStudyDialog extends BaseDialogFragment implements CustomStudy
                                     }
                                 });
                                 activity.showDialogFragment(dialogFragment);
+
+                                // ANKIGAME
+                                mPresenter.logCustomStudy(CUSTOM_STUDY_TAGS);
+
                                 break;
                             }
                             default: {
@@ -319,6 +327,9 @@ public class CustomStudyDialog extends BaseDialogFragment implements CustomStudy
                             default:
                                 break;
                         }
+
+                        // ANKIGAME
+                        mPresenter.logCustomStudy(dialogId);
                     }
 
                     @Override
