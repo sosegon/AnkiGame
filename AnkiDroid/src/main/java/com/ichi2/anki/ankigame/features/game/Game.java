@@ -93,8 +93,8 @@ public class Game extends CountersActivity implements GameMvpView {
         if ((event.getAction() == MotionEvent.ACTION_UP)
                 && (Math.abs(currentTime - mLastTouch) > mTouchThreshold)) {
             boolean toggledFullScreen = !isFullScreen();
-            saveFullScreen(toggledFullScreen);
-            applyFullScreen(toggledFullScreen);
+            //saveFullScreen(toggledFullScreen);
+            //applyFullScreen(toggledFullScreen);
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
             mLastTouch = currentTime;
         }
@@ -203,7 +203,6 @@ public class Game extends CountersActivity implements GameMvpView {
         Toolbar toolbar = (Toolbar) rootLayout.findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(getString(R.string.app_name));
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 

@@ -1,36 +1,43 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-    <RelativeLayout
-        android:id="@+id/game_view"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/root_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:layout_height="fill_parent">
 
-        <include layout="@layout/toolbar" />
+        <RelativeLayout
+            android:id="@+id/game_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
-        <include layout="@layout/coinsbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"/>
+            <include layout="@layout/toolbar" />
 
-        <!--TODO: AnkiGame, Fix the size of the webview-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
-        <WebView
-            android:id="@+id/web_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/coinsbar"/>
+            <include layout="@layout/coinsbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"/>
 
-    </RelativeLayout>
+            <!--TODO: AnkiGame, Fix the size of the webview-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+            <WebView
+                android:id="@+id/web_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/coinsbar"/>
 
-    <include layout="@layout/game_floating_add_button"/>
+        </RelativeLayout>
 
-</FrameLayout>
+        <include layout="@layout/game_floating_add_button"/>
+
+    </FrameLayout>
+</android.support.v4.widget.DrawerLayout>
