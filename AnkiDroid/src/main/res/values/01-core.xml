@@ -71,6 +71,9 @@
     <string name="menu_game">Game</string>
     <string name="update_nick_name">Update nickname</string>
     <string name="loading">Loading...</string>
+    <string name="share">Share</string>
+    <string name="about">About</string>
+    <string name="ankidroid_url">https://docs.ankidroid.org</string>
     <string name="game_instuctions">
         Swipe the screen ↔ ↕ to move the tiles. When two tiles with the same number touch, they merge into one!
     </string>
@@ -82,6 +85,13 @@
     </string>
     <string name="points_instructions">
         Review flashcards to earn points ★ and coins ⛁ to unblock and use tricks.
+    </string>
+    <string name="share_message">
+        <!--TODO: Ankigame, update app url-->
+        I am having fun with AnkiGame. <a href="">Check it out!</a> #AnkiGame
+    </string>
+    <string name="about_ankigame">
+        AnkiGame is a modified version of <a href="">AnkiDroid</a>
     </string>
 
     <string name="edit" translatable="false">✎</string>
