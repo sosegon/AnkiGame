@@ -57,8 +57,10 @@ public class Analytics {
 
     private Bundle logGoToGame(AppLog appLog) {
         Bundle params = getAppLogParams(appLog);
-        // TODO: AnkiGame, add logic to logEvent the earned coins as well.
-
+        if(appLog instanceof AnkiLog){
+            params.putInt(AnkiLog.PARAM_EARNED_COINS, ((AnkiLog)appLog).getEarnedCoins());
+            params.putInt(AnkiLog.PARAM_EARNED_POINTS, ((AnkiLog)appLog).getEarnedPoints());
+        }
         return params;
     }
 

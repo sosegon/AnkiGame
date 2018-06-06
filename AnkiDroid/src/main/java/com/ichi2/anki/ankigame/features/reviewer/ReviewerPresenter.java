@@ -82,6 +82,9 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         int totalPoints = mDataManager.getPreferencesHelper().retrievePoints();
         mDataManager.getPreferencesHelper().storePoints(totalPoints + extraPoints);
 
+        increaseEarnedPoints(extraPoints);
+        increaseEarnedCoins(extraCoins);
+
         mCoinsInCard = currentCoins;
         mCardEase = ease;
     }
@@ -178,5 +181,15 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
 
     public void setCardEase(int mCardEase) {
         this.mCardEase = mCardEase;
+    }
+
+    private void increaseEarnedPoints(int points) {
+        int prev = mDataManager.getPreferencesHelper().retrieveEarnedPoints();
+        mDataManager.getPreferencesHelper().storeEarnedPoints(prev + points);
+    }
+
+    private void increaseEarnedCoins(int coins) {
+        int prev = mDataManager.getPreferencesHelper().retrieveEarnedCoins();
+        mDataManager.getPreferencesHelper().storeEarnedCoins(prev + coins);
     }
 }

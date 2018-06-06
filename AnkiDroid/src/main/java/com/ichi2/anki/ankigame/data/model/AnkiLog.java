@@ -22,6 +22,8 @@ public class AnkiLog extends AppLog{
     public static final String PARAM_COINS_IN_CARD = "coinsInCard";
     public static final String PARAM_CARD_EASE = "cardEase";
     public static final String PARAM_CUSTOM_STUDY_OPTION = "customStudyOption";
+    public static final String PARAM_EARNED_COINS= "earnedCoins";
+    public static final String PARAM_EARNED_POINTS = "earnedPoints";
 
     // Params in logEvent
     public String dueDeckInfo;
@@ -33,6 +35,8 @@ public class AnkiLog extends AppLog{
     public int coinsInCard;
     public int cardEase;
     public String customStudyOption;
+    public int earnedCoins;
+    public int earnedPoints;
 
     public static AnkiLog logBase(String userId) {
         Date date = new Date();
@@ -122,5 +126,21 @@ public class AnkiLog extends AppLog{
 
     public void setCustomStudyOption(String customStudyOption) {
         this.customStudyOption = customStudyOption;
+    }
+
+    public int getEarnedCoins() {
+        return earnedCoins;
+    }
+
+    public void setEarnedCoins(int earnedCoins) {
+        this.earnedCoins = earnedCoins;
+    }
+
+    public int getEarnedPoints() {
+        return earnedPoints;
+    }
+
+    public void setEarnedPoints(int earnedPoints) {
+        this.earnedPoints = earnedPoints;
     }
 }

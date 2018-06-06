@@ -30,6 +30,14 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return mDataManager.getPreferencesHelper().retrievePoints();
     }
 
+    public void resetEarnedCoins() {
+        mDataManager.getPreferencesHelper().storeEarnedCoins(0);
+    }
+
+    public void resetEarnedPoints() {
+        mDataManager.getPreferencesHelper().storeEarnedPoints(0);
+    }
+
     public void reduceCoins(int coins) {
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins - coins);

@@ -223,6 +223,10 @@ public class Game extends CountersActivity implements GameMvpView {
         if(!mGamePresenter.isViewAttached()) {
             mGamePresenter.attachView(this);
         }
+        // This is specially useful when arriving from DeckPicker
+        mGamePresenter.resetEarnedCoins();
+        mGamePresenter.resetEarnedPoints();
+
         updateLblGameCoins(mGamePresenter.getCoins());
         updateLblPoints(mGamePresenter.getPoints());
         // To update the visual of the tricks based on the coins and points

@@ -14,6 +14,8 @@ public class PreferencesHelper {
 
     public static final String KEY_COINS = "prf_coins";
     public static final String KEY_POINTS = "prf_points";
+    public static final String KEY_EARNED_COINS = "prf_earned_coins";
+    public static final String KEY_EARNED_POINTS = "prf_earned_points";
     public static final String KEY_USER_ID = "prf_user_id";
     public static final String KEY_BEST_SCORE = "prf_best_score";
     public static final String KEY_NICK_NAME = "prf_nick_name";
@@ -43,6 +45,22 @@ public class PreferencesHelper {
 
     public void storePoints(int points) {
         mPref.edit().putInt(KEY_POINTS, points).apply();
+    }
+
+    public int retrieveEarnedCoins() {
+        return mPref.getInt(KEY_EARNED_COINS, 0);
+    }
+
+    public void storeEarnedCoins(int coins) {
+        mPref.edit().putInt(KEY_EARNED_COINS, coins).apply();
+    }
+
+    public int retrieveEarnedPoints() {
+        return mPref.getInt(KEY_EARNED_POINTS, 0);
+    }
+
+    public void storeEarnedPoints(int points) {
+        mPref.edit().putInt(KEY_EARNED_POINTS, points).apply();
     }
 
     public String retrieveUserId() {

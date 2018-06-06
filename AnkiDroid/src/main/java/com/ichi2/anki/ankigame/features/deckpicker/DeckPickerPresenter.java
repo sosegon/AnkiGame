@@ -29,8 +29,17 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         ankiLog.setLogType(AnkiLog.TYPE_GO_TO_GAME);
         ankiLog.setTotalCoins(getCoins());
         ankiLog.setTotalPoints(getPoints());
-        // TODO: AnkiGame, add logic to logEvent the earned coins as well.
+        ankiLog.setEarnedPoints(getEarnedPoints());
+        ankiLog.setEarnedCoins(getEarnedCoins());
         mDataManager.logBehaviour(ankiLog);
+    }
+
+    private int getEarnedCoins() {
+        return mDataManager.getPreferencesHelper().retrieveEarnedCoins();
+    }
+
+    private int getEarnedPoints() {
+        return mDataManager.getPreferencesHelper().retrieveEarnedPoints();
     }
 
 }
