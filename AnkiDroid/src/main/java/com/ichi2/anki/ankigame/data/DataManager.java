@@ -7,7 +7,7 @@ import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.Analytics;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
-import com.ichi2.anki.ankigame.util.DeckInfoHandler;
+import com.ichi2.anki.ankigame.util.InfoHandler;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
 import javax.inject.Inject;
@@ -81,8 +81,14 @@ public class DataManager {
             if(log instanceof AnkiLog) {
                 String deckInfo = ((AnkiLog)(log)).getDeckInfo();
                 if(deckInfo != null) {
-                    String filterDeckInfo = DeckInfoHandler.filterDeckInfo(deckInfo);
+                    String filterDeckInfo = InfoHandler.filterDeckInfo(deckInfo);
                     ((AnkiLog)(log)).setDeckInfo(filterDeckInfo);
+                }
+
+                String cardInfo = ((AnkiLog)(log)).getCardInfo();
+                if(cardInfo != null) {
+                    String filterCardInfo = InfoHandler.filterCardInfo(cardInfo);
+                    ((AnkiLog)(log)).setCardInfo(filterCardInfo);
                 }
             }
 

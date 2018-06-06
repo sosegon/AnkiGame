@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import timber.log.Timber;
 
-public class DeckInfoHandler {
+public class InfoHandler {
 
     public static String getValidDeckInfo(JSONObject jsonDeck) {
         String sDeckInfo = "";
@@ -28,6 +28,34 @@ public class DeckInfoHandler {
         return sDeckInfo;
     }
 
+    public static String getValidCardInfo(String fullString) {
+        String sCardInfo = "";
+        String[] fields = {"mElapsedTime", "mQueue", "mWasNew"};
+
+        String[] keys = fullString.split(",");
+
+        for(String field : fields) {
+            for(String key : keys) {
+                if(key.contains(field)){
+                    try {
+                        String value = key.split(":")[1];
+                        sCardInfo += value + ",";
+                    } catch (IndexOutOfBoundsException e) {
+                        Timber.e("Failed to get from card: " + field);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        // Remove last comma
+        if (sCardInfo.length() > 0 && sCardInfo.charAt(sCardInfo.length() - 1) == ',') {
+            sCardInfo = sCardInfo.substring(0, sCardInfo.length() - 1);
+        }
+
+        return sCardInfo;
+    }
+
     public static String filterDeckInfo(String deckInfo) {
         try {
             JSONObject json = new JSONObject(deckInfo);
@@ -36,5 +64,9 @@ public class DeckInfoHandler {
             Timber.e("Impossible to filter deck info");
             return deckInfo;
         }
+    }
+
+    public static String filterCardInfo(String cardInfo) {
+        return getValidCardInfo(cardInfo);
     }
 }
