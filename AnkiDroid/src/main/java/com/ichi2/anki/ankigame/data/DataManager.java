@@ -80,8 +80,10 @@ public class DataManager {
 
             if(log instanceof AnkiLog) {
                 String deckInfo = ((AnkiLog)(log)).getDeckInfo();
-                String filterDeckInfo = DeckInfoHandler.filterDeckInfo(deckInfo);
-                ((AnkiLog)(log)).setDeckInfo(filterDeckInfo);
+                if(deckInfo != null) {
+                    String filterDeckInfo = DeckInfoHandler.filterDeckInfo(deckInfo);
+                    ((AnkiLog)(log)).setDeckInfo(filterDeckInfo);
+                }
             }
 
             DatabaseReference logRef = mFirebaseHelper.storeLog(log);
