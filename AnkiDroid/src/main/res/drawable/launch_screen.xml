@@ -4,12 +4,12 @@
   <!-- Your product logo - 144dp color version of your app icon -->
   <item>
     <bitmap
-      android:src="@drawable/logo_star_144dp"
+      android:src="@drawable/logo_game_star_144dp"
       android:gravity="center"/>
   </item>
     <item android:top="200dp">
         <bitmap
-            android:src="@drawable/ankidroid_txt"
+            android:src="@drawable/ankigame_txt"
             android:gravity="center"/>
     </item>
 </layer-list>
