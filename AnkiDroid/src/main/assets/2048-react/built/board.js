@@ -57,15 +57,50 @@ Tile.prototype.toColumn = function () {
   return this.mergedInto ? this.mergedInto.column : this.column;
 };
 
-var Board = function Board() {
+var Board = function Board(state, bestScore, history) {
   this.tiles = [];
   this.cells = [];
   for (var i = 0; i < Board.size; ++i) {
     this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
   }
-  this.addRandomTile();
+
+  if (state) {
+    this.setTileValues(state.values);
+    this.score = state.score;
+    this.usedTricks = state.usedTricks;
+  } else {
+    this.addRandomTile();
+    this.addRandomTile(); // Two tiles at the begining
+    this.score = 0;
+    this.usedTricks = [];
+  }
+
+  if (bestScore) {
+    this.bestScore = bestScore;
+  } else {
+    this.bestScore = 0;
+  }
+
+  if (history) {
+    this.history = history;
+  } else {
+    this.history = [];
+  }
+
   this.setPositions();
+  this.addition = 0;
   this.won = false;
+  this.continueAfterWon = false;
+};
+
+Board.prototype.setTileValues = function (values) {
+  // values is an array of size 16
+  var self = this;
+  this.cells.forEach(function (row, rowIndex) {
+    row.forEach(function (tile, columnIndex) {
+      tile.value = values[rowIndex * Board.size + columnIndex];
+    });
+  });
 };
 
 Board.prototype.addTile = function () {
@@ -79,20 +114,38 @@ Board.size = 4;
 
 Board.prototype.moveLeft = function () {
   var hasChanged = false;
+  this.addition = 0;
   for (var row = 0; row < Board.size; ++row) {
+    // A row has to be processed to merge the colliding tiles
+    // Those non zero tiles are the ones to collide
     var currentRow = this.cells[row].filter(function (tile) {
       return tile.value != 0;
     });
     var resultRow = [];
+
     for (var target = 0; target < Board.size; ++target) {
       var targetTile = currentRow.length ? currentRow.shift() : this.addTile();
-      if (currentRow.length > 0 && currentRow[0].value == targetTile.value) {
-        var tile1 = targetTile;
-        targetTile = this.addTile(targetTile.value);
-        tile1.mergedInto = targetTile;
-        var tile2 = currentRow.shift();
-        tile2.mergedInto = targetTile;
-        targetTile.value += tile2.value;
+
+      if (currentRow.length > 0) {
+        if (currentRow[0].value == targetTile.value || currentRow[0].value == -1 || targetTile.value == -1) {
+
+          var tile1 = targetTile;
+          targetTile = this.addTile(targetTile.value);
+          tile1.mergedInto = targetTile;
+
+          var tile2 = currentRow.shift();
+          tile2.mergedInto = targetTile;
+
+          var toAdd = 0;
+          if (this.isGift(targetTile, tile2)) {
+            targetTile.value = this.mergeGift(targetTile, tile2);
+            toAdd = targetTile.value > 0 ? targetTile.value : 0;
+          } else {
+            targetTile.value += tile2.value;
+            toAdd = targetTile.value;
+          }
+          this.addition += toAdd;
+        }
       }
       resultRow[target] = targetTile;
       this.won |= targetTile.value == 2048;
@@ -100,7 +153,45 @@ Board.prototype.moveLeft = function () {
     }
     this.cells[row] = resultRow;
   }
+
+  this.score += this.addition;
+  if (this.score > this.bestScore) {
+    this.bestScore = this.score;
+    Anki.updateBestScore(this.bestScore);
+  }
+  if (this.won && !this.continueAfterWon) {
+    Anki.hasWon(this.asString());
+  }
   return hasChanged;
+};
+
+Board.prototype.isGift = function (tile1, tile2) {
+  var result = false;
+  if (tile1.value == -1 && tile2.value > 0) {
+    result = true;
+  } else if (tile1.value > 0 && tile2.value == -1) {
+    result = true;
+  } else if (tile1.value == -1 && tile2.value == -1) {
+    result = true;
+  }
+  return result;
+};
+
+Board.prototype.mergeGift = function (tile1, tile2) {
+  var result = 0;
+
+  if (tile1.value == -1 && tile2.value == -1) {
+    result = -1;
+  } else if (tile1.value == -1) {
+    result = tile2.value < 512 ? tile2.value * 2 : tile2.value;
+  } else if (tile2.value == -1) {
+    result = tile1.value < 512 ? tile1.value * 2 : tile1.value;
+  } else {
+    // unreachable
+    result = tile1.value + tile2.value;
+  }
+
+  return result;
 };
 
 Board.prototype.setPositions = function () {
@@ -118,6 +209,8 @@ Board.prototype.setPositions = function () {
 Board.fourProbability = 0.1;
 
 Board.prototype.addRandomTile = function () {
+  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+
   var emptyCells = [];
   for (var r = 0; r < Board.size; ++r) {
     for (var c = 0; c < Board.size; ++c) {
@@ -126,13 +219,18 @@ Board.prototype.addRandomTile = function () {
       }
     }
   }
-  var index = ~ ~(Math.random() * emptyCells.length);
+  var index = ~~(Math.random() * emptyCells.length);
   var cell = emptyCells[index];
-  var newValue = Math.random() < Board.fourProbability ? 4 : 2;
+  //var newValue = Math.random() < Board.fourProbability ? 4 : 2;
+  var newValue = value;
   this.cells[cell.r][cell.c] = this.addTile(newValue);
 };
 
 Board.prototype.move = function (direction) {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
   // 0 -> left, 1 -> up, 2 -> right, 3 -> down
   this.clearOldTiles();
   for (var i = 0; i < direction; ++i) {
@@ -144,6 +242,7 @@ Board.prototype.move = function (direction) {
   }
   if (hasChanged) {
     this.addRandomTile();
+    this.updateHistory(state);
   }
   this.setPositions();
   return this;
@@ -158,13 +257,11 @@ Board.prototype.clearOldTiles = function () {
   });
 };
 
-Board.prototype.hasWon = function () {
-  return this.won;
-};
-
 Board.deltaX = [-1, 0, 1, 0];
 Board.deltaY = [0, -1, 0, 1];
 
+// Board to test lost
+// [2,2,8,16,32,64,128,256,512,128,64,32,16,8,4,2]
 Board.prototype.hasLost = function () {
   var canMove = false;
   for (var row = 0; row < Board.size; ++row) {
@@ -181,4 +278,186 @@ Board.prototype.hasLost = function () {
     }
   }
   return !canMove;
+};
+
+Board.prototype.removeTwos = function () {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
+  this.clearOldTiles();
+  var hasChanged = false;
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      if (this.cells[r][c].value == 2) {
+        this.cells[r][c] = this.addTile();
+        this.cells[r][c].markForDeletion = true;
+        hasChanged = true;
+      }
+    }
+  }
+  this.setPositions();
+
+  // Need to clear old tile since those with value 2
+  // are supposed to be removed
+  this.clearOldTiles();
+  this.setPositions();
+
+  // Add the trick to the list of used ones
+  if (hasChanged) {
+    this.usedTricks.push("bomb");
+    this.updateHistory(state);
+  }
+  return this;
+};
+
+// At least one cell has to be greater than two
+Board.prototype.ableToDeleteTwos = function () {
+  var atLeastOneTwo = false;
+  var atLeastOneGreaterThanTwo = false;
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      var value = this.cells[r][c].value;
+      if (value == 2) {
+        atLeastOneTwo = true;
+      } else if (value > 2) {
+        atLeastOneGreaterThanTwo = true;
+      }
+    }
+  }
+  return atLeastOneTwo && atLeastOneGreaterThanTwo;
+};
+
+Board.prototype.addGift = function () {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
+  var hasChanged = false;
+  if (this.hasEmptyCells()) {
+    hasChanged = true;
+    this.clearOldTiles();
+    this.addRandomTile(-1);
+    this.setPositions();
+  }
+
+  if (hasChanged) {
+    // Add the trick to the list of used ones
+    this.usedTricks.push("gift");
+    this.updateHistory(state);
+  }
+  return this;
+};
+
+Board.prototype.double = function () {
+  // For history.
+  // The state has to be stored once the board has changed.
+  var state = this.serialize();
+
+  this.clearOldTiles();
+  var hasChanged = false;
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      var value = this.cells[r][c].value;
+      if (value > 0 && value <= 2) {
+        this.cells[r][c].value *= 2;
+        this.cells[r][c].markForDeletion = false;
+        hasChanged = true;
+      }
+    }
+  }
+
+  // Add the trick to the list of used ones
+  if (hasChanged) {
+    var values = this.serializeTiles();
+    this.setGridState(values);
+
+    this.usedTricks.push("double");
+    this.updateHistory(state);
+  }
+  return this;
+};
+
+Board.prototype.ableToDouble = function () {
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      var value = this.cells[r][c].value;
+      if (value > 0 && value <= 2) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+Board.prototype.hasEmptyCells = function () {
+  for (var r = 0; r < Board.size; ++r) {
+    for (var c = 0; c < Board.size; ++c) {
+      if (this.cells[r][c].value == 0) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+Board.prototype.serialize = function () {
+  return {
+    usedTricks: this.usedTricks,
+    hasLost: this.hasLost(),
+    bestScore: this.bestScore,
+    score: this.score,
+    values: this.serializeTiles()
+  };
+};
+
+Board.prototype.serializeTiles = function () {
+  var values = [];
+  this.cells.forEach(function (row, rowIndex) {
+    row.forEach(function (tile, columnIndex) {
+      values.push(tile.value);
+    });
+  });
+
+  return values;
+};
+
+Board.prototype.asString = function () {
+  return JSON.stringify(this.serialize());
+};
+
+Board.prototype.updateHistory = function (state) {
+  // TODO: AnkiGame, Check the hard-coded value
+  if (this.history.length >= 10) {
+    this.history.shift();
+  }
+  this.history.push(state);
+};
+
+Board.prototype.undo = function () {
+  var last = this.history.pop();
+  if (typeof last !== "undefined") {
+    this.score = last.score;
+    this.bestScore = last.bestScore;
+    this.setGridState(last.values);
+
+    // Add the trick to the list of used ones
+    this.usedTricks.push("undo");
+  }
+
+  return this;
+};
+
+Board.prototype.hasHistory = function () {
+  return this.history.length > 0;
+};
+
+Board.prototype.setGridState = function (tileValues) {
+  this.tiles = [];
+  this.cells = [];
+  for (var i = 0; i < Board.size; ++i) {
+    this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
+  }
+  this.setTileValues(tileValues);
+  this.setPositions();
 };
