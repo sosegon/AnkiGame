@@ -60,8 +60,8 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="restart_game">Restart game</string>
     <string name="how_to_play">How to play</string>
-    <string name="has_lost_game">You lose!</string>
-    <string name="has_won_game">You won!</string>
+    <string name="has_lost_game">☹You lose!☹</string>
+    <string name="has_won_game">☺You won!☺</string>
     <string name="coins">Coins: %1$d ⛁</string>
     <string name="points">Anki points: %1$d ★</string>
     <string name="insufficient_coins">You need %1$d extra coins to use this trick.</string>
@@ -74,7 +74,6 @@
     <string name="pausing">Pausing...</string>
     <string name="share">Share</string>
     <string name="about">About</string>
-    <string name="ankidroid_url">https://docs.ankidroid.org</string>
     <string name="game_instuctions">
         Swipe the screen ↔ ↕ to move the tiles. When two tiles with the same number touch, they merge into one!
         \n\nForm the tile 2048 to win.
@@ -89,9 +88,9 @@
     <string name="about_ankigame">
         AnkiGame is a modified version of <a href="">AnkiDroid</a>
         \n\nIt combines the AnkiDroid features that let you improve your learning
-        process with the fun of a simple game.
+        process with the fun of a casual game.
     </string>
-
+    <string name="ankidroid_url" translatable="false">https://docs.ankidroid.org</string>
     <string name="edit" translatable="false">✎</string>
     <string name="leaderboard_rest" translatable="false">♟</string>
     <string name="leaderboard_fifth" translatable="false">♜</string>
