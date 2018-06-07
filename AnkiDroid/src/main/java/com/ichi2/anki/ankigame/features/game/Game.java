@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -122,13 +121,17 @@ public class Game extends CountersActivity implements GameMvpView {
         mFabGameMenu.collapse();
 
         String logCode = GameLog.TYPE_RESTART_GAME;
-        new AlertDialog.Builder(this)
-        .setMessage(sRestart)
-        .setPositiveButton(R.string.dialog_ok,
-                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")"))
-        .setNegativeButton(R.string.dialog_cancel,
-                (dialog, which) ->  {})
-        .create()
+
+        new MaterialDialog.Builder(this)
+        .title(sRestart)
+        .positiveText(R.string.dialog_ok)
+        .onPositive(
+                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")")
+        )
+        .negativeText(R.string.dialog_cancel)
+        .onNegative(
+                (dialog, which) ->  {}
+        )
         .show();
     }
 
@@ -350,15 +353,18 @@ public class Game extends CountersActivity implements GameMvpView {
     @Override
     public void showHasLostDialog() {
         String logCode = GameLog.TYPE_LOST_GAME;
-        new AlertDialog.Builder(this)
-                .setTitle(sHasLost)
-                .setMessage(sRestart)
-                .setPositiveButton(R.string.dialog_ok,
-                        (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")"))
-                .setNegativeButton(R.string.dialog_cancel,
-                        (dialog, which) ->  {})
-                .create()
-                .show();
+
+        new MaterialDialog.Builder(this)
+        .title(sHasLost)
+        .positiveText(sRestart)
+        .onPositive(
+                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")")
+        )
+        .negativeText(R.string.close)
+        .onNegative(
+                (dialog, which) ->  {}
+        )
+        .show();
     }
 
     @Override
