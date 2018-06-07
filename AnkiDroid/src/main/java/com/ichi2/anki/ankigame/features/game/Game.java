@@ -80,6 +80,9 @@ public class Game extends CountersActivity implements GameMvpView {
     @BindView(R.id.root_layout)
     ViewGroup rootLayout;
 
+    @BindView(R.id.lbl_message)
+    TextView mMessage;
+
     // Set fullscreen toggle on webview LongClick
     @OnTouch(R.id.web_main)
     public boolean onTouchGameWebView(View v, MotionEvent event) {
@@ -226,6 +229,8 @@ public class Game extends CountersActivity implements GameMvpView {
         updateLblPoints(mGamePresenter.getPoints());
         // To update the visual of the tricks based on the coins and points
         mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
+
+        mMessage.setText(R.string.loading);
     }
 
     @Override
@@ -234,6 +239,8 @@ public class Game extends CountersActivity implements GameMvpView {
         // Remove the web page to avoid wrong state when coming back to the activity
         // This is because the visual of the page depends on the coins and points
         mWebMain.loadUrl("about:blank");
+
+        mMessage.setText(R.string.pausing);
     }
 
 
