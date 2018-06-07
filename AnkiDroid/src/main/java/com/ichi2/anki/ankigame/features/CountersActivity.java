@@ -2,12 +2,14 @@ package com.ichi2.anki.ankigame.features;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 
@@ -18,6 +20,10 @@ public class CountersActivity extends NavigationDrawerActivity {
     protected void initCounters(View maiView) {
         mLblCoins = maiView.findViewById(R.id.lbl_coins_game);
         mLblPoints = maiView.findViewById(R.id.lbl_points);
+
+        if(BuildConfig.FLAVOR.contentEquals("independent")){
+            mLblCoins.setVisibility(View.GONE);
+        }
     }
 
     public void updateLblGameCoins(int coins) {

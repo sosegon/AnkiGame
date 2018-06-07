@@ -63,6 +63,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
@@ -544,13 +545,17 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
             }
         });
         // ANKIGAME
-        addGameButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mActionsMenu.collapse();
-                addGame();
-            }
-        });
+        if(BuildConfig.FLAVOR.contentEquals("independent")) {
+            addGameButton.setVisibility(View.GONE);
+        } else {
+            addGameButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActionsMenu.collapse();
+                    addGame();
+                }
+            });
+        }
         // ANKIGAME
         addLeaderboardButton.setOnClickListener(new OnClickListener() {
             @Override
