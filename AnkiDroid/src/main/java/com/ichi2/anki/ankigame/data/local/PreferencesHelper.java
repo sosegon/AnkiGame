@@ -40,7 +40,7 @@ public class PreferencesHelper {
     }
 
     public int retrievePoints() {
-        return mPref.getInt(KEY_POINTS, 0);
+        return mPref.getInt(KEY_POINTS, 10);
     }
 
     public void storePoints(int points) {
