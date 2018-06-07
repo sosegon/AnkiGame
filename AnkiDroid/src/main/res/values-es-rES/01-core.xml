@@ -75,7 +75,7 @@
   <string name="earn_coins_points">Ganar monedas | puntos</string>
   <string name="earn_coins">Ganar monedas</string>
   <string name="earn_points">Ganar puntos</string>
-  <string name="leaderboard">Posiciones</string>
+  <string name="leaderboard">Ver posiciones</string>
   <string name="restart_game">Reiniciar juego</string>
   <string name="how_to_play">Cómo jugar</string>
   <string name="has_lost_game">☹Perdiste!☹</string>
@@ -86,7 +86,7 @@
   <string name="insufficient_points">Necesitas %1$d puntos más para desbloquear este truco.</string>
   <string name="unable_trick">No puedes usar el truco %1$s en este momento.</string>
   <string name="menu_options">Opciones</string>
-  <string name="menu_game">Juego</string>
+  <string name="menu_game">Jugar</string>
   <string name="update_nick_name">Cambiar nombre</string>
   <string name="loading">Cargando...</string>
   <string name="pausing">Pausando...</string>
