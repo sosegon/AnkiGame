@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +15,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -245,41 +242,6 @@ public class Game extends CountersActivity implements GameMvpView {
         super.onDestroy();
         if(mGamePresenter.isViewAttached()) {
             mGamePresenter.detachView();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.ankigame_options, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.act_about:
-                View v = View.inflate(this, R.layout.about_ankigame, null);
-                TextView tv = v.findViewById(R.id.txt_about);
-                tv.setOnClickListener((view) -> {
-                        openUrl(Uri.parse(getResources().getString(R.string.ankidroid_url)));
-                    }
-                );
-                new MaterialDialog.Builder(Game.this)
-                        .title(R.string.about)
-                        .positiveText(R.string.close)
-                        .customView(v, true)
-                        .show();
-                return true;
-            case R.id.act_share:
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message)); // TODO: get prediction
-                shareIntent.setType("text/plain");
-
-                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_message)));
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
