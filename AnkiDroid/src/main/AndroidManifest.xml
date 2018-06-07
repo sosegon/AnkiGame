@@ -170,7 +170,8 @@
             android:name=".ankigame.features.game.Game"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="Game">
+            android:label="Game"
+            android:screenOrientation="portrait">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <!-- TODO: AnkiGame, Fill the elements below if necessary -->
             <!--<meta-data/>
