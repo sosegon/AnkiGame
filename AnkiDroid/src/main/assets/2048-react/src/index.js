@@ -61,21 +61,21 @@ class BoardView extends React.Component {
       double: {
         name: 'double',
         coins: 20,
-        points: 1000,
+        points: 500,
         isPermitted: this.state.board.ableToDouble,
         execute: this.state.board.double
       },
       bomb: {
         name: 'bomb',
         coins: 30,
-        points: 5000,
+        points: 1000,
         isPermitted: this.state.board.ableToDeleteTwos,
         execute: this.state.board.removeTwos
       },
       undo: {
         name: 'undo',
         coins: 40,
-        points: 10000,
+        points: 2000,
         isPermitted: this.state.board.hasHistory,
         execute: this.state.board.undo
       }
