@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- ANKIGAME -->
+    <string name="share_message">
+        <!--TODO: Ankigame, update app url-->
+        I am having fun with AnkiPlay.
+        \n\n<a href="">Check it out!</a> #AnkiPlay
+    </string>
+    <string name="about_ankigame">
+        AnkiPlay is a modified version of <a href="">AnkiDroid</a>
+        \n\nIt lets you compete with other users to reach the top of
+        the leaderboard
+    </string>
+</resources>
