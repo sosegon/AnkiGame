@@ -77,22 +77,19 @@
     <string name="ankidroid_url">https://docs.ankidroid.org</string>
     <string name="game_instuctions">
         Swipe the screen ↔ ↕ to move the tiles. When two tiles with the same number touch, they merge into one!
-    </string>
-    <string name="win_instructions">
-        Form the tile 2048 to win.
-    </string>
-    <string name="tricks_instructions">
-        Use tricks to make the game easier.
-    </string>
-    <string name="points_instructions">
-        Review flashcards to earn points ★ and coins ⛁ to unblock and use tricks.
+        \n\nForm the tile 2048 to win.
+        \n\nUse tricks to make the game easier.
+        \n\nReview flashcards to earn points ★ and coins ⛁ to unblock and use tricks.
     </string>
     <string name="share_message">
         <!--TODO: Ankigame, update app url-->
-        I am having fun with AnkiGame. <a href="">Check it out!</a> #AnkiGame
+        I am having fun with AnkiGame.
+        \n\n<a href="">Check it out!</a> #AnkiGame
     </string>
     <string name="about_ankigame">
         AnkiGame is a modified version of <a href="">AnkiDroid</a>
+        \n\nIt combines the AnkiDroid features that let you improve your learning
+        process with the fun of a simple game.
     </string>
 
     <string name="edit" translatable="false">✎</string>
