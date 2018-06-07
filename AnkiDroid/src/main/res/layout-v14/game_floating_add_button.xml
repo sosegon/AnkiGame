@@ -17,14 +17,13 @@
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:layout_behavior="com.ichi2.anki.widgets.FabBehavior">
         <!--TODO: AnkiGame, Check the size of icons from 32dp to 24dp-->
-        <!-- TODO: ANKIGAME, update icon -->
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_howto_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/how_to_play"
             fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_restart_game_32dp"
+            fab:fab_icon="@drawable/ic_howto_32dp"
             fab:fab_title="@string/how_to_play"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
@@ -39,24 +38,23 @@
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_earn_coins_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/earn_coins_points"
-            fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_piggy_32dp"
-            fab:fab_title="@string/earn_coins_points"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>
-        <!-- TODO: ANKIGAME, update icon -->
-        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_leaderboard_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/leaderboard"
             fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_piggy_32dp"
+            fab:fab_icon="@drawable/ic_leaderboard_32dp"
             fab:fab_title="@string/leaderboard"
+            fab:fab_size="mini"
+            fab:fab_colorPressed="?attr/fab_pressed"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_earn_coins_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/earn_coins_points"
+            fab:fab_colorNormal="?attr/fab_normal"
+            fab:fab_icon="@drawable/ic_earn_32dp"
+            fab:fab_title="@string/earn_coins_points"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
