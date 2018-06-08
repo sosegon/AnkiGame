@@ -48,10 +48,6 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + coins);
     }
 
-    public String initUser() {
-        return mDataManager.initUser();
-    }
-
     public void log(Board board, String logType) {
         GameLog gameLog = GameLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
 

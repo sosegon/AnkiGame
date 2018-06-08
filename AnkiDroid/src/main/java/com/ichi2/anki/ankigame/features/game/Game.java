@@ -213,9 +213,6 @@ public class Game extends CountersActivity implements GameMvpView {
         initWebMain(savedInstanceState);
 
         pressBackToast = Toast.makeText(getApplicationContext(), sBack, Toast.LENGTH_SHORT);
-
-        // Init the user. It creates the id if necessary
-        mGamePresenter.initUser();
     }
 
     @Override

@@ -34,6 +34,10 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         mDataManager.logBehaviour(ankiLog);
     }
 
+    public String initUser() {
+        return mDataManager.initUser();
+    }
+
     private int getEarnedCoins() {
         return mDataManager.getPreferencesHelper().retrieveEarnedCoins();
     }

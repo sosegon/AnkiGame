@@ -394,6 +394,8 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         activityComponent().inject(this);
         mDeckPickerPresenter.attachView(this);
         initCounters(mainView);
+        // ANKIGAME Init the user. It creates the id if necessary
+        mDeckPickerPresenter.initUser();
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
