@@ -2,7 +2,6 @@ package com.ichi2.anki.ankigame.features;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,14 +60,20 @@ public class CountersActivity extends NavigationDrawerActivity {
                         .show();
                 return true;
             case R.id.act_share:
+                String shareUrl = getShareUrl();
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message)); // TODO: get prediction
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message) + " " + shareUrl); // TODO: get prediction
                 shareIntent.setType("text/plain");
 
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.share_message)));
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // To be implemented in every activity
+    public String getShareUrl() {
+        return "";
     }
 }

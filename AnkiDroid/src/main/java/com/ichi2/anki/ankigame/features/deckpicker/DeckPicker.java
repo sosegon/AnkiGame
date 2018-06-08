@@ -480,6 +480,12 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         }
     }
 
+    // ANKIGAME
+    @Override
+    public String getShareUrl() {
+        return mDeckPickerPresenter.getShareUrl();
+    }
+
     /**
      * Try to open the Collection for the first time, and do some error handling if it wasn't successful
      * @return whether or not we were successful

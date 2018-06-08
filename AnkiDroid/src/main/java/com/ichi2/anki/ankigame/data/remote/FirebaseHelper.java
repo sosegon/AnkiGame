@@ -19,24 +19,24 @@ public class FirebaseHelper {
     public static final String BEST_SCORE_KEY = "bestScore";
     public static final String POINTS_KEY = "points";
     public static final String NICK_NAME_KEY = "nickName";
+    public static final String SHARE_URL_KEY = "shareUrl";
 
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mLogsDatabaseReference;
-
+    private DatabaseReference mRoot;
     private FirebaseDatabase mFirebaseDatabase;
 
     public FirebaseHelper() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseDatabase.setPersistenceEnabled(true);
-        DatabaseReference root;
         if(BuildConfig.FLAVOR == "connection") {
-            root = mFirebaseDatabase.getReference().child(CONNECTION_KEY);
+            mRoot = mFirebaseDatabase.getReference().child(CONNECTION_KEY);
         } else {
-            root = mFirebaseDatabase.getReference().child(INDEPENDENT_KEY);
+            mRoot = mFirebaseDatabase.getReference().child(INDEPENDENT_KEY);
 
         }
-        mUsersDatabaseReference = root.child(USERS_KEY);
-        mLogsDatabaseReference = root.child(LOGS_KEY);
+        mUsersDatabaseReference = mRoot.child(USERS_KEY);
+        mLogsDatabaseReference = mRoot.child(LOGS_KEY);
     }
 
     public DatabaseReference storeUser(User user) {
@@ -79,5 +79,9 @@ public class FirebaseHelper {
 
     public DatabaseReference getUsersDatabaseReference() {
         return mUsersDatabaseReference;
+    }
+
+    public DatabaseReference retrieveShareUrl() {
+        return mRoot.child(SHARE_URL_KEY);
     }
 }

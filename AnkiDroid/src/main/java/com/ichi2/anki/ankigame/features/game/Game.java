@@ -387,6 +387,12 @@ public class Game extends CountersActivity implements GameMvpView {
                 .show();
     }
 
+    // ANKIGAME
+    @Override
+    public String getShareUrl() {
+        return mGamePresenter.getShareUrl();
+    }
+
     private void initScreenSettings() {
 
         // Don't show an action bar or title

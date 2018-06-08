@@ -24,6 +24,10 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         return mDataManager.getPreferencesHelper().retrievePoints();
     }
 
+    public String getShareUrl() {
+        return mDataManager.getShareUrl();
+    }
+
     public void logGoToGame() {
         AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setLogType(AnkiLog.TYPE_GO_TO_GAME);

@@ -127,6 +127,12 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     }
 
     // ANKIGAME
+    @Override
+    public String getShareUrl() {
+        return mReviewerPresenter.getShareUrl();
+    }
+
+    // ANKIGAME
     private Sched.DeckDueTreeNode getDueDeck() {
         long did = -1l;
 

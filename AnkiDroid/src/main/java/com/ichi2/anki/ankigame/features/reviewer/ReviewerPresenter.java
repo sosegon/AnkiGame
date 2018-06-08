@@ -48,6 +48,10 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return mDataManager.getPreferencesHelper().retrievePoints();
     }
 
+    public String getShareUrl() {
+        return mDataManager.getShareUrl();
+    }
+
     public void increaseCoinsAndPoints(int ease) {
         int currentCoins = 0;
 
