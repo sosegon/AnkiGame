@@ -74,7 +74,7 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
 
         activityComponent().inject(this);
 
-        addButtonToDialogTitle(getDialog());
+        //addButtonToDialogTitle(getDialog());
         getDialog().setTitle(sLeaderboard);
 
         mPresenter.attachView(this);
