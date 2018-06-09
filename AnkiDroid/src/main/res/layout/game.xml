@@ -33,8 +33,9 @@
                 android:layout_centerVertical="true"/>
             <WebView
                 android:id="@+id/web_main"
-                android:layout_width="480dp"
-                android:layout_height="650dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="290dp"
+                android:layout_height="390dp"
                 android:layout_below="@+id/coinsbar"/>
 
         </RelativeLayout>

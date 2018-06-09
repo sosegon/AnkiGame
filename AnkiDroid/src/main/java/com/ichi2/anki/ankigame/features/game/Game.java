@@ -95,6 +95,8 @@ public class Game extends CountersActivity implements GameMvpView {
             //applyFullScreen(toggledFullScreen);
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
             mLastTouch = currentTime;
+        } else if(event.getAction() == MotionEvent.ACTION_MOVE){
+            return true;
         }
         // return so that the event isn't consumed but used
         // by the webview as well
