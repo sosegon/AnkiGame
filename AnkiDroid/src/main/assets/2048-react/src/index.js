@@ -407,13 +407,13 @@ class Trick extends React.Component {
     return (
       <div className="trickContainer">
         <div>
-          <span className={generateTrickClass(trickName)} onClick={Board.tryTrick.bind(Board, trickName)}/>
+          <span className={generatePointsClass(trickName)}>{tricks[trickName]['points']}★</span>
         </div>
         <div>
           <span className={generateCoinsClass(trickName)}>{tricks[trickName]['coins']}⛁</span>
         </div>
         <div>
-          <span className={generatePointsClass(trickName)}>{tricks[trickName]['points']}★</span>
+          <span className={generateTrickClass(trickName)} onClick={Board.tryTrick.bind(Board, trickName)}/>
         </div>
       </div>
     )
