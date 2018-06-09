@@ -122,8 +122,8 @@
     <item quantity="one">%1$d minuto</item>
     <item quantity="other">%1$d minutos</item>
   </plurals>
-  <string name="studyoptions_welcome_title">Bienvenido a AnkiGame</string>
-  <string name="fact_adder_intent_title">Tarjeta de AnkiGame</string>
+  <string name="studyoptions_welcome_title">Bienvenido a AnkiPlay</string>
+  <string name="fact_adder_intent_title">Tarjeta de AnkiPlay</string>
   <string name="card_editor_add_card">Añadir nota</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Resetear progreso</string>
@@ -145,8 +145,8 @@
   <string name="unknown_type_field_warning">Tipear respuesta: campo desconocido %s</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor aguarde.</string>
   <string name="show_hint">Mostrar %s</string>
-  <string name="info_rate">Puntúe AnkiGame</string>
-  <string name="col_load_failed">Carga de colección fallida.\nPresione atrás para cerrar AnkiGame.</string>
+  <string name="info_rate">Puntúe AnkiPlay</string>
+  <string name="col_load_failed">Carga de colección fallida.\nPresione atrás para cerrar AnkiPlay.</string>
   <string name="import_title">Importando</string>
   <string name="import_select_title">Escoja un archivo para importar</string>
   <string name="import_message_add">Añadir</string>
@@ -154,7 +154,7 @@
   <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto podría tomar mucho tiempo</string>
   <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
   <string name="import_error_not_apkg_extension">El nombre de archivo %s no posee extensión .apkg</string>
-  <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiGame. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
+  <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiPlay. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
   <string name="import_replacing">Reemplazando colección&#8230;</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>
@@ -163,7 +163,7 @@
   <string name="export_in_progress">Exportando archivo apkg&#8230;</string>
   <string name="export_successful_title">¿Enviar apkg?</string>
   <string name="export_successful">El archivo \"%s\" fue exportado. ¿Desea enviarlo con otra aplicación?</string>
-  <string name="export_email_subject">Tarjetas exportadas por AnkiGame: %s</string>
+  <string name="export_email_subject">Tarjetas exportadas por AnkiPlay: %s</string>
   <string name="export_email_text">
 <![CDATA[
         ¡Hola!
