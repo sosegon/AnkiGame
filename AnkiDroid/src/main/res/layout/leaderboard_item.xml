@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_player"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="256dp"
     android:layout_height="48dp"
+    android:layout_gravity="center"
     android:gravity="center">
 
     <TextView

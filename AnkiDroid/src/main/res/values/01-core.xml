@@ -57,7 +57,8 @@
     <string name="earn_coins_points">Earn coins | points</string>
     <string name="earn_coins">Earn coins</string>
     <string name="earn_points">Earn points</string>
-    <string name="leaderboard">See leaderboard</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="see_leaderboard">See leaderboard</string>
     <string name="restart_game">Restart game</string>
     <string name="how_to_play">How to play</string>
     <string name="has_lost_game">☹You lose!☹</string>

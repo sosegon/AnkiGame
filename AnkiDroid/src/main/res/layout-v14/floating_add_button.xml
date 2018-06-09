@@ -48,10 +48,10 @@
             android:id="@+id/add_leaderboard_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/leaderboard"
+            android:contentDescription="@string/see_leaderboard"
             fab:fab_colorNormal="?attr/fab_normal"
             fab:fab_icon="@drawable/ic_leaderboard_32dp"
-            fab:fab_title="@string/leaderboard"
+            fab:fab_title="@string/see_leaderboard"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
         <com.getbase.floatingactionbutton.FloatingActionButton

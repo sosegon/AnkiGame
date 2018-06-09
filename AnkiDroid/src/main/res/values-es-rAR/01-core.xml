@@ -76,6 +76,7 @@
   <string name="earn_coins">Ganar monedas</string>
   <string name="earn_points">Ganar puntos</string>
   <string name="leaderboard">Posiciones</string>
+  <string name="see_leaderboard">Ver posiciones</string>
   <string name="restart_game">Reiniciar juego</string>
   <string name="how_to_play">Cómo jugar</string>
   <string name="has_lost_game">☹Perdiste!☹</string>
