@@ -43,6 +43,41 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:427007683779:android:8b8d5624983a94aa",
+        "android_client_info": {
+          "package_name": "com.ichi2.anki.connection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "427007683779-t6v4oaj6jc4hfm4tb347hjeqcl1025qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjBxQPHy3Q_NWGBZtzbRdinNVRRrabfiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:427007683779:android:aa5f1d2622b9c0eb",
         "android_client_info": {
           "package_name": "com.ichi2.anki.independent"
