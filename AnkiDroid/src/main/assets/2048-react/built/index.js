@@ -544,7 +544,12 @@ var Trick = function (_React$Component6) {
         React.createElement(
           'div',
           null,
-          React.createElement('span', { className: generateTrickClass(trickName), onClick: Board.tryTrick.bind(Board, trickName) })
+          React.createElement(
+            'span',
+            { className: generatePointsClass(trickName) },
+            tricks[trickName]['points'],
+            '\u2605'
+          )
         ),
         React.createElement(
           'div',
@@ -559,12 +564,7 @@ var Trick = function (_React$Component6) {
         React.createElement(
           'div',
           null,
-          React.createElement(
-            'span',
-            { className: generatePointsClass(trickName) },
-            tricks[trickName]['points'],
-            '\u2605'
-          )
+          React.createElement('span', { className: generateTrickClass(trickName), onClick: Board.tryTrick.bind(Board, trickName) })
         )
       );
     }

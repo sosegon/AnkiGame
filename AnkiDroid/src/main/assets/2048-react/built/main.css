@@ -73,7 +73,10 @@ body {
 .trick {
   width: 100px;
   height: 100px;
-  margin: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
   line-height: 90px;
   display: inline-block;
   font-size: 55px;
