@@ -22,7 +22,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.ichi2.anki"
           android:installLocation="auto"
-          android:versionCode="209001190"
+          android:versionCode="209001191"
           android:versionName="2.9alpha19">
 
     <!--
