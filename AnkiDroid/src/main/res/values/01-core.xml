@@ -53,6 +53,8 @@
     </plurals>
 
     <!-- ANKIGAME -->
+    <string name="remind_later">Remind me later</string>
+    <string name="no_rate">No, thanks.</string>
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="earn_coins_points">Earn coins | points</string>
     <string name="earn_coins">Earn coins</string>

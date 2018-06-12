@@ -19,6 +19,9 @@ public class PreferencesHelper {
     public static final String KEY_USER_ID = "prf_user_id";
     public static final String KEY_BEST_SCORE = "prf_best_score";
     public static final String KEY_NICK_NAME = "prf_nick_name";
+    public static final String KEY_SHOW_RATER = "prf_show_rater";
+    public static final String KEY_LAUNCHES = "prf_launches";
+    public static final String KEY_FIRST_LAUNCH_DATE = "prf_first_launch_date";
 
     private final SharedPreferences mPref;
 
@@ -86,4 +89,29 @@ public class PreferencesHelper {
     public String retrieveNickName() {
         return mPref.getString(KEY_NICK_NAME, "");
     }
+
+    public void storeShowRater(boolean show) {
+        mPref.edit().putBoolean(KEY_SHOW_RATER, show).apply();
+    }
+
+    public boolean retrieveShowRater() {
+        return mPref.getBoolean(KEY_SHOW_RATER, true);
+    }
+
+    public void storeLaunches(long launches) {
+        mPref.edit().putLong(KEY_LAUNCHES, launches).apply();
+    }
+
+    public long retrieveLaunches() {
+        return mPref.getLong(KEY_LAUNCHES, 0);
+    }
+
+    public void storeFirstLaunchDate(long date) {
+        mPref.edit().putLong(KEY_FIRST_LAUNCH_DATE, date).apply();
+    }
+
+    public long retrieveFirstLaunchDate() {
+        return mPref.getLong(KEY_FIRST_LAUNCH_DATE, 0);
+    }
+
 }

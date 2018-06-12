@@ -71,6 +71,8 @@
   </plurals>
 
   <!-- ANKIGAME -->
+  <string name="remind_later">Recordar después</string>
+  <string name="no_rate">No, gracias.</string>
   <string name="press_back_again_to_exit">Presiona atrás nuevamente para salir</string>
   <string name="earn_coins_points">Ganar monedas | puntos</string>
   <string name="earn_coins">Ganar monedas</string>

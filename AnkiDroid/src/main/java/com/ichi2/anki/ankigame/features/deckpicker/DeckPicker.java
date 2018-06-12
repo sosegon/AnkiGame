@@ -73,16 +73,16 @@ import com.ichi2.anki.ModelBrowser;
 import com.ichi2.anki.MyAccount;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
-import com.ichi2.anki.ankigame.features.CountersActivity;
-import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
-import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.ankigame.features.CountersActivity;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.anki.ankigame.features.game.Game;
+import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
+import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -396,6 +396,8 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         initCounters(mainView);
         // ANKIGAME Init the user. It creates the id if necessary
         mDeckPickerPresenter.initUser();
+        // ANKIGAME Add new launch
+        mDeckPickerPresenter.addNewLaunch();
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -478,6 +480,32 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
             }
         }
+    }
+
+    // ANKIGAME
+    @Override
+    public void showRateDialog() {
+        final String app_name = mDeckPickerPresenter.getAppPackageName();
+        new MaterialDialog.Builder(this)
+        .title(R.string.info_rate)
+        .positiveText(R.string.dialog_ok)
+        .onPositive(
+                (dialog, which) -> {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + app_name)));
+                }
+        )
+        .neutralText(R.string.remind_later)
+        .onNeutral(
+                (dialog, which) -> {}
+        )
+        .negativeText(R.string.no_rate)
+        .onNegative(
+                (dialog, which) -> {
+                    mDeckPickerPresenter.avoidRater();
+                }
+        )
+        .show();
+
     }
 
     // ANKIGAME
@@ -568,8 +596,10 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         addLeaderboardButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActionsMenu.collapse();
-                addLeaderboard();
+                String APP_PNAME = "com.ichi2.anki.connection";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+//                mActionsMenu.collapse();
+//                addLeaderboard();
             }
         });
     }
