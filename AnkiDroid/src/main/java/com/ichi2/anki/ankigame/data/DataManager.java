@@ -14,6 +14,9 @@ import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
 import com.ichi2.anki.ankigame.util.InfoHandler;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -70,6 +73,16 @@ public class DataManager {
             newUser.setBestScore(mPreferencesHelper.retrieveBestScore());
             newUser.setNickName(mPreferencesHelper.retrieveNickName());
             newUser.setPoints(mPreferencesHelper.retrievePoints());
+
+            Date date = new Date();
+            Date newDate = new Date(date.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            String sDate = dateFormat.format(newDate);
+            String sTime = timeFormat.format(newDate);
+
+            newUser.setDate(sDate);
+            newUser.setTime(sTime);
 
             DatabaseReference userRef = mFirebaseHelper.storeUser(newUser);
 

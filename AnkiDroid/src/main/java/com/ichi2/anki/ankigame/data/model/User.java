@@ -5,10 +5,14 @@ public class User {
     public static final String PARAM_BEST_SCORE = "bestScore";
     public static final String PARAM_NICK_NAME = "nickName";
     public static final String PARAM_POINTS = "points";
+    public static final String PARAM_DATE = "date";
+    public static final String PARAM_TIME = "time";
 
     private int bestScore;
     private String nickName;
     private int points;
+    public String date;
+    public String time;
 
     public User() {
     }
@@ -35,5 +39,21 @@ public class User {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
