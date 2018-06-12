@@ -77,6 +77,7 @@
     <string name="pausing">Pausing...</string>
     <string name="share">Share</string>
     <string name="about">About</string>
+    <string name="privacy">Privacy policy</string>
     <string name="game_instuctions">
         Swipe the screen ↔ ↕ to move the tiles. When two tiles with the same number touch, they merge into one!
         \n\nForm the tile 2048 to win.
@@ -94,6 +95,7 @@
         process with the fun of a casual game.
     </string>
     <string name="ankidroid_url" translatable="false">https://docs.ankidroid.org</string>
+    <string name="privacy_policy" translatable="false">https://gist.github.com/sosegon/9d1fdfc4293c1ae942b87727d6d4e681</string>
     <string name="edit" translatable="false">✎</string>
     <string name="leaderboard_rest" translatable="false">♟</string>
     <string name="leaderboard_fifth" translatable="false">♜</string>

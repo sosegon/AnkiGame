@@ -67,6 +67,8 @@ public class CountersActivity extends NavigationDrawerActivity {
                 shareIntent.setType("text/plain");
 
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.share_message)));
+            case R.id.act_privacy:
+                openUrl(Uri.parse(getResources().getString(R.string.privacy_policy)));
             default:
                 return super.onOptionsItemSelected(item);
         }

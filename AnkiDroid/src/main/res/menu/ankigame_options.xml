@@ -11,4 +11,8 @@
         android:id="@+id/act_about"
         android:title="@string/about">
     </item>
+    <item
+        android:id="@+id/act_privacy"
+        android:title="@string/privacy">
+    </item>
 </menu>

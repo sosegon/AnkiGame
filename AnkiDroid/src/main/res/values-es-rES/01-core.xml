@@ -95,6 +95,7 @@
   <string name="pausing">Pausando...</string>
   <string name="share">Compartir</string>
   <string name="about">Acerca de</string>
+  <string name="privacy">Política de privacidad</string>
   <string name="game_instuctions">
     Desliza el tablero ↔ ↕ para mover los cuadros. Cuando dos cuadros con el mismo número chocan, se convierten en uno solo!
     \n\nForma el cuadro 2048 para ganar.
