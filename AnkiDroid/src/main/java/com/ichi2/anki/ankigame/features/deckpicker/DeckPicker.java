@@ -596,10 +596,8 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         addLeaderboardButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String APP_PNAME = "com.ichi2.anki.connection";
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
-//                mActionsMenu.collapse();
-//                addLeaderboard();
+                mActionsMenu.collapse();
+                addLeaderboard();
             }
         });
     }
