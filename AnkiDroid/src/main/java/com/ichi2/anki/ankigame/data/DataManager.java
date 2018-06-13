@@ -31,6 +31,7 @@ public class DataManager {
     private final Analytics mAnalytics;
     private final RxEventBus mEventBus;
     private AnkiString mShareUrl;
+    private AnkiString mSurveyUrl;
 
     @Inject
     public DataManager(PreferencesHelper preferencesHelper, Analytics analytics, RxEventBus eventBus) {
@@ -39,7 +40,8 @@ public class DataManager {
         mAnalytics = analytics;
         mEventBus = eventBus;
         initBus();
-        initShareUrl();;
+        initShareUrl();
+        initSurveyUrl();
     }
 
     public PreferencesHelper getPreferencesHelper() {
@@ -131,12 +133,31 @@ public class DataManager {
         return mShareUrl.getString();
     }
 
+    public String getSurveyUrl(){
+        return mSurveyUrl.getString();
+    }
+
     private void initShareUrl() {
         mShareUrl = new AnkiString();
         mFirebaseHelper.retrieveShareUrl().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mShareUrl.setString(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void initSurveyUrl() {
+        mSurveyUrl = new AnkiString();
+        mFirebaseHelper.retrieveSurveyUrl().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mSurveyUrl.setString(dataSnapshot.getValue(String.class));
             }
 
             @Override

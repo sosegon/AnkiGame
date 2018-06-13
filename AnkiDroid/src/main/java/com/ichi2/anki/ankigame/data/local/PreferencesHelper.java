@@ -22,6 +22,9 @@ public class PreferencesHelper {
     public static final String KEY_SHOW_RATER = "prf_show_rater";
     public static final String KEY_LAUNCHES = "prf_launches";
     public static final String KEY_FIRST_LAUNCH_DATE = "prf_first_launch_date";
+    public static final String KEY_SURVEY_SCHEDULED = "prf_survey_scheduled";
+    public static final String KEY_SURVEY_TAKEN = "prf_survey_taken";
+    public static final String KEY_SCHEDULED_SURVEY_COUNT = "prf_scheduled_survey_count";
 
     private final SharedPreferences mPref;
 
@@ -114,4 +117,27 @@ public class PreferencesHelper {
         return mPref.getLong(KEY_FIRST_LAUNCH_DATE, 0);
     }
 
+    public void storeSurveyScheduled(boolean scheduled) {
+        mPref.edit().putBoolean(KEY_SURVEY_SCHEDULED, scheduled).apply();
+    }
+
+    public boolean retrieveSurveyScheduled() {
+        return mPref.getBoolean(KEY_SURVEY_SCHEDULED, false);
+    }
+
+    public void storeSurveyTaken(boolean taken) {
+        mPref.edit().putBoolean(KEY_SURVEY_TAKEN, taken).apply();
+    }
+
+    public boolean retrieveSurveyTaken() {
+        return mPref.getBoolean(KEY_SURVEY_TAKEN, false);
+    }
+
+    public void storeScheduledSurveyCount(int count) {
+        mPref.edit().putInt(KEY_SCHEDULED_SURVEY_COUNT, count);
+    }
+
+    public int retrieveScheduledSurveyCount() {
+        return mPref.getInt(KEY_SCHEDULED_SURVEY_COUNT, 0);
+    }
 }

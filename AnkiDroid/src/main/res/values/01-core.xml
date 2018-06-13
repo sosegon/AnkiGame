@@ -53,6 +53,9 @@
     </plurals>
 
     <!-- ANKIGAME -->
+    <string name="study_end">The study ended. Please, take the survey.</string>
+    <string name="thanks_participation">Thanks for participating in the study. Please, do the survey.</string>
+    <string name="start_survey">Start survey</string>
     <string name="remind_later">Remind me later</string>
     <string name="no_rate">No, thanks.</string>
     <string name="press_back_again_to_exit">Press back again to exit</string>
@@ -94,6 +97,7 @@
         \n\nIt combines the AnkiDroid features that let you improve your learning
         process with the fun of a casual game.
     </string>
+    <string name="main_notification_channel_name" translatable="false">Primary</string>
     <string name="ankidroid_url" translatable="false">https://docs.ankidroid.org</string>
     <string name="privacy_policy" translatable="false">https://gist.github.com/sosegon/9d1fdfc4293c1ae942b87727d6d4e681</string>
     <string name="edit" translatable="false">✎</string>

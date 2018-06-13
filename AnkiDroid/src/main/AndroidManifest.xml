@@ -178,6 +178,13 @@
             <intent-filter>
             </intent-filter>-->
         </activity>
+        <!-- ANKIGAME -->
+        <activity
+            android:name=".ankigame.features.survey.Survey"
+            android:exported="true"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="Survey">
+        </activity>
         <activity
         android:name=".ModelBrowser"
         android:exported="false"
@@ -301,6 +308,16 @@
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+
+        <!-- ANIGAME -->
+        <receiver
+            android:name=".ankigame.services.SurveyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="SURVEY_NOTIFICATION_SERVICE" />
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name="com.ichi2.anki.receiver.SdCardReceiver"

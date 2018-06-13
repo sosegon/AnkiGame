@@ -20,6 +20,7 @@ public class FirebaseHelper {
     public static final String POINTS_KEY = "points";
     public static final String NICK_NAME_KEY = "nickName";
     public static final String SHARE_URL_KEY = "shareUrl";
+    public static final String SURVEY_URL_KEY = "surveyUrl";
 
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mLogsDatabaseReference;
@@ -83,5 +84,9 @@ public class FirebaseHelper {
 
     public DatabaseReference retrieveShareUrl() {
         return mRoot.child(SHARE_URL_KEY);
+    }
+
+    public DatabaseReference retrieveSurveyUrl() {
+        return mRoot.child(SURVEY_URL_KEY);
     }
 }
