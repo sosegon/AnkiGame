@@ -354,16 +354,20 @@ public class Game extends CountersActivity implements GameMvpView {
         String logCode = GameLog.TYPE_LOST_GAME;
 
         new MaterialDialog.Builder(this)
-        .title(sHasLost)
-        .positiveText(sRestart)
-        .onPositive(
-                (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")")
-        )
-        .negativeText(R.string.close)
-        .onNegative(
-                (dialog, which) ->  {}
-        )
-        .show();
+                .title(sHasLost)
+                .positiveText(R.string.earn_coins)
+                .negativeText(sRestart)
+                .neutralText(R.string.close)
+                .onPositive(
+                        (dialog, which) ->  earnCoins()
+                )
+                .onNegative(
+                        (dialog, which) ->  mWebMain.loadUrl("javascript:restartGame(\"" + logCode + "\")")
+                )
+                .onNeutral(
+                        (dialog, which) ->  {}
+                )
+                .show();
     }
 
     @Override
