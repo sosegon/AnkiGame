@@ -963,6 +963,7 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
     public void addGame() {
         mDeckPickerPresenter.logGoToGame();
         Intent intent = new Intent(DeckPicker.this, Game.class);
+        finishWithAnimation();
         startActivityForResultWithAnimation(intent, GO_GAME, ActivityTransitionAnimation.LEFT);
     }
 

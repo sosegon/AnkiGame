@@ -112,6 +112,7 @@ public class Game extends CountersActivity implements GameMvpView {
         Intent intent = new Intent(Game.this, DeckPicker.class);
         String logCode = GameLog.TYPE_GO_TO_ANKI;
         mWebMain.loadUrl("javascript:goToAnki(\"" + logCode + "\")");
+        finishWithAnimation(ActivityTransitionAnimation.DOWN);
         startActivityForResultWithAnimation(intent, GO_EARN_COINS, ActivityTransitionAnimation.RIGHT);
     }
 
