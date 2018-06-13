@@ -78,7 +78,7 @@ public class PreferencesHelper {
     }
 
     public void storeBestScore(int bestScore) {
-        mPref.edit().putInt(KEY_BEST_SCORE, bestScore).apply();;
+        mPref.edit().putInt(KEY_BEST_SCORE, bestScore).apply();
     }
 
     public int retrieveBestScore() {
@@ -134,7 +134,7 @@ public class PreferencesHelper {
     }
 
     public void storeScheduledSurveyCount(int count) {
-        mPref.edit().putInt(KEY_SCHEDULED_SURVEY_COUNT, count);
+        mPref.edit().putInt(KEY_SCHEDULED_SURVEY_COUNT, count).apply();
     }
 
     public int retrieveScheduledSurveyCount() {
