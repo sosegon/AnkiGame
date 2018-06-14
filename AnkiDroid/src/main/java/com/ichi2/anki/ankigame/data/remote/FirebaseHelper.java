@@ -16,9 +16,11 @@ public class FirebaseHelper {
     public static final String USERS_KEY = "users";
     public static final String LOGS_KEY = "logs";
     public static final String USERLOGS_KEY = "logs";
-    public static final String BEST_SCORE_KEY = "bestScore";
-    public static final String POINTS_KEY = "points";
-    public static final String NICK_NAME_KEY = "nickName";
+    public static final String BEST_SCORE_KEY = User.PARAM_BEST_SCORE;
+    public static final String POINTS_KEY = User.PARAM_POINTS;
+    public static final String NICK_NAME_KEY = User.PARAM_NICK_NAME;
+    public static final String USER_DATE_KEY = User.PARAM_DATE;
+    public static final String USER_TIME_KEY = User.PARAM_TIME;
     public static final String SHARE_URL_KEY = "shareUrl";
     public static final String SURVEY_URL_KEY = "surveyUrl";
 
@@ -76,6 +78,20 @@ public class FirebaseHelper {
         userRef.child(NICK_NAME_KEY).setValue(nickName);
 
         return userRef.child(NICK_NAME_KEY);
+    }
+
+    public DatabaseReference storeUserDate(String userId, String date) {
+        DatabaseReference userRef = retrieveUser(userId);
+        userRef.child(USER_DATE_KEY).setValue(date);
+
+        return userRef.child(USER_DATE_KEY);
+    }
+
+    public DatabaseReference storeUserTime(String userId, String time) {
+        DatabaseReference userRef = retrieveUser(userId);
+        userRef.child(USER_TIME_KEY).setValue(time);
+
+        return userRef.child(USER_TIME_KEY);
     }
 
     public DatabaseReference getUsersDatabaseReference() {

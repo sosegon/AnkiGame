@@ -30,10 +30,19 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
         this.mDataManager= dataManager;
     }
 
-    public void updatePointsRemotely() {
-        int points = mDataManager.getPreferencesHelper().retrievePoints();
+    public void updateUserRemotely() {
         String userId = getUserId();
+        int points = mDataManager.getPreferencesHelper().retrievePoints();
+        int bestScore = mDataManager.getPreferencesHelper().retrieveBestScore();
+        String nickName = mDataManager.getPreferencesHelper().retrieveNickName();
+        String date = mDataManager.getPreferencesHelper().retrieveUserDate();
+        String time = mDataManager.getPreferencesHelper().retrieveUserTime();
+
         mDataManager.getFirebaseHelper().storePoints(userId, points);
+        mDataManager.getFirebaseHelper().storeBestScore(userId, bestScore);
+        mDataManager.getFirebaseHelper().storeNickName(userId, nickName);
+        mDataManager.getFirebaseHelper().storeUserDate(userId, date);
+        mDataManager.getFirebaseHelper().storeUserTime(userId, time);
     }
 
     public void logCheckLeaderboard() {

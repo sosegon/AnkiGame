@@ -19,6 +19,8 @@ public class PreferencesHelper {
     public static final String KEY_USER_ID = "prf_user_id";
     public static final String KEY_BEST_SCORE = "prf_best_score";
     public static final String KEY_NICK_NAME = "prf_nick_name";
+    public static final String KEY_USER_DATE = "prf_user_date";
+    public static final String KEY_USER_TIME = "prf_user_time";
     public static final String KEY_SHOW_RATER = "prf_show_rater";
     public static final String KEY_LAUNCHES = "prf_launches";
     public static final String KEY_FIRST_LAUNCH_DATE = "prf_first_launch_date";
@@ -95,6 +97,22 @@ public class PreferencesHelper {
 
     public void storeShowRater(boolean show) {
         mPref.edit().putBoolean(KEY_SHOW_RATER, show).apply();
+    }
+
+    public String retrieveUserDate() {
+        return mPref.getString(KEY_USER_DATE, "");
+    }
+
+    public void storeUserDate(String date) {
+        mPref.edit().putString(KEY_USER_DATE, date).apply();
+    }
+
+    public String retrieveUserTime() {
+        return mPref.getString(KEY_USER_TIME, "");
+    }
+
+    public void storeUserTime(String time) {
+        mPref.edit().putString(KEY_USER_TIME, time).apply();
     }
 
     public boolean retrieveShowRater() {

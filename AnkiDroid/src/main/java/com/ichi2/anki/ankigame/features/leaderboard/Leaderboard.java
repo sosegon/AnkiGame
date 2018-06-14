@@ -1,12 +1,8 @@
 package com.ichi2.anki.ankigame.features.leaderboard;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
@@ -79,7 +75,7 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
 
         mPresenter.attachView(this);
         mPresenter.initAdapter(mListenerChangeNickName);
-        mPresenter.updatePointsRemotely(); // So, they are updated in firebase
+        mPresenter.updateUserRemotely(); // So, they user is updated in firebase
         mPresenter.logCheckLeaderboard();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

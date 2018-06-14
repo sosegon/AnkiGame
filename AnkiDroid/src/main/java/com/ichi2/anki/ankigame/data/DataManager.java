@@ -85,6 +85,8 @@ public class DataManager {
 
             newUser.setDate(sDate);
             newUser.setTime(sTime);
+            mPreferencesHelper.storeUserDate(sDate);
+            mPreferencesHelper.storeUserTime(sTime);
 
             DatabaseReference userRef = mFirebaseHelper.storeUser(newUser);
 
