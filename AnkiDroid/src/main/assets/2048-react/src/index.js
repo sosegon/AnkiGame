@@ -242,14 +242,16 @@ class BoardView extends React.Component {
       .map(tile => <TileView tile={tile} key={tile.id} />);
     return (
       <div>
-        <div className="scores-container">
-          {scoreElem} {bestScoreElem}
+        <div className="tricks-container">
+          {trickElements}
         </div>
         <div className='board' onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)} tabIndex="1">
           {cells}
           {tiles}
         </div>
-        {trickElements}
+        <div className="scores-container">
+          {scoreElem} {bestScoreElem}
+        </div>
       </div>
     );
   }
@@ -407,13 +409,13 @@ class Trick extends React.Component {
     return (
       <div className="trickContainer">
         <div>
+          <span className={generateTrickClass(trickName)} onClick={Board.tryTrick.bind(Board, trickName)}/>
+        </div>
+        <div>
           <span className={generatePointsClass(trickName)}>{tricks[trickName]['points']}★</span>
         </div>
         <div>
           <span className={generateCoinsClass(trickName)}>{tricks[trickName]['coins']}⛁</span>
-        </div>
-        <div>
-          <span className={generateTrickClass(trickName)} onClick={Board.tryTrick.bind(Board, trickName)}/>
         </div>
       </div>
     )
