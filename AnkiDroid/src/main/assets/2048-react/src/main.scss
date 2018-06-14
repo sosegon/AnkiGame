@@ -108,7 +108,7 @@ $section-space: 8px;
   border-bottom-left-radius: 8px;
   position: relative;
   background: #c6c0ab;
-  opacity: 0.5;
+  opacity: 0.75;
   z-index: 90;
   @include animation(hide 300ms ease-in);
 }
@@ -120,7 +120,7 @@ $section-space: 8px;
   border-bottom-left-radius: 8px;
   position: relative;
   background: #c6c0ab;
-  opacity: 0.5;
+  opacity: 0.75;
   z-index: 90;
   @include animation(reveal 300ms ease-in);
 }
@@ -140,10 +140,17 @@ $section-space: 8px;
 .tricks-container {
   height: 180px;
   position: relative;
+  margin-top: -$section-space;
+  margin-bottom: $section-space;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #baa;
+  color: black;
 }
 
 .trickContainer {
   float:left;
+  margin-top: $section-space;
   padding-left: 2px;
 }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -469,6 +470,7 @@ public class Game extends CountersActivity implements GameMvpView {
         mWebMain.setVerticalScrollBarEnabled(false);
         mWebMain.setHorizontalScrollBarEnabled(false);
         mWebMain.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        mWebMain.setBackgroundColor(Color.argb(1, 0, 0, 0));
     }
 
     private void initFabGameMenu() {
