@@ -50,6 +50,7 @@ class BoardView extends React.Component {
     this.state = {board: new Board(previousState, bestScore, history)};
     this.points = Anki.getAnkiPoints();
     this.coins = Anki.getAnkiCoins();
+    this.tricksRevealed = false;
     this.tricks = {
       gift: {
         name: 'gift',
@@ -97,6 +98,7 @@ class BoardView extends React.Component {
     if (event.keyCode >= 37 && event.keyCode <= 40) {
       event.preventDefault();
       var direction = event.keyCode - 37;
+      this.tricksRevealed = false;
       this.setState({board: this.state.board.move(direction)});
       if(this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
         Anki.hasLost();
@@ -124,6 +126,7 @@ class BoardView extends React.Component {
       direction = deltaY > 0 ? 3 : 1;
     }
     if (direction != -1) {
+      this.tricksRevealed = false;
       this.setState({board: this.state.board.move(direction)});
       if(this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
         Anki.hasLost();
@@ -140,6 +143,10 @@ class BoardView extends React.Component {
   // prop, otherwise, it won't work.
   tryTrick(trickName, event) {
     event.preventDefault();
+
+    if(this.tricksRevealed === false) {
+      return;
+    }
 
     var trick = this.tricks[trickName];
     var requiredCoins = trick["coins"];
@@ -204,6 +211,10 @@ class BoardView extends React.Component {
   continuePlaying() {
     this.state.board.continueAfterWon = true;
   }
+  revealTricks() {
+    this.tricksRevealed = !this.tricksRevealed;
+    this.forceUpdate();
+  }
   render() {
     // Since render is executed every time the state changes
     // Here we store the state of the game and the best score
@@ -242,6 +253,11 @@ class BoardView extends React.Component {
       .map(tile => <TileView tile={tile} key={tile.id} />);
     return (
       <div>
+        <div className="tricks-revealer" onClick={this.revealTricks.bind(this)}>
+          {this.tricksRevealed ? '▼' : '▲'}
+        </div>
+        <div className={this.tricksRevealed ? 'tricks-curtain-drop' : 'tricks-curtain'}>
+        </div>
         <div className="tricks-container">
           {trickElements}
         </div>

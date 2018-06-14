@@ -68,8 +68,77 @@ body {
   background-color: #dcb;
 }
 
+$section-space: 8px;
+
+@keyframes reveal {
+  0% {
+    height: 180px;
+    margin-top: -180px;
+    top: 180px;
+  }
+
+  100% {
+    height: 0px;
+    margin-top: 0px;
+    top: 0px;
+  }
+}
+
+@keyframes hide {
+  0% {
+    height: 0px;
+    margin-top: 0px;
+    top: 0px;
+  }
+
+  100% {
+    height: 180px;
+    margin-top: -180px;
+    top: 180px;
+  }
+}
+
+.tricks-curtain {
+  top: 180px;
+  margin-top: -180px;
+  height: 180px;
+  margin-bottom: $section-space;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  position: relative;
+  background: #c6c0ab;
+  opacity: 0.5;
+  z-index: 90;
+  @include animation(hide 300ms ease-in);
+}
+
+.tricks-curtain-drop {
+  height: 0px;
+  margin-bottom: $section-space;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  position: relative;
+  background: #c6c0ab;
+  opacity: 0.5;
+  z-index: 90;
+  @include animation(reveal 300ms ease-in);
+}
+
+.tricks-revealer {
+  height: 32px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  background-color: #a29f96;
+  text-align: center;
+}
+
+.tricks-revealer-hidden {
+  opacity: 0;
+}
+
 .tricks-container {
   height: 180px;
+  position: relative;
 }
 
 .trickContainer {
@@ -80,7 +149,6 @@ body {
 .trick {
   width: 100px;
   height: 100px;
-  margin-top: 10px;
   margin-bottom: 5px;
   margin-right: 5px;
   margin-left: 5px;
@@ -294,7 +362,7 @@ $tile-color: #eee4da;
 
 .scores-container {
   text-align: left;
-  margin-top: 16px;
+  margin-top: $section-space;
 }
 
 .score-container, .best-container {
@@ -310,7 +378,6 @@ $tile-color: #eee4da;
   font-weight: bold;
   border-radius: 3px;
   color: white;
-  margin-top: 8px;
   text-align: center;
 
   &:after {
