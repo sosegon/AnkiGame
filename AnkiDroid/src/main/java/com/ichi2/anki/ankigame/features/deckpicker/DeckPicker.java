@@ -820,6 +820,7 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         }
         updateLblGameCoins(mDeckPickerPresenter.getCoins());
         updateLblPoints(mDeckPickerPresenter.getPoints());
+        updateLblPlayerName(mDeckPickerPresenter.getNickName());
     }
 
 

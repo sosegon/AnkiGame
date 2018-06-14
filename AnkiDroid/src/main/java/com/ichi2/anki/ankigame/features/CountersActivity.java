@@ -15,10 +15,12 @@ import com.ichi2.anki.R;
 public class CountersActivity extends NavigationDrawerActivity {
     TextView mLblCoins;
     TextView mLblPoints;
+    TextView mLblPlayerName;
 
     protected void initCounters(View maiView) {
         mLblCoins = maiView.findViewById(R.id.lbl_coins_game);
         mLblPoints = maiView.findViewById(R.id.lbl_points);
+        mLblPlayerName = maiView.findViewById(R.id.lbl_player_name);
 
         if(BuildConfig.FLAVOR.contentEquals("independent")){
             mLblCoins.setVisibility(View.GONE);
@@ -34,6 +36,12 @@ public class CountersActivity extends NavigationDrawerActivity {
     public void updateLblPoints(int points) {
         if(mLblPoints != null) {
             mLblPoints.setText(getString(R.string.points, points));
+        }
+    }
+
+    public void updateLblPlayerName(String name) {
+        if(mLblPlayerName != null) {
+            mLblPlayerName.setText(getString(R.string.nickname, name));
         }
     }
 

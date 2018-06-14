@@ -130,7 +130,12 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
-                            mPresenter.updateNickName(mDialogEditText.getText().toString());
+                            String nickname = mDialogEditText.getText().toString();
+                            mPresenter.updateNickName(nickname);
+
+                            // Update the nickname in bar
+                            TextView tv = getActivity().findViewById(R.id.lbl_player_name);
+                            tv.setText(getString(R.string.nickname, nickname));
                         }
                     })
                     .negativeText(R.string.dialog_cancel)

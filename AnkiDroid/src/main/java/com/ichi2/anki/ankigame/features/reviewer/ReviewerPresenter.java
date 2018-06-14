@@ -48,6 +48,10 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return mDataManager.getPreferencesHelper().retrievePoints();
     }
 
+    public String getNickName() {
+        return mDataManager.getPreferencesHelper().retrieveNickName();
+    }
+
     public String getShareUrl() {
         return mDataManager.getShareUrl();
     }

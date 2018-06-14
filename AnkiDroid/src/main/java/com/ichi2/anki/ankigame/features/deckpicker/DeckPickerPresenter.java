@@ -39,6 +39,10 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         return mDataManager.getPreferencesHelper().retrievePoints();
     }
 
+    public String getNickName() {
+        return mDataManager.getPreferencesHelper().retrieveNickName();
+    }
+
     public String getShareUrl() {
         return mDataManager.getShareUrl();
     }

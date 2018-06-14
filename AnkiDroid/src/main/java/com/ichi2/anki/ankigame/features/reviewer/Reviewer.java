@@ -115,6 +115,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         }
         updateLblGameCoins(mReviewerPresenter.getCoins());
         updateLblPoints(mReviewerPresenter.getPoints());
+        updateLblPlayerName(mReviewerPresenter.getNickName());
     }
 
     @Override

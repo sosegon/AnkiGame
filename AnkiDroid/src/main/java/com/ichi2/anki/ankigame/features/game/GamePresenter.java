@@ -30,6 +30,10 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         return mDataManager.getPreferencesHelper().retrievePoints();
     }
 
+    public String getNickName() {
+        return mDataManager.getPreferencesHelper().retrieveNickName();
+    }
+
     public void resetEarnedCoins() {
         mDataManager.getPreferencesHelper().storeEarnedCoins(0);
     }

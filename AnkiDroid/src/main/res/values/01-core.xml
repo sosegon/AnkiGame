@@ -68,10 +68,11 @@
     <string name="how_to_play">How to play</string>
     <string name="has_lost_game">☹You lose!☹</string>
     <string name="has_won_game">☺You won!☺</string>
-    <string name="coins">Coins: %1$d ⛁</string>
-    <string name="points">Anki points: %1$d ★</string>
+    <string name="coins">Coins \n%1$d ⛁</string>
+    <string name="points">Points \n%1$d ★</string>
+    <string name="nickname" translatable="false">Nickname \n%1$s</string>
     <string name="insufficient_coins">You need %1$d extra coins to use this trick.</string>
-    <string name="insufficient_points">You need %1$d extra anki points to unblock this trick.</string>
+    <string name="insufficient_points">You need %1$d extra points to unblock this trick.</string>
     <string name="unable_trick">Not possible to use %1$s trick at the moment.</string>
     <string name="menu_options">Options</string>
     <string name="menu_game">Play</string>
