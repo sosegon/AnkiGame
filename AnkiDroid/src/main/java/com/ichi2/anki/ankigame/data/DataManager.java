@@ -65,7 +65,7 @@ public class DataManager {
 //        }
 
         // Create new user if necessary
-        if(userId.equals("")) {
+        if(userId.equals("") || userId.equals("anon")) {
 
             // Set a nickname here
             String randomSuffix = String.valueOf((int)(Math.random() * 1000));

@@ -72,7 +72,7 @@ public class PreferencesHelper {
     }
 
     public String retrieveUserId() {
-        return mPref.getString(KEY_USER_ID, "");
+        return mPref.getString(KEY_USER_ID, "anon");
     }
 
     public void storeUserId(String userId) {
