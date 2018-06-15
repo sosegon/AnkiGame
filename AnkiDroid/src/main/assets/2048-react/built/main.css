@@ -30,7 +30,10 @@ body {
   font-weight: bold; }
 
 #boardDiv {
-  zoom: 1.5; }
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
 
 .board {
   -webkit-box-ordinal-group: 2;
@@ -66,14 +69,100 @@ body {
   color: #766;
   background-color: #dcb; }
 
+@-webkit-keyframes reveal {
+  0% {
+    height: 180px;
+    margin-top: -180px;
+    top: 180px; }
+  100% {
+    height: 0px;
+    margin-top: 0px;
+    top: 0px; } }
+
+@keyframes reveal {
+  0% {
+    height: 180px;
+    margin-top: -180px;
+    top: 180px; }
+  100% {
+    height: 0px;
+    margin-top: 0px;
+    top: 0px; } }
+
+@-webkit-keyframes hide {
+  0% {
+    height: 0px;
+    margin-top: 0px;
+    top: 0px; }
+  100% {
+    height: 180px;
+    margin-top: -180px;
+    top: 180px; } }
+
+@keyframes hide {
+  0% {
+    height: 0px;
+    margin-top: 0px;
+    top: 0px; }
+  100% {
+    height: 180px;
+    margin-top: -180px;
+    top: 180px; } }
+
+.tricks-curtain {
+  top: 180px;
+  margin-top: -180px;
+  height: 180px;
+  margin-bottom: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  position: relative;
+  background: #c6c0ab;
+  opacity: 0.75;
+  z-index: 90;
+  -webkit-animation: hide 300ms ease-in;
+  animation: hide 300ms ease-in; }
+
+.tricks-curtain-drop {
+  height: 0px;
+  margin-bottom: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  position: relative;
+  background: #c6c0ab;
+  opacity: 0.75;
+  z-index: 90;
+  -webkit-animation: reveal 300ms ease-in;
+  animation: reveal 300ms ease-in; }
+
+.tricks-revealer {
+  height: 32px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  background-color: #a29f96;
+  text-align: center; }
+
+.tricks-revealer-hidden {
+  opacity: 0; }
+
+.tricks-container {
+  height: 180px;
+  position: relative;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #baa;
+  color: black; }
+
 .trickContainer {
   float: left;
+  margin-top: 8px;
   padding-left: 2px; }
 
 .trick {
   width: 100px;
   height: 100px;
-  margin-top: 10px;
   margin-bottom: 5px;
   margin-right: 5px;
   margin-left: 5px;
@@ -276,8 +365,8 @@ body {
     opacity: 0; } }
 
 .scores-container {
-  text-align: right;
-  margin-bottom: 8px; }
+  text-align: left;
+  margin-top: 8px; }
 
 .score-container, .best-container {
   position: relative;
@@ -290,7 +379,6 @@ body {
   font-weight: bold;
   border-radius: 3px;
   color: white;
-  margin-top: 8px;
   text-align: center; }
   .score-container:after, .best-container:after {
     position: absolute;

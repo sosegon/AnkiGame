@@ -69,6 +69,7 @@ var BoardView = function (_React$Component) {
       this.state = { board: new Board(previousState, bestScore, history) };
       this.points = Anki.getAnkiPoints();
       this.coins = Anki.getAnkiCoins();
+      this.tricksRevealed = false;
       this.tricks = {
         gift: {
           name: 'gift',
@@ -122,6 +123,7 @@ var BoardView = function (_React$Component) {
       if (event.keyCode >= 37 && event.keyCode <= 40) {
         event.preventDefault();
         var direction = event.keyCode - 37;
+        //this.tricksRevealed = false;
         this.setState({ board: this.state.board.move(direction) });
         if (this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
           Anki.hasLost();
@@ -153,6 +155,7 @@ var BoardView = function (_React$Component) {
         direction = deltaY > 0 ? 3 : 1;
       }
       if (direction != -1) {
+        //this.tricksRevealed = false;
         this.setState({ board: this.state.board.move(direction) });
         if (this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
           Anki.hasLost();
@@ -176,6 +179,10 @@ var BoardView = function (_React$Component) {
     key: 'tryTrick',
     value: function tryTrick(trickName, event) {
       event.preventDefault();
+
+      if (this.tricksRevealed === false) {
+        return;
+      }
 
       var trick = this.tricks[trickName];
       var requiredCoins = trick["coins"];
@@ -245,6 +252,12 @@ var BoardView = function (_React$Component) {
       this.state.board.continueAfterWon = true;
     }
   }, {
+    key: 'revealTricks',
+    value: function revealTricks() {
+      this.tricksRevealed = !this.tricksRevealed;
+      this.forceUpdate();
+    }
+  }, {
     key: 'render',
     value: function render() {
       // Since render is executed every time the state changes
@@ -285,10 +298,14 @@ var BoardView = function (_React$Component) {
         null,
         React.createElement(
           'div',
-          { className: 'scores-container' },
-          scoreElem,
-          ' ',
-          bestScoreElem
+          { className: 'tricks-revealer', onClick: this.revealTricks.bind(this) },
+          this.tricksRevealed ? '▼' : '▲'
+        ),
+        React.createElement('div', { className: this.tricksRevealed ? 'tricks-curtain-drop' : 'tricks-curtain' }),
+        React.createElement(
+          'div',
+          { className: 'tricks-container' },
+          trickElements
         ),
         React.createElement(
           'div',
@@ -296,7 +313,13 @@ var BoardView = function (_React$Component) {
           cells,
           tiles
         ),
-        trickElements
+        React.createElement(
+          'div',
+          { className: 'scores-container' },
+          scoreElem,
+          ' ',
+          bestScoreElem
+        )
       );
     }
   }]);
@@ -544,6 +567,11 @@ var Trick = function (_React$Component6) {
         React.createElement(
           'div',
           null,
+          React.createElement('span', { className: generateTrickClass(trickName), onClick: Board.tryTrick.bind(Board, trickName) })
+        ),
+        React.createElement(
+          'div',
+          null,
           React.createElement(
             'span',
             { className: generatePointsClass(trickName) },
@@ -560,11 +588,6 @@ var Trick = function (_React$Component6) {
             tricks[trickName]['coins'],
             '\u26C1'
           )
-        ),
-        React.createElement(
-          'div',
-          null,
-          React.createElement('span', { className: generateTrickClass(trickName), onClick: Board.tryTrick.bind(Board, trickName) })
         )
       );
     }
@@ -592,3 +615,107 @@ var goToAnki = function goToAnki(logCode) {
 var continuePlaying = function continuePlaying() {
   BoardViewRendered.continuePlaying();
 };
+
+// Adjust the board to the device's screen
+var rescale = function rescale(screenHeight, screenWidth) {
+  //var screenHeight = screen.height;
+  //var screenWidth = screen.width;
+  var screenHeight = screenHeight; // | window.innerHeight; //* window.devicePixelRatio;
+  var screenWidth = screenWidth; // | window.innerWidth; //* window.devicePixelRatio;
+  var screenRatio = screenWidth / screenHeight;
+
+  // Scrolling on the following devices
+  // PIXEL 2XL landscape
+  // iPhone 5/SE landscape
+  // iPhone 6/7/8 landscape
+  // iPhone 6/7/8 plus landscape
+  // iPhone X landscape
+  // iPad landscape and portrait
+  // iPad Pro landscape and portrait
+  var antiScroll = 1.2;
+  var gameWidth = 450 * antiScroll;
+  var gameHeight = 733 * antiScroll;
+  var gameRatio = gameWidth / gameHeight;
+
+  //console.log("screen ratio: " + screenRatio + ", game ratio: " + gameRatio);
+  var scale = 1;
+
+  // gameHeight > gameWidth always
+  // The game has to fit the screen device always
+  //console.log("screenHeight: " + screenHeight);
+  //console.log("screenWidth:  " + screenWidth);
+  //console.log("gameHeight:   " + gameHeight);
+  //console.log("gameWidth:    " + gameWidth);
+  if (screenHeight >= screenWidth) {
+    if (screenHeight >= gameHeight && screenWidth >= gameWidth) {
+      // Consider ratios
+      if (screenRatio >= gameRatio) {
+        // Increase gameHeight
+        scale = screenHeight / gameHeight;
+        //console.log("case 1_1");
+      } else {
+        // Increase gameWidth
+        scale = screenWidth / gameWidth;
+        //console.log("case 1_2"); // never happens
+      }
+    } else if (screenHeight >= gameHeight && screenWidth < gameWidth) {
+      // Decrease the gameWidth
+      scale = screenWidth / gameWidth;
+      //console.log("case 2");
+    } else if (screenHeight < gameHeight && screenWidth >= gameWidth) {
+      // Decrease the gameHeight
+      scale = screenHeight / gameHeight;
+      //console.log("case 3");
+    } else {
+      // Consider ratios
+      if (screenRatio >= gameRatio) {
+        // Decrease gameHeight
+        scale = screenHeight / gameHeight;
+        //console.log("case 4_1");
+      } else {
+        // Decrease gameWidth
+        scale = screenWidth / gameWidth;
+        //console.log("case 4_2");
+      }
+    }
+  } else {
+    if (screenHeight >= gameHeight && screenWidth >= gameWidth) {
+      // Consider ratios
+      if (screenRatio >= gameRatio) {
+        // Increase gameHeight
+        scale = screenHeight / gameHeight;
+        //console.log("case 5_1");
+      } else {
+        // Increase gameWidth
+        scale = screenWidth / gameWidth;
+        //console.log("case 5_2"); // never happens
+      }
+    } else if (screenHeight >= gameHeight && screenWidth < gameWidth) {
+      // Decrease the gameWidth
+      scale = screenWidth / gameWidth;
+      //console.log("case 6"); // never happens
+    } else if (screenHeight < gameHeight && screenWidth >= gameWidth) {
+      // Decrease the gameHeight
+      scale = screenHeight / gameHeight;
+      //console.log("case 7");
+    } else {
+      // Consider ratios
+      if (screenRatio >= gameRatio) {
+        // Decrease gameHeight
+        scale = screenHeight / gameHeight;
+        //console.log("case 8_1");
+      } else {
+        // Decrease gameWidth
+        scale = screenWidth / gameWidth;
+        //console.log("case 8_2"); // never happens
+      }
+    }
+  }
+
+  var board = document.getElementById("boardDiv");
+  board.style.zoom = scale;
+  board.style.display = "block";
+  //console.log("scalew: " + scale);
+};
+
+//window.setTimeout(rescale, 300);
