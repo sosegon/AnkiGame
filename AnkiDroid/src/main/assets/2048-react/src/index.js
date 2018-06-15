@@ -98,7 +98,7 @@ class BoardView extends React.Component {
     if (event.keyCode >= 37 && event.keyCode <= 40) {
       event.preventDefault();
       var direction = event.keyCode - 37;
-      this.tricksRevealed = false;
+      //this.tricksRevealed = false;
       this.setState({board: this.state.board.move(direction)});
       if(this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
         Anki.hasLost();
@@ -126,7 +126,7 @@ class BoardView extends React.Component {
       direction = deltaY > 0 ? 3 : 1;
     }
     if (direction != -1) {
-      this.tricksRevealed = false;
+      //this.tricksRevealed = false;
       this.setState({board: this.state.board.move(direction)});
       if(this.state.board.hasLost() && !this.ableToDoAnyTrick()) {
         Anki.hasLost();
