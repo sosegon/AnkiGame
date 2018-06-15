@@ -93,10 +93,10 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
 
     public void scheduleSurveyNotification() {
 
-        // Survey is only available for users that used the app the first week
+        // Survey is only available for users that used the app the ten days
         Long firstLaunchDate = mDataManager.getPreferencesHelper().retrieveFirstLaunchDate();
         Calendar firstWeekDate = Calendar.getInstance();
-        firstWeekDate.set(Calendar.DAY_OF_MONTH, 25);
+        firstWeekDate.set(Calendar.DAY_OF_MONTH, 28);
         firstWeekDate.set(Calendar.MONTH, Calendar.JUNE);
         firstWeekDate.set(Calendar.YEAR, 2018);
 
@@ -109,12 +109,12 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         cal.set(Calendar.DAY_OF_MONTH, 9);
         cal.set(Calendar.MONTH, Calendar.JULY);
         cal.set(Calendar.YEAR, 2018);
-        cal.set(Calendar.HOUR_OF_DAY, 12);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
 
         // avoid scheduling the survey too many times
         int scheduledSurveyCount = mDataManager.getPreferencesHelper().retrieveScheduledSurveyCount();
-        if(scheduledSurveyCount > 3) {
+        if(scheduledSurveyCount > 2) {
             return;
         }
 
