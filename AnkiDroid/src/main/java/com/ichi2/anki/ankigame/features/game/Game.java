@@ -22,6 +22,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -234,7 +235,7 @@ public class Game extends CountersActivity implements GameMvpView {
         updateLblPlayerName(mGamePresenter.getNickName());
         // To update the visual of the tricks based on the coins and points
         mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());
-
+        updateWebMainVisual();
         mMessage.setText(R.string.loading);
     }
 
@@ -465,12 +466,26 @@ public class Game extends CountersActivity implements GameMvpView {
 
         // TODO: AnkiGame, Remove this code if needed
         //Toast.makeText(getApplication(), R.string.toggle_fullscreen, Toast.LENGTH_SHORT).show();
+    }
 
+    private void updateWebMainVisual() {
         // ANKIGAME hide scrollbars and blue shade
         mWebMain.setVerticalScrollBarEnabled(false);
         mWebMain.setHorizontalScrollBarEnabled(false);
         mWebMain.setOverScrollMode(View.OVER_SCROLL_NEVER);
         mWebMain.setBackgroundColor(Color.argb(1, 0, 0, 0));
+
+        mWebMain.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                float dpr = getResources().getDisplayMetrics().density;
+                float width = view.getWidth() / dpr;
+                float height = view.getHeight() / dpr;
+                view.loadUrl("javascript:rescale("+ height + "," + width +")");
+                super.onPageFinished(view, url);
+            }
+        });
+
     }
 
     private void initFabGameMenu() {

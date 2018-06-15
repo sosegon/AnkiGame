@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="built/style.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   </head>
   <body>
     <!-- <div class="text">
@@ -21,7 +22,8 @@
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </p>
     </div> -->
-    <div id="boardDiv" />
+    <!-- Hide it, and display it when it is resized -->
+    <div id="boardDiv" style="display: none;"/>
     <script src="built/react-15.0.1.min.js"></script>
     <script src="built/react-dom-15.0.1.min.js"></script>
     <script type="text/javascript" src="built/localStorage.js"></script>
