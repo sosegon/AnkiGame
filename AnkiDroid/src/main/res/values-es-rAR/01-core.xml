@@ -72,7 +72,12 @@
 
   <!-- ANKIGAME -->
   <string name="study_end">El estudio finalizó. Por favor, llena la encuesta.</string>
-  <string name="thanks_participation">Gracias por participar en el estudio. Por favor, llena la encuesta.</string>
+  <string name="thanks_participation">
+    Gracias por participar en el estudio.
+    \nPor favor, llena la encuesta.
+    \nNo presiones el botón regresar hasta finalizar.
+    \nLa encuesta no estará disponible después.
+  </string>
   <string name="start_survey">Llenar encuesta</string>
   <string name="remind_later">Recordar después</string>
   <string name="no_rate">No, gracias.</string>
