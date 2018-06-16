@@ -119,7 +119,7 @@ public class DataManager {
 
             // Store the reference of the log under user record
             DatabaseReference userRef = mFirebaseHelper.retrieveUser(log.getUserId());
-            userRef.child(USERLOGS_KEY).child(logRef.getKey()).setValue(true);
+            userRef.child(USERLOGS_KEY).child(logRef.getKey()).setValue(log.getLogType());
 
             mAnalytics.logEvent(log);
         }
