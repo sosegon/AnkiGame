@@ -16,12 +16,19 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"/>
 
+        <include layout="@layout/achievementsbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/coinsbar"/>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/pull_to_sync_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/today_stats_text_view"
-            android:layout_below="@+id/coinsbar">
+            android:layout_below="@+id/coinsbar"
+            android:layout_toRightOf="@+id/achievementsbar">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/files"

@@ -4,15 +4,21 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.view.LayoutInflater;
 
+import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.data.model.Achievement;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 import com.ichi2.anki.ankigame.services.SurveyReceiver;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,11 +30,17 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
 
     private final DataManager mDataManager;
     private Context mContext;
+    private AchievementAdapter mAchievementAdapter;
 
     @Inject
     public DeckPickerPresenter(@ApplicationContext Context context, DataManager dataManager) {
         this.mContext = context;
         mDataManager = dataManager;
+        initAchievementAdapter();
+    }
+
+    public AchievementAdapter getAchievementAdapter() {
+        return mAchievementAdapter;
     }
 
     public int getCoins() {
@@ -154,4 +166,31 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         return mDataManager.getPreferencesHelper().retrieveEarnedPoints();
     }
 
+    private void initAchievementAdapter() {
+        TypedArray iconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
+        int[] valueAch = mContext.getResources().getIntArray(R.array.achievement_values);
+
+        int l = 0;
+        if(iconAch.length() <= valueAch.length) {
+            l = iconAch.length();
+        } else {
+            l = valueAch.length;
+        }
+
+        List<Achievement> achs = new ArrayList<>();
+        for(int i = 0; i < l; i++) {
+            Achievement a = new Achievement();
+            int requiredPoints = valueAch[i];
+            int currentPoints = getPoints();
+            if(requiredPoints > currentPoints) {
+                a.setAchievement(mContext.getResources().getDrawable(R.drawable.ic_block_32dp));
+            } else {
+                a.setAchievement(mContext.getResources().getDrawable(iconAch.getResourceId(i, -1)));
+            }
+            a.setPoints(requiredPoints);
+            achs.add(a);
+        }
+
+        mAchievementAdapter = new AchievementAdapter(achs);
+    }
 }

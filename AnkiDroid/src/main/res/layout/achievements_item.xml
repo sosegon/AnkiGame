@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_player"
+    android:orientation="vertical"
+    android:layout_width="48dp"
+    android:layout_height="64dp"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/lbl_achievement"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:textSize="32sp"
+        tools:text="☀"/>
+    <TextView
+        android:id="@+id/lbl_points"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:gravity="center"
+        android:textSize="10sp"
+        tools:text="100000★"/>
+
+</LinearLayout>

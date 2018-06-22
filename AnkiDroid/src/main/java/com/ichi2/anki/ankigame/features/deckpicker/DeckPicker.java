@@ -126,6 +126,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -372,6 +373,9 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
 
     @Inject DeckPickerPresenter mDeckPickerPresenter;
 
+    @BindView(R.id.achievements)
+    RecyclerView mAchievementsList;
+
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -401,6 +405,10 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         mDeckPickerPresenter.addNewLaunch();
         // ANKIGAME schedule survey notification
         mDeckPickerPresenter.scheduleSurveyNotification();
+        // ANKIGAME list of achievement
+        mAchievementsList.addItemDecoration(new DividerItemDecoration(this));
+        mAchievementsList.setLayoutManager(new LinearLayoutManager(this));
+        mAchievementsList.setAdapter(mDeckPickerPresenter.getAchievementAdapter());
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
