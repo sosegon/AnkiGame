@@ -59,6 +59,20 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         return mDataManager.getShareUrl();
     }
 
+    public int getNumberFreeAnimals() {
+        int[] pointsAch = mContext.getResources().getIntArray(R.array.achievement_values);
+        int availablePoints = getPoints();
+
+        int freeAnimals = 0;
+        for(int points : pointsAch) {
+            if(availablePoints > points) {
+                freeAnimals++;
+            }
+        }
+
+        return freeAnimals;
+    }
+
     public void logGoToGame() {
         AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
         ankiLog.setLogType(AnkiLog.TYPE_GO_TO_GAME);

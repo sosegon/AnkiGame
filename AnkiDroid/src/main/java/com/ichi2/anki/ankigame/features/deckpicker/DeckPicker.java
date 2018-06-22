@@ -81,7 +81,6 @@ import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.anki.ankigame.features.game.Game;
 import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
 import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
-import com.ichi2.anki.ankigame.util.NotificationUtils;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
@@ -829,6 +828,12 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         updateLblGameCoins(mDeckPickerPresenter.getCoins());
         updateLblPoints(mDeckPickerPresenter.getPoints());
         updateLblPlayerName(mDeckPickerPresenter.getNickName());
+        scrollAchievements();
+    }
+
+    // ANKI
+    private void scrollAchievements() {
+        mAchievementsList.scrollToPosition(mDeckPickerPresenter.getNumberFreeAnimals() - 1);
     }
 
 
