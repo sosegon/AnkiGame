@@ -107,6 +107,9 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         int extraPoints = calcPoints(elapsedTime) + calcPoints(mElapsedTimeToAnswer);
         int totalPoints = mDataManager.getPreferencesHelper().retrievePoints();
         mDataManager.getPreferencesHelper().storePoints(totalPoints + extraPoints);
+        if(extraPoints > 0) {
+            mDataManager.getFirebaseHelper().storePoints(getUserId(), totalPoints + extraPoints);
+        }
 
         increaseEarnedPoints(extraPoints);
         increaseEarnedCoins(extraCoins);
@@ -166,6 +169,10 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         ankiLog.setDueDeckInfo(mDueDeckInfo);
 
         mDataManager.logBehaviour(ankiLog);
+    }
+
+    private String getUserId() {
+        return mDataManager.getPreferencesHelper().retrieveUserId();
     }
 
     private int calcCoins(int elapsedTime) {
