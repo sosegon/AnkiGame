@@ -71,6 +71,8 @@
   </plurals>
 
   <!-- ANKIGAME -->
+  <string name="rescued">¡Gracias por rescatarme!</string>
+  <string name="rescue_others">¡Gana más puntos para rescatar a mis otros amigos!</string>
   <string name="study_end">El estudio finalizó. Por favor, llena la encuesta.</string>
   <string name="thanks_participation">
     Gracias por participar en el estudio.

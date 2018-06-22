@@ -1,8 +1,15 @@
 package com.ichi2.anki.ankigame.features.reviewer;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+
+import com.ichi2.anki.BuildConfig;
+import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
+import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 
 import javax.inject.Inject;
@@ -18,6 +25,7 @@ import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private static final String LOG_TAG = ReviewerPresenter.class.getSimpleName();
 
+    private Context mContext;
     private final DataManager mDataManager;
     private String mDeckInfo;
     private String mDueDeckInfo;
@@ -35,9 +43,13 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     int mZeroRange = 1; // To avoid cheating due to fast assessing of cards
     int mIncreaseRange = 3;
 
+    private int mFreeAnimals;
+
     @Inject
-    public ReviewerPresenter(DataManager dataManager) {
+    public ReviewerPresenter(@ApplicationContext Context context, DataManager dataManager) {
         mDataManager = dataManager;
+        this.mContext = context;
+        mFreeAnimals = countFreeAnimals();
     }
 
     public int getCoins() {
@@ -57,6 +69,11 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     }
 
     public void increaseCoinsAndPoints(int ease) {
+//        if(BuildConfig.DEBUG) {
+//            Drawable draw = getAnimal(0);
+//            getMvpView().showLiberatedAnimalMessage(draw);
+//            return;
+//        }
         int currentCoins = 0;
 
         // TODO: ANKIGAME, Double check the values
@@ -97,6 +114,13 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         mCoinsInCard = currentCoins;
         mPointsInCard = extraPoints;
         mCardEase = ease;
+
+        int freeAnimals = countFreeAnimals();
+        if(freeAnimals > mFreeAnimals) {
+            Drawable icon = getAnimalIcon(freeAnimals - 1);
+            getMvpView().showLiberatedAnimalMessage(icon);
+            mFreeAnimals = freeAnimals;
+        }
     }
 
     public void logSelectDeck() {
@@ -202,5 +226,32 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private void increaseEarnedCoins(int coins) {
         int prev = mDataManager.getPreferencesHelper().retrieveEarnedCoins();
         mDataManager.getPreferencesHelper().storeEarnedCoins(prev + coins);
+    }
+
+    private int countFreeAnimals() {
+        int[] pointsAch = mContext.getResources().getIntArray(R.array.achievement_values);
+        int availablePoints = getPoints();
+
+        int freeAnimals = 0;
+        for(int points : pointsAch) {
+            if(availablePoints > points) {
+                freeAnimals++;
+            }
+        }
+
+        return freeAnimals;
+    }
+
+    private Drawable getAnimalIcon(int index){
+        TypedArray iconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
+
+        try {
+            return mContext.getResources().getDrawable(iconAch.getResourceId(index, -1));
+        } catch (IndexOutOfBoundsException e) {
+            Timber.e("Invalid achievement index");
+        }
+
+        // TODO: ANKIGAME, find a better icon
+        return mContext.getResources().getDrawable(R.drawable.ic_block_32dp);
     }
 }

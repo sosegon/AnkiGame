@@ -30,14 +30,19 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
@@ -125,6 +130,32 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         if(mReviewerPresenter.isViewAttached()) {
             mReviewerPresenter.detachView();
         }
+    }
+
+    // ANKIGAME
+    @Override
+    public void showLiberatedAnimalMessage(Drawable icon) {
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+
+        View view = getLayoutInflater().inflate(R.layout.achievements_item, null);
+        TextView tvAnimal = view.findViewById(R.id.lbl_achievement);
+        tvAnimal.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+        tvAnimal.setLayoutParams(layoutParams);
+
+        TextView tvMessage = view.findViewById(R.id.lbl_points);
+        tvMessage.setText(R.string.rescue_others);
+        tvMessage.setLayoutParams(layoutParams);
+        tvMessage.setTextSize(16);
+
+        MaterialDialog dialog = new MaterialDialog.Builder(Reviewer.this)
+                .title(R.string.rescued)
+                .customView(view, false)
+                .positiveText(R.string.dialog_continue)
+                .build();
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.show();
     }
 
     // ANKIGAME
