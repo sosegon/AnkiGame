@@ -4,14 +4,14 @@
     android:id="@+id/ll_player"
     android:orientation="vertical"
     android:layout_width="48dp"
-    android:layout_height="64dp"
+    android:layout_height="80dp"
     android:layout_gravity="center"
     android:gravity="center">
 
     <TextView
         android:id="@+id/lbl_achievement"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="64dp"
         android:gravity="center"
         android:textSize="32sp"
         tools:text="☀"/>

@@ -6,7 +6,7 @@
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
     android:gravity="center_horizontal"
-    android:background="?attr/hardButtonRef">
+    android:background="?attr/topBarColor">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/achievements"
