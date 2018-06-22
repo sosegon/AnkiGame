@@ -407,7 +407,7 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         // ANKIGAME list of achievement
         mAchievementsList.addItemDecoration(new DividerItemDecoration(this));
         mAchievementsList.setLayoutManager(new LinearLayoutManager(this));
-        mAchievementsList.setAdapter(mDeckPickerPresenter.getAchievementAdapter());
+        //mAchievementsList.setAdapter(mDeckPickerPresenter.getAchievementAdapter());
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -828,11 +828,8 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         updateLblGameCoins(mDeckPickerPresenter.getCoins());
         updateLblPoints(mDeckPickerPresenter.getPoints());
         updateLblPlayerName(mDeckPickerPresenter.getNickName());
-        scrollAchievements();
-    }
-
-    // ANKI
-    private void scrollAchievements() {
+        mDeckPickerPresenter.updateAnimalList();
+        mAchievementsList.swapAdapter(mDeckPickerPresenter.getAchievementAdapter(), false);
         mAchievementsList.scrollToPosition(mDeckPickerPresenter.getNumberFreeAnimals() - 1);
     }
 

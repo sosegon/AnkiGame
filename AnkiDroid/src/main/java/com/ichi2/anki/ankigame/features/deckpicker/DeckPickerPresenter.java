@@ -36,7 +36,7 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
     public DeckPickerPresenter(@ApplicationContext Context context, DataManager dataManager) {
         this.mContext = context;
         mDataManager = dataManager;
-        initAchievementAdapter();
+        updateAnimalList();
     }
 
     public AchievementAdapter getAchievementAdapter() {
@@ -161,26 +161,7 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         mDataManager.getPreferencesHelper().storeSurveyScheduled(true);
     }
 
-    private void scheduleSurvey(long time) {
-        Intent intent = new Intent(mContext, SurveyReceiver.class);
-        intent.setAction(SURVEY_NOTIFICATION_ACTION);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 001, intent, 0);
-        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-
-        int scheduledSurveyCount = mDataManager.getPreferencesHelper().retrieveScheduledSurveyCount();
-        mDataManager.getPreferencesHelper().storeScheduledSurveyCount(scheduledSurveyCount + 1);
-    }
-
-    private int getEarnedCoins() {
-        return mDataManager.getPreferencesHelper().retrieveEarnedCoins();
-    }
-
-    private int getEarnedPoints() {
-        return mDataManager.getPreferencesHelper().retrieveEarnedPoints();
-    }
-
-    private void initAchievementAdapter() {
+    public void updateAnimalList() {
         TypedArray iconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
         int[] valueAch = mContext.getResources().getIntArray(R.array.achievement_values);
 
@@ -206,5 +187,24 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
         }
 
         mAchievementAdapter = new AchievementAdapter(achs);
+    }
+
+    private void scheduleSurvey(long time) {
+        Intent intent = new Intent(mContext, SurveyReceiver.class);
+        intent.setAction(SURVEY_NOTIFICATION_ACTION);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 001, intent, 0);
+        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+
+        int scheduledSurveyCount = mDataManager.getPreferencesHelper().retrieveScheduledSurveyCount();
+        mDataManager.getPreferencesHelper().storeScheduledSurveyCount(scheduledSurveyCount + 1);
+    }
+
+    private int getEarnedCoins() {
+        return mDataManager.getPreferencesHelper().retrieveEarnedCoins();
+    }
+
+    private int getEarnedPoints() {
+        return mDataManager.getPreferencesHelper().retrieveEarnedPoints();
     }
 }

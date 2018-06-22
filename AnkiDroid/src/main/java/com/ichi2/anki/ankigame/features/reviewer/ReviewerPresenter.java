@@ -234,7 +234,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
 
         int freeAnimals = 0;
         for(int points : pointsAch) {
-            if(availablePoints > points) {
+            if(availablePoints >= points) {
                 freeAnimals++;
             }
         }
