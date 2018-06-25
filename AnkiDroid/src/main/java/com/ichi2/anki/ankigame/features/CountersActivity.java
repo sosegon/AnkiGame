@@ -16,11 +16,13 @@ public class CountersActivity extends NavigationDrawerActivity {
     TextView mLblCoins;
     TextView mLblPoints;
     TextView mLblPlayerName;
+    TextView mLblAnkimals;
 
     protected void initCounters(View maiView) {
         mLblCoins = maiView.findViewById(R.id.lbl_coins_game);
         mLblPoints = maiView.findViewById(R.id.lbl_points);
         mLblPlayerName = maiView.findViewById(R.id.lbl_player_name);
+        mLblAnkimals = maiView.findViewById(R.id.lbl_ankimals);
 
         if(BuildConfig.FLAVOR.contentEquals("independent")){
             mLblCoins.setVisibility(View.GONE);
@@ -42,6 +44,12 @@ public class CountersActivity extends NavigationDrawerActivity {
     public void updateLblPlayerName(String name) {
         if(mLblPlayerName != null) {
             mLblPlayerName.setText(getString(R.string.nickname, name));
+        }
+    }
+
+    public void updateLblAnkimals(int ankimals) {
+        if(mLblAnkimals != null) {
+            mLblAnkimals.setText(getString(R.string.ankimals, ankimals));
         }
     }
 

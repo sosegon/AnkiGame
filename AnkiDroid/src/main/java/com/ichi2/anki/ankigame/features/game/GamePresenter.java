@@ -1,5 +1,6 @@
 package com.ichi2.anki.ankigame.features.game;
 
+import android.content.Context;
 import android.webkit.JavascriptInterface;
 
 import com.ichi2.anki.BuildConfig;
@@ -8,7 +9,9 @@ import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.Board;
 import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.data.model.Trick;
+import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
+import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 
 import javax.inject.Inject;
 
@@ -16,9 +19,11 @@ import javax.inject.Inject;
 public class GamePresenter extends BasePresenter<GameMvpView> {
 
     private final DataManager mDataManager;
+    private Context mContext;
 
     @Inject
-    public GamePresenter(DataManager dataManager) {
+    public GamePresenter(@ApplicationContext Context context, DataManager dataManager) {
+        this.mContext = context;
         mDataManager = dataManager;
     }
 
@@ -28,6 +33,10 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
 
     public int getPoints() {
         return mDataManager.getPreferencesHelper().retrievePoints();
+    }
+
+    public int countFreeAnkimals() {
+        return AnkimalsUtils.countFreeAnkimals(mContext, getPoints());
     }
 
     public String getNickName() {

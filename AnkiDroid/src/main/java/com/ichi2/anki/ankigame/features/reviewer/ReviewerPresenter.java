@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
-import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
+import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 
 import javax.inject.Inject;
 
@@ -49,7 +49,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     public ReviewerPresenter(@ApplicationContext Context context, DataManager dataManager) {
         mDataManager = dataManager;
         this.mContext = context;
-        mFreeAnimals = countFreeAnimals();
+        mFreeAnimals = countFreeAnkimals();
     }
 
     public int getCoins() {
@@ -58,6 +58,10 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
 
     public int getPoints() {
         return mDataManager.getPreferencesHelper().retrievePoints();
+    }
+
+    public int countFreeAnkimals() {
+        return AnkimalsUtils.countFreeAnkimals(mContext, getPoints());
     }
 
     public String getNickName() {
@@ -118,7 +122,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         mPointsInCard = extraPoints;
         mCardEase = ease;
 
-        int freeAnimals = countFreeAnimals();
+        int freeAnimals = countFreeAnkimals();
         if(freeAnimals > mFreeAnimals) {
             Drawable icon = getAnimalIcon(freeAnimals - 1);
             getMvpView().showLiberatedAnimalMessage(icon);
@@ -233,20 +237,6 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private void increaseEarnedCoins(int coins) {
         int prev = mDataManager.getPreferencesHelper().retrieveEarnedCoins();
         mDataManager.getPreferencesHelper().storeEarnedCoins(prev + coins);
-    }
-
-    private int countFreeAnimals() {
-        int[] pointsAch = mContext.getResources().getIntArray(R.array.achievement_values);
-        int availablePoints = getPoints();
-
-        int freeAnimals = 0;
-        for(int points : pointsAch) {
-            if(availablePoints >= points) {
-                freeAnimals++;
-            }
-        }
-
-        return freeAnimals;
     }
 
     private Drawable getAnimalIcon(int index){

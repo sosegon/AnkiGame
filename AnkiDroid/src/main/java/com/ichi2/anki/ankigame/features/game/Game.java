@@ -232,6 +232,7 @@ public class Game extends CountersActivity implements GameMvpView {
 
         updateLblGameCoins(mGamePresenter.getCoins());
         updateLblPoints(mGamePresenter.getPoints());
+        updateLblAnkimals(mGamePresenter.countFreeAnkimals());
         updateLblPlayerName(mGamePresenter.getNickName());
         // To update the visual of the tricks based on the coins and points
         mWebMain.loadUrl("file:///android_asset/2048-react/index.html?lang=" + Locale.getDefault().getLanguage());

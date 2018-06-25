@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.view.LayoutInflater;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
@@ -15,6 +14,7 @@ import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 import com.ichi2.anki.ankigame.services.SurveyReceiver;
+import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +49,10 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
 
     public int getPoints() {
         return mDataManager.getPreferencesHelper().retrievePoints();
+    }
+
+    public int countFreeAnkimals() {
+        return AnkimalsUtils.countFreeAnkimals(mContext, getPoints());
     }
 
     public String getNickName() {

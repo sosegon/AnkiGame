@@ -120,6 +120,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         }
         updateLblGameCoins(mReviewerPresenter.getCoins());
         updateLblPoints(mReviewerPresenter.getPoints());
+        updateLblAnkimals(mReviewerPresenter.countFreeAnkimals());
         updateLblPlayerName(mReviewerPresenter.getNickName());
     }
 
@@ -229,6 +230,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         mReviewerPresenter.increaseCoinsAndPoints(mCurrentEase); // also updates mCoinsInCard and mCardEase
         updateLblGameCoins(mReviewerPresenter.getCoins());
         updateLblPoints(mReviewerPresenter.getPoints());
+        updateLblAnkimals(mReviewerPresenter.countFreeAnkimals());
 
         String deckInfo = getCol().getDecks().current().toString();
         mReviewerPresenter.setDeckInfo(deckInfo);
