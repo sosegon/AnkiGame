@@ -2,6 +2,7 @@ package com.ichi2.anki.ankigame.data.remote;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
@@ -28,6 +29,7 @@ public class FirebaseHelper {
     private DatabaseReference mLogsDatabaseReference;
     private DatabaseReference mRoot;
     private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseMessaging mFirebaseMessaging;
 
     public FirebaseHelper() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -40,6 +42,9 @@ public class FirebaseHelper {
         }
         mUsersDatabaseReference = mRoot.child(USERS_KEY);
         mLogsDatabaseReference = mRoot.child(LOGS_KEY);
+
+        mFirebaseMessaging = FirebaseMessaging.getInstance();
+        subscribeToAnkimals();
     }
 
     public DatabaseReference storeUser(User user) {
@@ -98,11 +103,20 @@ public class FirebaseHelper {
         return mUsersDatabaseReference;
     }
 
+    public FirebaseMessaging getFirebaseMessaging() {
+        return mFirebaseMessaging;
+    }
+
     public DatabaseReference retrieveShareUrl() {
         return mRoot.child(SHARE_URL_KEY);
     }
 
     public DatabaseReference retrieveSurveyUrl() {
         return mRoot.child(SURVEY_URL_KEY);
+    }
+
+    private void subscribeToAnkimals() {
+        mFirebaseMessaging.subscribeToTopic("ankimals");
+
     }
 }
