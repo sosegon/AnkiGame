@@ -5,18 +5,20 @@ import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.ankigame.features.game.Game;
 
 public class CountersActivity extends NavigationDrawerActivity {
-    TextView mLblCoins;
-    TextView mLblPoints;
+    TextSwitcher mLblCoins;
+    TextSwitcher mLblPoints;
     TextView mLblPlayerName;
-    TextView mLblAnkimals;
+    TextSwitcher mLblAnkimals;
 
     protected void initCounters(View maiView) {
         mLblCoins = maiView.findViewById(R.id.lbl_coins_game);
@@ -27,6 +29,18 @@ public class CountersActivity extends NavigationDrawerActivity {
         if(BuildConfig.FLAVOR.contentEquals("independent")){
             mLblCoins.setVisibility(View.GONE);
         }
+
+        mLblPoints.setInAnimation(getBaseContext(), R.anim.slide_up_in);
+        mLblPoints.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
+        if(CountersActivity.this instanceof Game) {
+            mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_down_in);
+            mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_down_out);
+        } else {
+            mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_up_in);
+            mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
+        }
+        mLblAnkimals.setInAnimation(getBaseContext(), R.anim.slide_up_in);
+        mLblAnkimals.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
     }
 
     public void updateLblGameCoins(int coins) {

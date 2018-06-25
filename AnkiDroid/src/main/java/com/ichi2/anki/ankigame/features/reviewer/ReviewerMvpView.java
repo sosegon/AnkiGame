@@ -6,4 +6,7 @@ import com.ichi2.anki.ankigame.base.MvpView;
 
 public interface ReviewerMvpView extends MvpView {
     void showLiberatedAnimalMessage(Drawable icon);
+    void updateLblGameCoins(int coins);
+    void updateLblPoints(int points);
+    void updateLblAnkimals(int ankimals);
 }

@@ -19,7 +19,7 @@
         android:textSize="14sp"
         android:textColor="?attr/answerButtonTextColor"
         android:text="nickname"/>
-    <TextView
+    <TextSwitcher
         android:id="@+id/lbl_coins_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,8 +27,21 @@
         android:layout_alignParentLeft="true"
         android:textSize="14sp"
         android:textColor="?attr/answerButtonTextColor"
-        android:text="coins"/>
-    <TextView
+        android:text="coins">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            android:text="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            />
+    </TextSwitcher>
+    <TextSwitcher
         android:id="@+id/lbl_points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,8 +49,21 @@
         android:layout_toRightOf="@id/lbl_coins_game"
         android:textSize="14sp"
         android:textColor="?attr/answerButtonTextColor"
-        android:text="points"/>
-    <TextView
+        android:text="points">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            android:text="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            />
+    </TextSwitcher>
+    <TextSwitcher
         android:id="@+id/lbl_ankimals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +71,20 @@
         android:layout_toRightOf="@id/lbl_points"
         android:textSize="14sp"
         android:textColor="?attr/answerButtonTextColor"
-        android:text="ankimals"/>
+        android:text="ankimals">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            android:text="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            />
+    </TextSwitcher>
 
 
 </RelativeLayout>

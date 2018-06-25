@@ -228,9 +228,6 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
     @Override
     public void onCardIsAnswered() {
         mReviewerPresenter.increaseCoinsAndPoints(mCurrentEase); // also updates mCoinsInCard and mCardEase
-        updateLblGameCoins(mReviewerPresenter.getCoins());
-        updateLblPoints(mReviewerPresenter.getPoints());
-        updateLblAnkimals(mReviewerPresenter.countFreeAnkimals());
 
         String deckInfo = getCol().getDecks().current().toString();
         mReviewerPresenter.setDeckInfo(deckInfo);

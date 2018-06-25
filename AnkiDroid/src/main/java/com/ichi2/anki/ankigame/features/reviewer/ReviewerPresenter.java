@@ -106,6 +106,9 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
 
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
+        if(currentCoins > 0) {
+            getMvpView().updateLblGameCoins(totalCoins + currentCoins);
+        }
 
         // Add points based on elapsed time
         int extraPoints = calcPoints(elapsedTime) + calcPoints(mElapsedTimeToAnswer);
@@ -113,6 +116,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         mDataManager.getPreferencesHelper().storePoints(totalPoints + extraPoints);
         if(extraPoints > 0) {
             mDataManager.getFirebaseHelper().storePoints(getUserId(), totalPoints + extraPoints);
+            getMvpView().updateLblPoints(totalPoints + extraPoints);
         }
 
         increaseEarnedPoints(extraPoints);
@@ -126,6 +130,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         if(freeAnimals > mFreeAnimals) {
             Drawable icon = getAnimalIcon(freeAnimals - 1);
             getMvpView().showLiberatedAnimalMessage(icon);
+            getMvpView().updateLblAnkimals(freeAnimals);
             mFreeAnimals = freeAnimals;
         }
     }
