@@ -159,7 +159,7 @@ class BoardView extends React.Component {
       Anki.noPointsForTrick(trickName, requiredPoints, this.getBoardStateAsString());
       return;
     }
-    
+
     if(!Anki.hasCoinsForTrick(requiredCoins)) {
       Anki.noCoinsForTrick(trickName, requiredCoins, this.getBoardStateAsString());
       return;
@@ -329,8 +329,8 @@ class Score extends React.Component {
     var addition = this.props.addition;
     // TODO: AnkiGame, The addition is not displayed if the previous move generated
     // non-zero addition
-    var increment = addition > 0 ? 
-    (<div className="score-addition">+{addition}</div>) : 
+    var increment = addition > 0 ?
+    (<div className="score-addition">+{addition}</div>) :
     (<span/>);
     return (
       <div className="score-container">
@@ -428,7 +428,7 @@ class Trick extends React.Component {
           <span className={generateTrickClass(trickName)} onClick={Board.tryTrick.bind(Board, trickName)}/>
         </div>
         <div>
-          <span className={generatePointsClass(trickName)}>{tricks[trickName]['points']}★</span>
+          <span className={generatePointsClass(trickName)}>{tricks[trickName]['points']}☆</span>
         </div>
         <div>
           <span className={generateCoinsClass(trickName)}>{tricks[trickName]['coins']}⛁</span>
