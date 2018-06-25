@@ -33,7 +33,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setPoints(int points) {
-        lblPlayerPoints.setText(String.valueOf(points) + " ★");
+        lblPlayerPoints.setText(String.valueOf(points) + "☆");
     }
 
     public void setPosition(String position) {

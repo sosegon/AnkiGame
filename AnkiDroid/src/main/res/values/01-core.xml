@@ -76,7 +76,7 @@
     <string name="has_lost_game">☹You lose!☹</string>
     <string name="has_won_game">☺You won!☺</string>
     <string name="coins">Coins \n%1$d⛁</string>
-    <string name="points">Points \n%1$d★</string>
+    <string name="points">Points \n%1$d☆</string>
     <string name="ankimals" translatable="false">Ankimals \n%1$d♾</string>
     <string name="nickname" translatable="false">Nickname \n%1$s</string>
     <string name="insufficient_coins">You need %1$d extra coins to use this trick.</string>
@@ -94,7 +94,7 @@
         Swipe the screen ↔ ↕ to move the tiles. When two tiles with the same number touch, they merge into one!
         \n\nForm the tile 2048 to win.
         \n\nUse tricks to make the game easier.
-        \n\nReview flashcards to earn points ★ and coins ⛁ to unblock and use tricks.
+        \n\nReview flashcards to earn points ☆ and coins ⛁ to unblock and use tricks.
     </string>
     <string name="share_message">
         <!--TODO: Ankigame, update app url-->

@@ -26,7 +26,7 @@ public class AchievementViewHolver extends RecyclerView.ViewHolder{
     }
 
     public void setPoints(int points) {
-        lblPoints.setText(String.valueOf(points) + "★");
+        lblPoints.setText(String.valueOf(points) + "☆");
     }
 
     public void setAchievement(Drawable icon) {
