@@ -576,7 +576,7 @@ var Trick = function (_React$Component6) {
             'span',
             { className: generatePointsClass(trickName) },
             tricks[trickName]['points'],
-            '\u2605'
+            '\u2606'
           )
         ),
         React.createElement(
