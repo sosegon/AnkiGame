@@ -4,14 +4,26 @@
     android:id="@+id/ll_player"
     android:orientation="vertical"
     android:layout_width="48dp"
-    android:layout_height="80dp"
+    android:layout_height="78dp"
     android:layout_gravity="center"
     android:gravity="center">
 
     <TextView
+        android:id="@+id/lbl_position"
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:gravity="start"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingTop="4dp"
+        android:textColor="@color/material_blue_grey_600"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        tools:text="23"/>
+    <TextView
         android:id="@+id/lbl_achievement"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="52dp"
         android:gravity="center"
         android:textSize="32sp"
         tools:text="☀"/>

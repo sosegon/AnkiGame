@@ -28,6 +28,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolv
         Achievement ach = mAchievementList.get(position);
         holder.setPoints(ach.getPoints());
         holder.setAchievement(ach.getAchievement());
+        holder.setPosition(position + 1);
     }
 
     @Override
