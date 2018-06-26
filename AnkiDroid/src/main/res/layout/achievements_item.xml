@@ -20,13 +20,12 @@
         android:textSize="8sp"
         android:textStyle="bold"
         tools:text="23"/>
-    <TextView
-        android:id="@+id/lbl_achievement"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
+    <ImageView
+        android:id="@+id/imv_achievement"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:textSize="32sp"
-        tools:text="☀"/>
+        android:scaleType="fitXY"/>
     <TextView
         android:id="@+id/lbl_points"
         android:layout_width="match_parent"

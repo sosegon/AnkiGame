@@ -5,12 +5,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.Achievement;
 import com.ichi2.anki.ankigame.data.model.AnkiLog;
+import com.ichi2.anki.ankigame.features.customankimal.CustomAnkimal;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 import com.ichi2.anki.ankigame.services.SurveyReceiver;
@@ -23,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @ConfigPersistent
-public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
+public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implements AnkimalClickListener {
     private final static int DAYS_UNTIL_PROMPT = 15;//Min number of days
     private final static int LAUNCHES_UNTIL_PROMPT = 20;//Min number of launches
     private final static String SURVEY_NOTIFICATION_ACTION = "SURVEY_NOTIFICATION_SERVICE";
@@ -183,14 +187,37 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> {
             int currentPoints = getPoints();
             if(requiredPoints > currentPoints) {
                 a.setAchievement(mContext.getResources().getDrawable(R.drawable.ic_block_32dp));
+                a.setEnabled(false);
             } else {
                 a.setAchievement(mContext.getResources().getDrawable(iconAch.getResourceId(i, -1)));
+                a.setEnabled(true);
             }
             a.setPoints(requiredPoints);
             achs.add(a);
         }
 
-        mAchievementAdapter = new AchievementAdapter(achs);
+        mAchievementAdapter = new AchievementAdapter(achs, this);
+    }
+
+    @Override
+    public void onAnkimalSelected(int ankimalIndex, boolean enabled) {
+        if(!enabled) {
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("ankimalIndex", ankimalIndex);
+        CustomAnkimal customAnkimal = new CustomAnkimal();
+        customAnkimal.setArguments(bundle);
+
+        FragmentTransaction ft = getMvpView().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getMvpView().getSupportFragmentManager().findFragmentByTag(CustomAnkimal.FRAGMENT_TAG);
+        if(prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        customAnkimal.show(ft, CustomAnkimal.FRAGMENT_TAG);
     }
 
     private void scheduleSurvey(long time) {

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 public class Achievement {
     private Drawable achievement;
     private int points;
+    private boolean enabled;
 
     public Achievement() {
     }
@@ -23,5 +24,13 @@ public class Achievement {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

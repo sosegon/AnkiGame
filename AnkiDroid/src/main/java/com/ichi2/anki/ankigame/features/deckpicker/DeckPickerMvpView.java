@@ -1,6 +1,7 @@
 package com.ichi2.anki.ankigame.features.deckpicker;
 
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.ankigame.base.MvpView;
@@ -15,4 +16,5 @@ public interface DeckPickerMvpView extends MvpView,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
     void showRateDialog();
+    FragmentManager getSupportFragmentManager();
 }

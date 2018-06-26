@@ -12,9 +12,11 @@ import java.util.List;
 
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolver> {
     private List<Achievement> mAchievementList;
+    private AnkimalClickListener mListener;
 
-    public AchievementAdapter(List<Achievement>  achievementList) {
+    public AchievementAdapter(List<Achievement>  achievementList, AnkimalClickListener listener) {
         mAchievementList = achievementList;
+        mListener = listener;
     }
 
     @Override
@@ -29,6 +31,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolv
         holder.setPoints(ach.getPoints());
         holder.setAchievement(ach.getAchievement());
         holder.setPosition(position + 1);
+        holder.setOnClickListener(mListener, position, ach.isEnabled());
     }
 
     @Override

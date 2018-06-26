@@ -39,6 +39,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -141,9 +142,9 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         layoutParams.gravity = Gravity.CENTER;
 
         View view = getLayoutInflater().inflate(R.layout.achievements_item, null);
-        TextView tvAnimal = view.findViewById(R.id.lbl_achievement);
-        tvAnimal.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
-        tvAnimal.setLayoutParams(layoutParams);
+        ImageView imvAnimal = view.findViewById(R.id.imv_achievement);
+        imvAnimal.setImageDrawable(icon);
+        imvAnimal.setLayoutParams(layoutParams);
 
         TextView tvMessage = view.findViewById(R.id.lbl_points);
         tvMessage.setText(R.string.rescue_others);
