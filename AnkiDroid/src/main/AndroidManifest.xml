@@ -22,8 +22,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.ichi2.anki"
           android:installLocation="auto"
-          android:versionCode="209001194"
-          android:versionName="2.9alpha19Mod2">
+          android:versionCode="209001195"
+          android:versionName="2.9alpha19Mod3">
 
     <!--
         The version number is of the form:
@@ -392,6 +392,7 @@
         <meta-data
             android:name="com.sec.minimode.icon.landscape.normal"
             android:resource="@drawable/ankigame" />
+        <!--<meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />-->
 
         <provider
             android:name=".provider.CardContentProvider"
