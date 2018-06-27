@@ -24,6 +24,7 @@ public class FirebaseHelper {
     public static final String USER_TIME_KEY = User.PARAM_TIME;
     public static final String SHARE_URL_KEY = "shareUrl";
     public static final String SURVEY_URL_KEY = "surveyUrl";
+    public static final String DEBUG_KEY = "debug";
 
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mLogsDatabaseReference;
@@ -34,10 +35,17 @@ public class FirebaseHelper {
     public FirebaseHelper() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseDatabase.setPersistenceEnabled(true);
+
+        DatabaseReference reference = mFirebaseDatabase.getReference();
+
+        if(BuildConfig.DEBUG) {
+            reference = reference.child(DEBUG_KEY);
+        }
+
         if(BuildConfig.FLAVOR == "connection") {
-            mRoot = mFirebaseDatabase.getReference().child(CONNECTION_KEY);
+            mRoot = reference.child(CONNECTION_KEY);
         } else {
-            mRoot = mFirebaseDatabase.getReference().child(INDEPENDENT_KEY);
+            mRoot = reference.child(INDEPENDENT_KEY);
 
         }
         mUsersDatabaseReference = mRoot.child(USERS_KEY);
