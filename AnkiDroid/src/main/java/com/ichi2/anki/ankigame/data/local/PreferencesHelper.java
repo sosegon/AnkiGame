@@ -27,6 +27,8 @@ public class PreferencesHelper {
     public static final String KEY_SURVEY_SCHEDULED = "prf_survey_scheduled";
     public static final String KEY_SURVEY_TAKEN = "prf_survey_taken";
     public static final String KEY_SCHEDULED_SURVEY_COUNT = "prf_scheduled_survey_count";
+    public static final String KEY_LAST_SELECTED_ANKIMAL = "prf_last_selected_ankimal";
+    public static final String KEY_SELECTED_ANKIMALS = "prf_selected_ankimals";
 
     private final SharedPreferences mPref;
 
@@ -158,4 +160,21 @@ public class PreferencesHelper {
     public int retrieveScheduledSurveyCount() {
         return mPref.getInt(KEY_SCHEDULED_SURVEY_COUNT, 0);
     }
+
+    public void storeLastSelectedAnkimal(int ankimalIndex) {
+        mPref.edit().putInt(KEY_LAST_SELECTED_ANKIMAL, ankimalIndex).apply();
+    }
+
+    public int retrieveLastSelectedAnkimal() {
+        return mPref.getInt(KEY_LAST_SELECTED_ANKIMAL, -1);
+    }
+
+    public void storeSelectedAnkimals(String ankimals) {
+        mPref.edit().putString(KEY_SELECTED_ANKIMALS, ankimals).apply();
+    }
+
+    public String retrieveSelectedAnkimals() {
+        return mPref.getString(KEY_SELECTED_ANKIMALS, "");
+    }
+
 }

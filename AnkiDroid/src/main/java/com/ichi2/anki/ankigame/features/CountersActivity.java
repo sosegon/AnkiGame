@@ -1,10 +1,15 @@
 package com.ichi2.anki.ankigame.features;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -12,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.ankigame.features.game.Game;
 
 public class CountersActivity extends NavigationDrawerActivity {
@@ -19,20 +25,18 @@ public class CountersActivity extends NavigationDrawerActivity {
     TextSwitcher mLblPoints;
     TextView mLblPlayerName;
     TextSwitcher mLblAnkimals;
+    ImageView mImvPlayerAnkimal;
 
     protected void initCounters(View maiView) {
         mLblCoins = maiView.findViewById(R.id.lbl_coins_game);
         mLblPoints = maiView.findViewById(R.id.lbl_points);
         mLblPlayerName = maiView.findViewById(R.id.lbl_player_name);
         mLblAnkimals = maiView.findViewById(R.id.lbl_ankimals);
-
-        if(BuildConfig.FLAVOR.contentEquals("independent")){
-            mLblCoins.setVisibility(View.GONE);
-        }
+        mImvPlayerAnkimal = maiView.findViewById(R.id.imv_player_ankimal);
 
         mLblPoints.setInAnimation(getBaseContext(), R.anim.slide_up_in);
         mLblPoints.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
-        if(CountersActivity.this instanceof Game) {
+        if(CountersActivity.this instanceof Game || CountersActivity.this instanceof DeckPicker) {
             mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_down_in);
             mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_down_out);
         } else {
@@ -64,6 +68,12 @@ public class CountersActivity extends NavigationDrawerActivity {
     public void updateLblAnkimals(int ankimals) {
         if(mLblAnkimals != null) {
             mLblAnkimals.setText(getString(R.string.ankimals, ankimals));
+        }
+    }
+
+    public void updateImvPlayerAnkimal(Drawable icon) {
+        if(mImvPlayerAnkimal != null) {
+            ImageViewAnimatedChange(getBaseContext(), mImvPlayerAnkimal, icon);
         }
     }
 
@@ -110,4 +120,28 @@ public class CountersActivity extends NavigationDrawerActivity {
     public String getShareUrl() {
         return "";
     }
+
+    private void ImageViewAnimatedChange(Context c, final ImageView v, final Drawable new_image) {
+        final Animation anim_in  = AnimationUtils.loadAnimation(c, R.anim.slide_up_in);
+        final Animation anim_out = AnimationUtils.loadAnimation(c, R.anim.slide_up_out);
+        anim_in.setDuration(150);
+        anim_out.setDuration(150);
+        anim_out.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override public void onAnimationStart(Animation animation) {}
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation)
+            {
+                v.setImageDrawable(new_image);
+                anim_in.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {}
+                    @Override public void onAnimationRepeat(Animation animation) {}
+                    @Override public void onAnimationEnd(Animation animation) {}
+                });
+                v.startAnimation(anim_in);
+            }
+        });
+        v.startAnimation(anim_out);
+    }
+
 }

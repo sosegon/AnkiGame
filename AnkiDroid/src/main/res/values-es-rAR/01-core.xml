@@ -95,8 +95,8 @@
   <string name="has_won_game">☺Ganaste!☺</string>
   <string name="coins">Monedas \n%1$d ⛁</string>
   <string name="points">Puntos \n%1$d ★</string>
-  <string name="insufficient_coins">Necesitas %1$d monedas más para usar este truco.</string>
-  <string name="insufficient_points">Necesitas %1$d puntos más para desbloquear este truco.</string>
+  <string name="insufficient_coins">Necesitas %1$d monedas addicionales.</string>
+  <string name="insufficient_points">Necesitas %1$d puntos addicionales.</string>
   <string name="unable_trick">No puedes usar el truco %1$s en este momento.</string>
   <string name="menu_options">Opciones</string>
   <string name="menu_game">Juego</string>
