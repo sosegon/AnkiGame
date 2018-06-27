@@ -409,7 +409,7 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         mAchievementsList.setLayoutManager(new LinearLayoutManager(this));
         //mAchievementsList.setAdapter(mDeckPickerPresenter.getAchievementAdapter());
         //ANKIGAME
-        updateImvPlayerAnkimal(mDeckPickerPresenter.getPlayerAnkimal());
+        updateImvPlayerAnkimal(mDeckPickerPresenter.getPlayerDrawableAnkimal());
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -832,12 +832,15 @@ public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
         updateLblAnkimals(mDeckPickerPresenter.countFreeAnkimals());
         updateLblPlayerName(mDeckPickerPresenter.getNickName());
         // The ankimal has to be updated in onCreate only
-        //updateImvPlayerAnkimal(mDeckPickerPresenter.getPlayerAnkimal());
+        //updateImvPlayerAnkimal(mDeckPickerPresenter.getPlayerDrawableAnkimal());
         mDeckPickerPresenter.updateAnimalList();
         mAchievementsList.swapAdapter(mDeckPickerPresenter.getAchievementAdapter(), false);
         mAchievementsList.scrollToPosition(mDeckPickerPresenter.getNumberFreeAnimals() - 1);
     }
 
+    public void updateAnkimalList() {
+        mDeckPickerPresenter.updateAnimalList();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {

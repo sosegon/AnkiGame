@@ -38,4 +38,14 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolv
     public int getItemCount() {
         return mAchievementList.size();
     }
+
+    public void swap(List<Achievement> list) {
+        if(mAchievementList != null) {
+            mAchievementList.clear();
+            mAchievementList.addAll(list);
+        } else {
+            mAchievementList = list;
+        }
+        notifyDataSetChanged();
+    }
 }

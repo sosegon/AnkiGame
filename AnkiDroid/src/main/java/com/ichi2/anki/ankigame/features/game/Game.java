@@ -217,7 +217,7 @@ public class Game extends CountersActivity implements GameMvpView {
 
         initWebMain(savedInstanceState);
 
-        updateImvPlayerAnkimal(mGamePresenter.getPlayerAnkimal()); // update here not in onResume
+        updateImvPlayerAnkimal(mGamePresenter.getPlayerDrawableAnkimal()); // update here not in onResume
 
         pressBackToast = Toast.makeText(getApplicationContext(), sBack, Toast.LENGTH_SHORT);
     }

@@ -6,5 +6,8 @@ public interface CustomAnkimalMvpView extends MvpView {
     void showInsufficientCoinsMessage(int requiredCoins);
     void updatePlayerIcon();
     void updateSelectViews();
+    void updateColorViews();
+    void updateAnkimalView();
+    void updateAnkimalList();
     void updateCoins();
 }

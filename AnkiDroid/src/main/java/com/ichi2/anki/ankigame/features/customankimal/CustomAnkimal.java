@@ -1,9 +1,7 @@
 package com.ichi2.anki.ankigame.features.customankimal;
 
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseDialogFragment;
 import com.ichi2.anki.ankigame.features.CountersActivity;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 
 import javax.inject.Inject;
 
@@ -49,6 +48,17 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
         mPresenter.selectAnkimal();
     }
 
+    @BindView(R.id.lbl_coins_color)
+    TextSwitcher lblCoinsColor;
+
+    @BindView(R.id.ll_color)
+    ViewGroup llColor;
+
+    @OnClick(R.id.ll_color)
+    public void colorAnkimal() {
+        mPresenter.colorAnkimal();
+    }
+
     public CustomAnkimal() {
     }
 
@@ -68,11 +78,8 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
         mPresenter.setAnkimalIndex(ankimalIndex);
 
         updateSelectViews();
-
-        TypedArray grayIconAch = getResources().obtainTypedArray(R.array.achievements);
-
-        Drawable grayDrawable = getResources().getDrawable(grayIconAch.getResourceId(ankimalIndex, -1));
-        imvAnkimal.setImageDrawable(grayDrawable);
+        updateColorViews();
+        updateAnkimalView();
 
         return view;
     }
@@ -94,10 +101,16 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
         Activity iv = getActivity();
 
         if(iv instanceof CountersActivity) {
-            int ankimalIndex = mPresenter.getAnkimalIndex();
-            TypedArray grayIconAch = getResources().obtainTypedArray(R.array.achievements);
-            Drawable ankimalDrawable = getResources().getDrawable(grayIconAch.getResourceId(ankimalIndex, -1));
-            ((CountersActivity)iv).updateImvPlayerAnkimal(ankimalDrawable);
+            ((CountersActivity)iv).updateImvPlayerAnkimal(mPresenter.getDrawableAnkimal());
+        }
+    }
+
+    @Override
+    public void updateAnkimalList() {
+        Activity iv = getActivity();
+
+        if(iv instanceof DeckPicker) {
+            ((DeckPicker)iv).updateAnkimalList();
         }
     }
 
@@ -126,6 +139,23 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
             lblCoinsSelect.setText("");
             lblCoinsSelect.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void updateColorViews() {
+        if(!mPresenter.isColored()) {
+            llColor.setEnabled(true);
+            llColor.setVisibility(View.VISIBLE);
+            lblCoinsColor.setText(String.valueOf(mPresenter.REQUIRED_COINS_TO_COLOR) + getString(R.string.coins_glyph));
+        } else {
+            llColor.setEnabled(false);
+            llColor.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void updateAnkimalView() {
+        imvAnkimal.setImageDrawable(mPresenter.getDrawableAnkimal());
     }
 
     @Override

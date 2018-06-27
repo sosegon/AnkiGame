@@ -91,6 +91,7 @@
     <string name="pausing">Pausing...</string>
     <string name="share">Share</string>
     <string name="about">About</string>
+    <string name="color">Color</string>
     <string name="privacy">Privacy policy</string>
     <string name="game_instuctions">
         Swipe the screen ↔ ↕ to move the tiles. When two tiles with the same number touch, they merge into one!

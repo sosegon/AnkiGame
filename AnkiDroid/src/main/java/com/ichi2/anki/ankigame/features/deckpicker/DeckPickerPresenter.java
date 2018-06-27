@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implem
     public DeckPickerPresenter(@ApplicationContext Context context, DataManager dataManager) {
         this.mContext = context;
         mDataManager = dataManager;
-        updateAnimalList();
+        mAchievementAdapter = new AchievementAdapter(null, this);
     }
 
     public AchievementAdapter getAchievementAdapter() {
@@ -175,12 +174,8 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implem
         TypedArray iconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
         int[] valueAch = mContext.getResources().getIntArray(R.array.achievement_values);
 
-        int l = 0;
-        if(iconAch.length() <= valueAch.length) {
-            l = iconAch.length();
-        } else {
-            l = valueAch.length;
-        }
+        assert iconAch.length() == valueAch.length;
+        int l = valueAch.length;
 
         List<Achievement> achs = new ArrayList<>();
         for(int i = 0; i < l; i++) {
@@ -191,25 +186,20 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implem
                 a.setAchievement(mContext.getResources().getDrawable(R.drawable.ic_block_32dp));
                 a.setEnabled(false);
             } else {
-                a.setAchievement(mContext.getResources().getDrawable(iconAch.getResourceId(i, -1)));
+                boolean colored = AnkimalsUtils.isColoredAnkimal(mDataManager, i);
+                Drawable drawableAnkimal = AnkimalsUtils.getDrawableAnkimal(mContext, i, colored);
+                a.setAchievement(drawableAnkimal);
                 a.setEnabled(true);
             }
             a.setPoints(requiredPoints);
             achs.add(a);
         }
 
-        mAchievementAdapter = new AchievementAdapter(achs, this);
+        mAchievementAdapter.swap(achs);
     }
 
-    public Drawable getPlayerAnkimal() {
-        int ankimalIndex = mDataManager.getPreferencesHelper().retrieveLastSelectedAnkimal();
-        int totalAnkimals = mContext.getResources().getIntArray(R.array.achievement_values).length;
-        if(ankimalIndex < 0 || ankimalIndex >= totalAnkimals) {
-            return mContext.getResources().getDrawable(R.drawable.ic_block_32dp);
-        }
-
-        TypedArray grayIconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
-        return mContext.getResources().getDrawable(grayIconAch.getResourceId(ankimalIndex, -1));
+    public Drawable getPlayerDrawableAnkimal() {
+        return AnkimalsUtils.getPlayerDrawableAnkimal(mContext, mDataManager);
     }
 
     @Override

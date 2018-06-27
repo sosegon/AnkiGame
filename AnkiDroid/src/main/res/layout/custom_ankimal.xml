@@ -14,42 +14,89 @@
         android:scaleType="fitXY" />
 
     <LinearLayout
-        style="@style/FooterButtonLayout"
-        android:id="@+id/ll_select"
-        android:background="?attr/goodButtonRef"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/imv_ankimal"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/GoodButtonTimeStyle"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:text="@string/select"/>
-
-        <TextSwitcher
-            style="@style/GoodButtonTimeStyle"
-            android:id="@+id/lbl_coins_select"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imv_ankimal">
+        <LinearLayout
+            style="@style/FooterButtonLayout"
+            android:id="@+id/ll_select"
+            android:background="?attr/goodButtonRef"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
             <TextView
                 style="@style/GoodButtonTimeStyle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"/>
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:text="@string/select"/>
+
+            <TextSwitcher
+                style="@style/GoodButtonTimeStyle"
+                android:id="@+id/lbl_coins_select"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    style="@style/GoodButtonTimeStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"/>
+
+                <TextView
+                    style="@style/GoodButtonTimeStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"/>
+            </TextSwitcher>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/FooterButtonLayout"
+            android:id="@+id/ll_color"
+            android:background="?attr/easyButtonRef"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
             <TextView
-                style="@style/GoodButtonTimeStyle"
+                style="@style/EasyButtonTimeStyle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"/>
-        </TextSwitcher>
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:text="@string/color"/>
+
+            <TextSwitcher
+                style="@style/EasyButtonTimeStyle"
+                android:id="@+id/lbl_coins_color"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    style="@style/EasyButtonTimeStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"/>
+
+                <TextView
+                    style="@style/EasyButtonTimeStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"/>
+            </TextSwitcher>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
