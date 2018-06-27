@@ -82,6 +82,10 @@ public class AnkimalsUtils {
         return iAnkimals;
     }
 
+    public static String getAnkimalName(Context context, int ankimalIndex) {
+        return context.getResources().getStringArray(R.array.achievement_names)[ankimalIndex];
+    }
+
     private static String getColoredAnkimals(DataManager dataManager) {
         return dataManager.getPreferencesHelper().retrieveColoredAnkimals();
     }

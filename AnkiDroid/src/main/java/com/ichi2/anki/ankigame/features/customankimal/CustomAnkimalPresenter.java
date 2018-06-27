@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
+import com.ichi2.anki.ankigame.data.model.AnkiLog;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
 import com.ichi2.anki.ankigame.util.AnkimalsUtils;
@@ -55,7 +56,7 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
                 if(isCurrentlySelected()) {
                     getMvpView().updatePlayerIcon();
                 }
-                // TODO: Ankigame logging
+                logColorAnkimal();
             }
         }
     }
@@ -86,13 +87,9 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
                 mDataManager.getPreferencesHelper().storeLastSelectedAnkimal(mAnkimalIndex);
                 getMvpView().updatePlayerIcon();
                 getMvpView().updateSelectViews();
-                // TODO: Ankigame logging
+                logSelectAnkimal();
             }
         }
-    }
-
-    public int getAnkimalIndex() {
-        return mAnkimalIndex;
     }
 
     public void setAnkimalIndex(int index) {
@@ -151,5 +148,27 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
         ankimals += String.valueOf(newAnkimal);
 
         return ankimals;
+    }
+
+    private void logSelectAnkimal() {
+        String ankimalName = AnkimalsUtils.getAnkimalName(mContext, mAnkimalIndex);
+        AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        ankiLog.setLogType(AnkiLog.TYPE_SELECT_ANKIMAL);
+        ankiLog.setTotalCoins(getCoins());
+        ankiLog.setTotalPoints(getPoints());
+        ankiLog.setAnkimalName(ankimalName);
+
+        mDataManager.logBehaviour(ankiLog);
+    }
+
+    private void logColorAnkimal() {
+        String ankimalName = AnkimalsUtils.getAnkimalName(mContext, mAnkimalIndex);
+        AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        ankiLog.setLogType(AnkiLog.TYPE_COLOR_ANKIMAL);
+        ankiLog.setTotalCoins(getCoins());
+        ankiLog.setTotalPoints(getPoints());
+        ankiLog.setAnkimalName(ankimalName);
+
+        mDataManager.logBehaviour(ankiLog);
     }
 }

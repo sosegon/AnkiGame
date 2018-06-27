@@ -11,6 +11,9 @@ public class AnkiLog extends AppLog{
     public static final String TYPE_DISPLAY_ANSWER_CARD = "displayAnswerCard";
     public static final String TYPE_ASSESS_CARD = "assessCard";
     public static final String TYPE_CUSTOM_STUDY = "customStudy";
+    public static final String TYPE_RESCUE_ANKIMAL = "rescueAnkimal";
+    public static final String TYPE_SELECT_ANKIMAL = "selectAnkimal";
+    public static final String TYPE_COLOR_ANKIMAL = "colorAnkimal";
 
     // Name of params
     public static final String PARAM_DUE_DECK_INFO = "dueDeckInfo";
@@ -25,6 +28,7 @@ public class AnkiLog extends AppLog{
     public static final String PARAM_CUSTOM_STUDY_OPTION = "customStudyOption";
     public static final String PARAM_EARNED_COINS= "earnedCoins";
     public static final String PARAM_EARNED_POINTS = "earnedPoints";
+    public static final String PARAM_ANKIMAL_NAME = "ankimalName";
 
     // Params in logEvent
     public String dueDeckInfo;
@@ -39,6 +43,7 @@ public class AnkiLog extends AppLog{
     public String customStudyOption;
     public int earnedCoins;
     public int earnedPoints;
+    public String ankimalName;
 
     public static AnkiLog logBase(String userId) {
         Date date = new Date();
@@ -152,5 +157,13 @@ public class AnkiLog extends AppLog{
 
     public void setEarnedPoints(int earnedPoints) {
         this.earnedPoints = earnedPoints;
+    }
+
+    public String getAnkimalName() {
+        return ankimalName;
+    }
+
+    public void setAnkimalName(String ankimalName) {
+        this.ankimalName = ankimalName;
     }
 }

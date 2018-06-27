@@ -131,12 +131,26 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         mCardEase = ease;
 
         int freeAnimals = countFreeAnkimals();
-        if(freeAnimals > mFreeAnimals) {
+        int totalAnimals = mContext.getResources().getIntArray(R.array.achievement_values).length;
+        if(freeAnimals > mFreeAnimals && freeAnimals <= totalAnimals) {
             Drawable icon = AnkimalsUtils.getDrawableAnkimal(mContext, freeAnimals - 1, false);
             getMvpView().showLiberatedAnimalMessage(icon);
             getMvpView().updateLblAnkimals(freeAnimals);
             mFreeAnimals = freeAnimals;
+            logRescueAnkimal(AnkimalsUtils.getAnkimalName(mContext, freeAnimals - 1));
         }
+    }
+
+    public void logRescueAnkimal(String ankimalName) {
+        AnkiLog ankiLog = AnkiLog.logBase(mDataManager.getPreferencesHelper().retrieveUserId());
+        ankiLog.setLogType(AnkiLog.TYPE_RESCUE_ANKIMAL);
+        ankiLog.setTotalCoins(getCoins());
+        ankiLog.setTotalPoints(getPoints());
+        ankiLog.setCoinsInCard(mCoinsInCard);
+        ankiLog.setPointsInCard(mPointsInCard);
+        ankiLog.setAnkimalName(ankimalName);
+
+        mDataManager.logBehaviour(ankiLog);
     }
 
     public void logSelectDeck() {
@@ -246,18 +260,5 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     private void increaseEarnedCoins(int coins) {
         int prev = mDataManager.getPreferencesHelper().retrieveEarnedCoins();
         mDataManager.getPreferencesHelper().storeEarnedCoins(prev + coins);
-    }
-
-    private Drawable getAnimalIcon(int index){
-        TypedArray iconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
-
-        try {
-            return mContext.getResources().getDrawable(iconAch.getResourceId(index, -1));
-        } catch (IndexOutOfBoundsException e) {
-            Timber.e("Invalid achievement index");
-        }
-
-        // TODO: ANKIGAME, find a better icon
-        return mContext.getResources().getDrawable(R.drawable.ic_block_32dp);
     }
 }

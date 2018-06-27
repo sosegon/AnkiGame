@@ -34,6 +34,12 @@ public class Analytics {
             params = logAssessCard(appLog);
         } else if(appLog.getLogType().contentEquals(AnkiLog.TYPE_CUSTOM_STUDY)){
             params = logCustomStudy(appLog);
+        } else if(appLog.getLogType().contentEquals(AnkiLog.TYPE_RESCUE_ANKIMAL)){
+            params = logRescueAnkimal(appLog);
+        } else if(appLog.getLogType().contentEquals(AnkiLog.TYPE_SELECT_ANKIMAL)){
+            params = logSelectAnkimal(appLog);
+        } else if(appLog.getLogType().contentEquals(AnkiLog.TYPE_COLOR_ANKIMAL)){
+            params = logColorAnkimal(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_USE_TRICK)){
             params = logUseTrick(appLog);
         } else if(appLog.getLogType().contentEquals(GameLog.TYPE_FAIL_TRICK)){
@@ -123,6 +129,37 @@ public class Analytics {
         return params;
     }
 
+    private Bundle logRescueAnkimal(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
+
+        if(appLog instanceof AnkiLog){
+            params.putInt(AnkiLog.PARAM_COINS_IN_CARD, ((AnkiLog)appLog).getCoinsInCard());
+            params.putInt(AnkiLog.PARAM_POINTS_IN_CARD, ((AnkiLog)appLog).getPointsInCard());
+            params.putString(AnkiLog.PARAM_ANKIMAL_NAME, ((AnkiLog)appLog).getAnkimalName());
+        }
+
+        return params;
+    }
+
+    private Bundle logSelectAnkimal(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
+
+        if(appLog instanceof AnkiLog){
+            params.putString(AnkiLog.PARAM_ANKIMAL_NAME, ((AnkiLog)appLog).getAnkimalName());
+        }
+
+        return params;
+    }
+
+    private Bundle logColorAnkimal(AppLog appLog) {
+        Bundle params = getAppLogParams(appLog);
+
+        if(appLog instanceof AnkiLog){
+            params.putString(AnkiLog.PARAM_ANKIMAL_NAME, ((AnkiLog)appLog).getAnkimalName());
+        }
+
+        return params;
+    }
 
     private Bundle logUseTrick(AppLog appLog) {
         Bundle params = getAppLogParams(appLog);
