@@ -1,9 +1,12 @@
 package com.ichi2.anki.ankigame.features.game;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.webkit.JavascriptInterface;
 
 import com.ichi2.anki.BuildConfig;
+import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.Board;
@@ -37,6 +40,17 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
 
     public int countFreeAnkimals() {
         return AnkimalsUtils.countFreeAnkimals(mContext, getPoints());
+    }
+
+    public Drawable getPlayerAnkimal() {
+        int ankimalIndex = mDataManager.getPreferencesHelper().retrieveLastSelectedAnkimal();
+        int totalAnkimals = mContext.getResources().getIntArray(R.array.achievement_values).length;
+        if(ankimalIndex < 0 || ankimalIndex >= totalAnkimals) {
+            return mContext.getResources().getDrawable(R.drawable.ic_block_32dp);
+        }
+
+        TypedArray grayIconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
+        return mContext.getResources().getDrawable(grayIconAch.getResourceId(ankimalIndex, -1));
     }
 
     public String getNickName() {

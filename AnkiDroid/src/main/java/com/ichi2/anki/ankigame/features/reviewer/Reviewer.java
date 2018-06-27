@@ -105,6 +105,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         ButterKnife.bind(this);
         activityComponent().inject(this);
         initCounters(findViewById(android.R.id.content));
+        updateImvPlayerAnkimal(mReviewerPresenter.getPlayerAnkimal()); // update here not in onResume
         logSelectDeck();
     }
 

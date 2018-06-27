@@ -64,6 +64,17 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         return AnkimalsUtils.countFreeAnkimals(mContext, getPoints());
     }
 
+    public Drawable getPlayerAnkimal() {
+        int ankimalIndex = mDataManager.getPreferencesHelper().retrieveLastSelectedAnkimal();
+        int totalAnkimals = mContext.getResources().getIntArray(R.array.achievement_values).length;
+        if(ankimalIndex < 0 || ankimalIndex >= totalAnkimals) {
+            return mContext.getResources().getDrawable(R.drawable.ic_block_32dp);
+        }
+
+        TypedArray grayIconAch = mContext.getResources().obtainTypedArray(R.array.achievements);
+        return mContext.getResources().getDrawable(grayIconAch.getResourceId(ankimalIndex, -1));
+    }
+
     public String getNickName() {
         return mDataManager.getPreferencesHelper().retrieveNickName();
     }
