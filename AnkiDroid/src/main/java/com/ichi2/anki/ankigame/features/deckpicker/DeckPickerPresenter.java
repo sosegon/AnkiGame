@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -65,7 +66,8 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implem
     }
 
     public String getShareUrl() {
-        return mDataManager.getShareUrl();
+        Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" +  mContext.getPackageName());
+        return uri.toString();
     }
 
     public int getNumberFreeAnimals() {
@@ -183,7 +185,7 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implem
             int requiredPoints = valueAch[i];
             int currentPoints = getPoints();
             if(requiredPoints > currentPoints) {
-                a.setAchievement(AnkimalsUtils.getDrawableAnkimal(mContext, -1, false));
+                a.setAchievement(AnkimalsUtils.getDrawableAnkimal(mContext, -1, true));
                 a.setEnabled(false);
             } else {
                 boolean colored = AnkimalsUtils.isColoredAnkimal(mDataManager, i);

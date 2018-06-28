@@ -1,7 +1,5 @@
 package com.ichi2.anki.ankigame.data;
 
-import android.content.Context;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,7 +11,6 @@ import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.Analytics;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
-import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 import com.ichi2.anki.ankigame.util.InfoHandler;
 import com.ichi2.anki.ankigame.util.RxEventBus;
@@ -34,7 +31,6 @@ public class DataManager {
     private final FirebaseHelper mFirebaseHelper;
     private final Analytics mAnalytics;
     private final RxEventBus mEventBus;
-    private AnkiString mShareUrl;
     private AnkiString mSurveyUrl;
 
     @Inject
@@ -44,7 +40,6 @@ public class DataManager {
         mAnalytics = analytics;
         mEventBus = eventBus;
         initBus();
-        initShareUrl();
         initSurveyUrl();
     }
 
@@ -140,27 +135,8 @@ public class DataManager {
         mFirebaseHelper.storeBestScore(userId, bestScore);
     }
 
-    public String getShareUrl(){
-        return mShareUrl.getString();
-    }
-
     public String getSurveyUrl(){
         return mSurveyUrl.getString();
-    }
-
-    private void initShareUrl() {
-        mShareUrl = new AnkiString();
-        mFirebaseHelper.retrieveShareUrl().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mShareUrl.setString(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void initSurveyUrl() {

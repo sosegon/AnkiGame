@@ -2,6 +2,7 @@ package com.ichi2.anki.ankigame.features.reviewer;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
@@ -72,7 +73,8 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
     }
 
     public String getShareUrl() {
-        return mDataManager.getShareUrl();
+        Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" +  mContext.getPackageName());
+        return uri.toString();
     }
 
     public void increaseCoinsAndPoints(int ease) {

@@ -2,6 +2,7 @@ package com.ichi2.anki.ankigame.features.game;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.webkit.JavascriptInterface;
 
 import com.ichi2.anki.BuildConfig;
@@ -67,7 +68,8 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
     }
 
     public String getShareUrl() {
-        return mDataManager.getShareUrl();
+        Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" +  mContext.getPackageName());
+        return uri.toString();
     }
 
     public void log(Board board, String logType) {
