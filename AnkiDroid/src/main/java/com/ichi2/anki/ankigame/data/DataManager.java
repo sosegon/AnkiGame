@@ -1,5 +1,7 @@
 package com.ichi2.anki.ankigame.data;
 
+import android.content.Context;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,6 +13,7 @@ import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.Analytics;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
+import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 import com.ichi2.anki.ankigame.util.InfoHandler;
 import com.ichi2.anki.ankigame.util.RxEventBus;
@@ -35,9 +38,9 @@ public class DataManager {
     private AnkiString mSurveyUrl;
 
     @Inject
-    public DataManager(PreferencesHelper preferencesHelper, Analytics analytics, RxEventBus eventBus) {
+    public DataManager(PreferencesHelper preferencesHelper, FirebaseHelper firebaseHelper, Analytics analytics, RxEventBus eventBus) {
         mPreferencesHelper = preferencesHelper;
-        mFirebaseHelper = new FirebaseHelper(); // Does not depend on anything
+        mFirebaseHelper = firebaseHelper;
         mAnalytics = analytics;
         mEventBus = eventBus;
         initBus();

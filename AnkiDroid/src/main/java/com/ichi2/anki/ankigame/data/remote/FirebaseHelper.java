@@ -1,12 +1,19 @@
 package com.ichi2.anki.ankigame.data.remote;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
+import com.ichi2.anki.ankigame.injection.ApplicationContext;
 
+import java.util.Calendar;
+
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
@@ -27,6 +34,7 @@ public class FirebaseHelper {
     public static final String SHARE_URL_KEY = "shareUrl";
     public static final String SURVEY_URL_KEY = "surveyUrl";
     public static final String DEBUG_KEY = "debug";
+    public static final String PUBLIC_KEY = "public";
 
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mLogsDatabaseReference;
@@ -34,7 +42,11 @@ public class FirebaseHelper {
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseMessaging mFirebaseMessaging;
 
-    public FirebaseHelper() {
+    private Context mContext;
+
+    @Inject
+    public FirebaseHelper(@ApplicationContext Context context) {
+        mContext = context;
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseDatabase.setPersistenceEnabled(true);
 
@@ -42,6 +54,8 @@ public class FirebaseHelper {
 
         if(BuildConfig.DEBUG) {
             reference = reference.child(DEBUG_KEY);
+        } else if(isPublic()) {
+            reference = reference.child(PUBLIC_KEY);
         }
 
         if(BuildConfig.FLAVOR == "connection") {
@@ -142,5 +156,28 @@ public class FirebaseHelper {
     private void subscribeToAnkimals() {
         mFirebaseMessaging.subscribeToTopic("ankimals");
 
+    }
+
+    private boolean isPublic() {
+
+        Calendar participantsDate = Calendar.getInstance();
+        participantsDate.set(Calendar.DAY_OF_MONTH, 28);
+        participantsDate.set(Calendar.MONTH, Calendar.JUNE);
+        participantsDate.set(Calendar.YEAR, 2018);
+
+        try {
+            long installed = mContext
+                    .getPackageManager()
+                    .getPackageInfo(mContext.getPackageName(), 0)
+                    .firstInstallTime;
+
+            if(installed > participantsDate.getTimeInMillis()) {
+                return true;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+
+        return false;
     }
 }
