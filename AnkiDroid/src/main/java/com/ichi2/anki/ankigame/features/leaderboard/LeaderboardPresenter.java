@@ -32,6 +32,27 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
         this.mDataManager= dataManager;
     }
 
+    public void updateUserRemotely() {
+        String userId = getUserId();
+        int points = mDataManager.getPreferencesHelper().retrievePoints();
+        int bestScore = mDataManager.getPreferencesHelper().retrieveBestScore();
+        String nickName = mDataManager.getPreferencesHelper().retrieveNickName();
+        String date = mDataManager.getPreferencesHelper().retrieveUserDate();
+        String time = mDataManager.getPreferencesHelper().retrieveUserTime();
+        int ankimalIndex = mDataManager.getPreferencesHelper().retrieveLastSelectedAnkimal();
+        boolean coloredAnkimal = AnkimalsUtils.isColoredAnkimal(mDataManager, ankimalIndex);
+        ankimalIndex += 1; // workaround for users with no avatar set
+
+        mDataManager.getFirebaseHelper().storePoints(userId, points);
+        mDataManager.getFirebaseHelper().storeBestScore(userId, bestScore);
+        mDataManager.getFirebaseHelper().storeNickName(userId, nickName);
+        mDataManager.getFirebaseHelper().storeUserDate(userId, date);
+        mDataManager.getFirebaseHelper().storeUserTime(userId, time);
+        mDataManager.getFirebaseHelper().storeUserAnkimalIndex(userId, ankimalIndex);
+        mDataManager.getFirebaseHelper().storeUserColoredAnkimal(userId, coloredAnkimal);
+
+    }
+
     public void logCheckLeaderboard() {
         doLogCheckLeaderboard();
     }

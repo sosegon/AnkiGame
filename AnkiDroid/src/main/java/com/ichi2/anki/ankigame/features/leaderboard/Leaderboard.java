@@ -78,6 +78,7 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
 
         mPresenter.attachView(this);
         mPresenter.initAdapter(mListenerChangeNickName);
+        mPresenter.updateUserRemotely();
         mPresenter.logCheckLeaderboard();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
