@@ -120,7 +120,7 @@ public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView
         if(!mReviewerPresenter.isViewAttached()) {
             mReviewerPresenter.attachView(this);
         }
-        updateLblGameCoins(mReviewerPresenter.getCoins());
+        updateLblGameCoins(mReviewerPresenter.getCoins(), true);
         updateLblPoints(mReviewerPresenter.getPoints());
         updateLblAnkimals(mReviewerPresenter.countFreeAnkimals());
         updateLblPlayerName(mReviewerPresenter.getNickName());

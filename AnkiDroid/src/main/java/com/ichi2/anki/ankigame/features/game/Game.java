@@ -232,7 +232,7 @@ public class Game extends CountersActivity implements GameMvpView {
         mGamePresenter.resetEarnedCoins();
         mGamePresenter.resetEarnedPoints();
 
-        updateLblGameCoins(mGamePresenter.getCoins());
+        updateLblGameCoins(mGamePresenter.getCoins(), true);
         updateLblPoints(mGamePresenter.getPoints());
         updateLblAnkimals(mGamePresenter.countFreeAnkimals());
         updateLblPlayerName(mGamePresenter.getNickName());

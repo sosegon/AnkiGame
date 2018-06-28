@@ -14,11 +14,8 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
-import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
-import com.ichi2.anki.ankigame.features.game.Game;
 
 public class CountersActivity extends NavigationDrawerActivity {
     TextSwitcher mLblCoins;
@@ -36,19 +33,19 @@ public class CountersActivity extends NavigationDrawerActivity {
 
         mLblPoints.setInAnimation(getBaseContext(), R.anim.slide_up_in);
         mLblPoints.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
-        if(CountersActivity.this instanceof Game || CountersActivity.this instanceof DeckPicker) {
-            mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_down_in);
-            mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_down_out);
-        } else {
-            mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_up_in);
-            mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
-        }
         mLblAnkimals.setInAnimation(getBaseContext(), R.anim.slide_up_in);
         mLblAnkimals.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
     }
 
-    public void updateLblGameCoins(int coins) {
+    public void updateLblGameCoins(int coins, boolean increase) {
         if(mLblCoins != null) {
+            if(increase) {
+                mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_up_in);
+                mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
+            } else {
+                mLblCoins.setInAnimation(getBaseContext(), R.anim.slide_down_in);
+                mLblCoins.setOutAnimation(getBaseContext(), R.anim.slide_down_out);
+            }
             mLblCoins.setText(getString(R.string.coins, coins));
         }
     }

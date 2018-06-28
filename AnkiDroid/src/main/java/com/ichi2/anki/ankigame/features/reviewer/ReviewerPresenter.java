@@ -1,7 +1,6 @@
 package com.ichi2.anki.ankigame.features.reviewer;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import com.ichi2.anki.R;
@@ -111,7 +110,7 @@ public class ReviewerPresenter extends BasePresenter<ReviewerMvpView> {
         int totalCoins = mDataManager.getPreferencesHelper().retrieveCoins();
         mDataManager.getPreferencesHelper().storeCoins(totalCoins + currentCoins);
         if(currentCoins > 0) {
-            getMvpView().updateLblGameCoins(totalCoins + currentCoins);
+            getMvpView().updateLblGameCoins(totalCoins + currentCoins, true);
         }
 
         // Add points based on elapsed time

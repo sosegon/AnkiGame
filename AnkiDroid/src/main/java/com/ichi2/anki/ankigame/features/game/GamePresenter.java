@@ -1,12 +1,10 @@
 package com.ichi2.anki.ankigame.features.game;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.webkit.JavascriptInterface;
 
 import com.ichi2.anki.BuildConfig;
-import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BasePresenter;
 import com.ichi2.anki.ankigame.data.DataManager;
 import com.ichi2.anki.ankigame.data.model.Board;
@@ -172,7 +170,7 @@ public class GamePresenter extends BasePresenter<GameMvpView> {
         getMvpView().postRunnable(new Runnable(){
             @Override
             public void run () {
-                getMvpView().updateLblGameCoins(getCoins());
+                getMvpView().updateLblGameCoins(getCoins(), false);
                 logUseTrick(board, trickName);
             }
         });

@@ -119,7 +119,7 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
         Activity iv = getActivity();
 
         if(iv instanceof CountersActivity) {
-            ((CountersActivity)iv).updateLblGameCoins(mPresenter.getCoins());
+            ((CountersActivity)iv).updateLblGameCoins(mPresenter.getCoins(), false);
         }
     }
 
