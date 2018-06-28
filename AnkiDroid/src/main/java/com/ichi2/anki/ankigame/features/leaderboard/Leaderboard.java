@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseDialogFragment;
 import com.ichi2.anki.ankigame.features.CountersActivity;
+import com.ichi2.ui.DividerItemDecoration;
 
 import javax.inject.Inject;
 
@@ -83,6 +84,7 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
         layoutManager.setReverseLayout(true); // reverse order
 
         mPlayersList.setLayoutManager(layoutManager);
+        mPlayersList.addItemDecoration(new DividerItemDecoration(getContext()));
         mPlayersList.setHasFixedSize(true); // Optimizations in the UI
         mPlayersList.setAdapter(mPresenter.getAdapter());
 
