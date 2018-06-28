@@ -38,15 +38,17 @@ public class AnkimalsUtils {
     public static Drawable getDrawableAnkimal(Context context, int ankimalIndex, boolean isColored) {
         TypedArray ankimalDrawables = context.getResources().obtainTypedArray(R.array.achievements);
 
+        int totalAnkimals = ankimalDrawables.length();
+        if(ankimalIndex < 0 || ankimalIndex >= totalAnkimals) {
+            return context.getResources().getDrawable(R.drawable.ic_block_32dp);
+        }
+
         assert ankimalIndex >= 0 && ankimalIndex < ankimalDrawables.length();
 
         android.graphics.drawable.Drawable ankimalDrawable = context.getResources().getDrawable(ankimalDrawables.getResourceId(ankimalIndex, -1));
 
         if(!isColored) {
-            ColorMatrix matrix = new ColorMatrix();
-            matrix.setSaturation(0);
-            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
-            ankimalDrawable.setColorFilter(filter);
+            grayDrawable(ankimalDrawable);
         }
 
         return ankimalDrawable;
@@ -98,5 +100,12 @@ public class AnkimalsUtils {
         }
 
         return false;
+    }
+
+    private static void grayDrawable(Drawable icon) {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        icon.setColorFilter(filter);
     }
 }

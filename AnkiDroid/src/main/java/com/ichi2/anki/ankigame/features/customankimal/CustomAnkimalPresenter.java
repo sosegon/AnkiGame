@@ -55,7 +55,9 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
                 getMvpView().updateAnkimalList();
                 if(isCurrentlySelected()) {
                     getMvpView().updatePlayerIcon();
+                    mDataManager.getFirebaseHelper().storeUserColoredAnkimal(getUserId(), true);
                 }
+
                 logColorAnkimal();
             }
         }
@@ -87,6 +89,15 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
                 mDataManager.getPreferencesHelper().storeLastSelectedAnkimal(mAnkimalIndex);
                 getMvpView().updatePlayerIcon();
                 getMvpView().updateSelectViews();
+
+                String userId = getUserId();
+                int ankimalIndex = mDataManager.getPreferencesHelper().retrieveLastSelectedAnkimal();
+                boolean coloredAnkimal = AnkimalsUtils.isColoredAnkimal(mDataManager, ankimalIndex);
+                ankimalIndex += 1; // workaround for users with no avatar set
+
+                mDataManager.getFirebaseHelper().storeUserAnkimalIndex(userId, ankimalIndex);
+                mDataManager.getFirebaseHelper().storeUserColoredAnkimal(userId, coloredAnkimal);
+
                 logSelectAnkimal();
             }
         }
@@ -170,5 +181,9 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
         ankiLog.setAnkimalName(ankimalName);
 
         mDataManager.logBehaviour(ankiLog);
+    }
+
+    private String getUserId() {
+        return mDataManager.getPreferencesHelper().retrieveUserId();
     }
 }

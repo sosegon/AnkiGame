@@ -7,12 +7,16 @@ public class User {
     public static final String PARAM_POINTS = "points";
     public static final String PARAM_DATE = "date";
     public static final String PARAM_TIME = "time";
+    public static final String PARAM_ANKIMAL_INDEX = "ankimalIndex";
+    public static final String PARAM_COLORED_ANKIMAL = "coloredAnkimal";
 
     private int bestScore;
     private String nickName;
     private int points;
     public String date;
     public String time;
+    public int ankimalIndex;
+    public boolean coloredAnkimal;
 
     public User() {
     }
@@ -55,5 +59,21 @@ public class User {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getAnkimalIndex() {
+        return ankimalIndex;
+    }
+
+    public void setAnkimalIndex(int ankimalIndex) {
+        this.ankimalIndex = ankimalIndex;
+    }
+
+    public boolean isColoredAnkimal() {
+        return coloredAnkimal;
+    }
+
+    public void setColoredAnkimal(boolean coloredAnkimal) {
+        this.coloredAnkimal = coloredAnkimal;
     }
 }

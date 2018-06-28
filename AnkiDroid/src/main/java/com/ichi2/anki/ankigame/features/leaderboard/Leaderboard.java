@@ -75,7 +75,6 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
 
         mPresenter.attachView(this);
         mPresenter.initAdapter(mListenerChangeNickName);
-        mPresenter.updateUserRemotely(); // So, they user is updated in firebase
         mPresenter.logCheckLeaderboard();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

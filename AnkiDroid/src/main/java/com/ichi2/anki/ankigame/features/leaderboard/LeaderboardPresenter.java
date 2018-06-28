@@ -3,6 +3,7 @@ package com.ichi2.anki.ankigame.features.leaderboard;
 //import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -14,6 +15,7 @@ import com.ichi2.anki.ankigame.data.model.GameLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.injection.ApplicationContext;
 import com.ichi2.anki.ankigame.injection.ConfigPersistent;
+import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 
 import javax.inject.Inject;
 
@@ -28,21 +30,6 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
     public LeaderboardPresenter(@ApplicationContext Context context, DataManager dataManager) {
         this.mContext = context;
         this.mDataManager= dataManager;
-    }
-
-    public void updateUserRemotely() {
-        String userId = getUserId();
-        int points = mDataManager.getPreferencesHelper().retrievePoints();
-        int bestScore = mDataManager.getPreferencesHelper().retrieveBestScore();
-        String nickName = mDataManager.getPreferencesHelper().retrieveNickName();
-        String date = mDataManager.getPreferencesHelper().retrieveUserDate();
-        String time = mDataManager.getPreferencesHelper().retrieveUserTime();
-
-        mDataManager.getFirebaseHelper().storePoints(userId, points);
-        mDataManager.getFirebaseHelper().storeBestScore(userId, bestScore);
-        mDataManager.getFirebaseHelper().storeNickName(userId, nickName);
-        mDataManager.getFirebaseHelper().storeUserDate(userId, date);
-        mDataManager.getFirebaseHelper().storeUserTime(userId, time);
     }
 
     public void logCheckLeaderboard() {
@@ -121,6 +108,11 @@ public class LeaderboardPresenter extends BasePresenter<LeaderboardMvpView> {
 
                viewHolder.setPosition(sPlayerPosition);
                viewHolder.setColor(rowColor);
+
+               boolean ankimalColored = model.isColoredAnkimal();
+               int ankimalIndex = model.getAnkimalIndex() - 1; // workaround for users with no avatar set
+               Drawable avatar = AnkimalsUtils.getDrawableAnkimal(mContext, ankimalIndex, ankimalColored);
+               viewHolder.setPlayerAvatar(avatar);
            }
 
            @Override

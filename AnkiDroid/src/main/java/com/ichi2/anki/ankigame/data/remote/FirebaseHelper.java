@@ -22,6 +22,8 @@ public class FirebaseHelper {
     public static final String NICK_NAME_KEY = User.PARAM_NICK_NAME;
     public static final String USER_DATE_KEY = User.PARAM_DATE;
     public static final String USER_TIME_KEY = User.PARAM_TIME;
+    public static final String USER_ANKIMAL_INDEX_KEY = User.PARAM_ANKIMAL_INDEX;
+    public static final String USER_COLORED_ANKIMAL_KEY = User.PARAM_COLORED_ANKIMAL;
     public static final String SHARE_URL_KEY = "shareUrl";
     public static final String SURVEY_URL_KEY = "surveyUrl";
     public static final String DEBUG_KEY = "debug";
@@ -105,6 +107,20 @@ public class FirebaseHelper {
         userRef.child(USER_TIME_KEY).setValue(time);
 
         return userRef.child(USER_TIME_KEY);
+    }
+
+    public DatabaseReference storeUserAnkimalIndex(String userId, int ankimalIndex) {
+        DatabaseReference userRef = retrieveUser(userId);
+        userRef.child(USER_ANKIMAL_INDEX_KEY).setValue(ankimalIndex);
+
+        return userRef.child(USER_ANKIMAL_INDEX_KEY);
+    }
+
+    public DatabaseReference storeUserColoredAnkimal(String userId, boolean coloredAnkimal) {
+        DatabaseReference userRef = retrieveUser(userId);
+        userRef.child(USER_COLORED_ANKIMAL_KEY).setValue(coloredAnkimal);
+
+        return userRef.child(USER_COLORED_ANKIMAL_KEY);
     }
 
     public DatabaseReference getUsersDatabaseReference() {

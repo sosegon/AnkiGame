@@ -11,6 +11,7 @@ import com.ichi2.anki.ankigame.data.model.AppLog;
 import com.ichi2.anki.ankigame.data.model.User;
 import com.ichi2.anki.ankigame.data.remote.Analytics;
 import com.ichi2.anki.ankigame.data.remote.FirebaseHelper;
+import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 import com.ichi2.anki.ankigame.util.InfoHandler;
 import com.ichi2.anki.ankigame.util.RxEventBus;
 
@@ -76,6 +77,10 @@ public class DataManager {
             newUser.setNickName(mPreferencesHelper.retrieveNickName());
             newUser.setPoints(mPreferencesHelper.retrievePoints());
 
+            int ankimalIndex = mPreferencesHelper.retrieveLastSelectedAnkimal();
+            newUser.setColoredAnkimal(AnkimalsUtils.isColoredAnkimal(this, ankimalIndex));
+            newUser.setAnkimalIndex(ankimalIndex + 1); // workaround for users with no avatar set
+
             Date date = new Date();
             Date newDate = new Date(date.getTime());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -99,6 +104,7 @@ public class DataManager {
     }
 
     public void logBehaviour(AppLog log) {
+//        if(true) return;
         if(log != null) {
 
             if(log instanceof AnkiLog) {

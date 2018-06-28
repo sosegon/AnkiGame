@@ -1,7 +1,9 @@
 package com.ichi2.anki.ankigame.features.leaderboard;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +25,9 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.ll_player)
     public LinearLayout llPlayer;
 
+    @BindView(R.id.imv_player_avatar)
+    public ImageView imvPlayerAvatar;
+
     public PlayerViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -42,6 +47,10 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
 
     public void setColor(int color){
         llPlayer.setBackgroundColor(color);
+    }
+
+    public void setPlayerAvatar(Drawable icon) {
+        imvPlayerAvatar.setImageDrawable(icon);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {

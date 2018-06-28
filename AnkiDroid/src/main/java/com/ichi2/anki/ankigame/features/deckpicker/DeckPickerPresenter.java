@@ -183,7 +183,7 @@ public class DeckPickerPresenter extends BasePresenter<DeckPickerMvpView> implem
             int requiredPoints = valueAch[i];
             int currentPoints = getPoints();
             if(requiredPoints > currentPoints) {
-                a.setAchievement(mContext.getResources().getDrawable(R.drawable.ic_block_32dp));
+                a.setAchievement(AnkimalsUtils.getDrawableAnkimal(mContext, -1, false));
                 a.setEnabled(false);
             } else {
                 boolean colored = AnkimalsUtils.isColoredAnkimal(mDataManager, i);

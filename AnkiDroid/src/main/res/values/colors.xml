@@ -15,12 +15,12 @@
 <resources>
 
     <!-- ANKIGAME -->
-    <color name="leaderboard_rest">#ffB3E5FC</color>
-    <color name="leaderboard_fifth">#ff81D4FA</color>
-    <color name="leaderboard_fourth">#ff4FC3F7</color>
-    <color name="leaderboard_third">#ff29B6F6</color>
-    <color name="leaderboard_second">#ff03a9f4</color>
-    <color name="leaderboard_first">#ff039be5</color>
+    <color name="leaderboard_rest">@color/material_light_blue_200</color>
+    <color name="leaderboard_fifth">@color/material_light_blue_300</color>
+    <color name="leaderboard_fourth">@color/material_light_blue_400</color>
+    <color name="leaderboard_third">@color/material_light_blue_500</color>
+    <color name="leaderboard_second">@color/material_light_blue_600</color>
+    <color name="leaderboard_first">@color/material_light_blue_700</color>
 
     <color name="wb_fg_color">#B00000FF</color>
     <color name="wb_fg_color_inv">#0099FF</color>
