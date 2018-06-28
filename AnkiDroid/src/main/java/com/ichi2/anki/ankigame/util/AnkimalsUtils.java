@@ -88,6 +88,13 @@ public class AnkimalsUtils {
         return context.getResources().getStringArray(R.array.achievement_names)[ankimalIndex];
     }
 
+    public static void grayDrawable(Drawable icon) {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        icon.setColorFilter(filter);
+    }
+
     private static String getColoredAnkimals(DataManager dataManager) {
         return dataManager.getPreferencesHelper().retrieveColoredAnkimals();
     }
@@ -100,12 +107,5 @@ public class AnkimalsUtils {
         }
 
         return false;
-    }
-
-    private static void grayDrawable(Drawable icon) {
-        ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(0);
-        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
-        icon.setColorFilter(filter);
     }
 }

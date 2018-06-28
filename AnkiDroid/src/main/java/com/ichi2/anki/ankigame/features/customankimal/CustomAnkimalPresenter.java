@@ -51,7 +51,7 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
                 getMvpView().updateCoins();
 
                 getMvpView().updateColorViews();
-                getMvpView().updateAnkimalView();
+                getMvpView().doColorEffect();
                 getMvpView().updateAnkimalList();
                 if(isCurrentlySelected()) {
                     getMvpView().updatePlayerIcon();
@@ -89,6 +89,7 @@ public class CustomAnkimalPresenter extends BasePresenter<CustomAnkimalMvpView> 
                 mDataManager.getPreferencesHelper().storeLastSelectedAnkimal(mAnkimalIndex);
                 getMvpView().updatePlayerIcon();
                 getMvpView().updateSelectViews();
+                getMvpView().doSelectEffect();
 
                 String userId = getUserId();
                 int ankimalIndex = mDataManager.getPreferencesHelper().retrieveLastSelectedAnkimal();

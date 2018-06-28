@@ -9,5 +9,7 @@ public interface CustomAnkimalMvpView extends MvpView {
     void updateColorViews();
     void updateAnkimalView();
     void updateAnkimalList();
+    void doSelectEffect();
+    void doColorEffect();
     void updateCoins();
 }

@@ -1,13 +1,17 @@
 package com.ichi2.anki.ankigame.features.customankimal;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
@@ -17,6 +21,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseDialogFragment;
 import com.ichi2.anki.ankigame.features.CountersActivity;
 import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.util.AnkimalsUtils;
 
 import javax.inject.Inject;
 
@@ -159,6 +164,16 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
     }
 
     @Override
+    public void doSelectEffect() {
+        selectAnimation(getContext(), imvAnkimal, mPresenter.getDrawableAnkimal());
+    }
+
+    @Override
+    public void doColorEffect() {
+        colorAnimation(getContext(), imvAnkimal, mPresenter.getDrawableAnkimal());
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if(!mPresenter.isViewAttached()) {
@@ -172,5 +187,59 @@ public class CustomAnkimal extends BaseDialogFragment implements CustomAnkimalMv
         if(mPresenter.isViewAttached()) {
             mPresenter.detachView();
         }
+    }
+
+    private void colorAnimation(Context c, final ImageView v, final Drawable new_image) {
+        final Animation anim_out = AnimationUtils.loadAnimation(c, R.anim.scale_fade_out);
+        anim_out.setDuration(175);
+        anim_out.setAnimationListener(new Animation.AnimationListener() {
+            @Override public void onAnimationStart(Animation animation) {
+                v.setImageDrawable(new_image);
+            }
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation) {}
+        });
+
+        final Animation anim_in = AnimationUtils.loadAnimation(c, R.anim.scale_fade_in);
+        anim_in.setDuration(175);
+        anim_in.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override public void onAnimationStart(Animation animation) {
+                Drawable gray = new_image.getConstantState().newDrawable();
+                AnkimalsUtils.grayDrawable(gray);
+                v.setImageDrawable(gray);
+            }
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation)
+            {
+                v.startAnimation(anim_out);
+            }
+        });
+        v.startAnimation(anim_in);
+    }
+
+    private void selectAnimation(Context c, final ImageView v, final Drawable new_image) {
+        final Animation anim_out = AnimationUtils.loadAnimation(c, R.anim.scale_fade_out);
+        anim_out.setDuration(175);
+        anim_out.setAnimationListener(new Animation.AnimationListener() {
+            @Override public void onAnimationStart(Animation animation) {
+            }
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation) {}
+        });
+
+        final Animation anim_in = AnimationUtils.loadAnimation(c, R.anim.scale_fade_in);
+        anim_in.setDuration(175);
+        anim_in.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override public void onAnimationStart(Animation animation) {
+            }
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation)
+            {
+                v.startAnimation(anim_out);
+            }
+        });
+        v.startAnimation(anim_in);
     }
 }
