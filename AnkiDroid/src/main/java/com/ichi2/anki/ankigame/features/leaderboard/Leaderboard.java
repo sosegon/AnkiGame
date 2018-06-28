@@ -1,5 +1,6 @@
 package com.ichi2.anki.ankigame.features.leaderboard;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ankigame.base.BaseDialogFragment;
+import com.ichi2.anki.ankigame.features.CountersActivity;
 
 import javax.inject.Inject;
 
@@ -129,8 +131,10 @@ public class Leaderboard extends BaseDialogFragment implements LeaderboardMvpVie
                             mPresenter.updateNickName(nickname);
 
                             // Update the nickname in bar
-                            TextView tv = getActivity().findViewById(R.id.lbl_player_name);
-                            tv.setText(getString(R.string.nickname, nickname));
+                            Activity iv = getActivity();
+                            if(iv instanceof CountersActivity) {
+                                ((CountersActivity)iv).updateLblPlayerName(nickname);
+                            }
                         }
                     })
                     .negativeText(R.string.dialog_cancel)

@@ -20,7 +20,7 @@ import com.ichi2.anki.R;
 public class CountersActivity extends NavigationDrawerActivity {
     TextSwitcher mLblCoins;
     TextSwitcher mLblPoints;
-    TextView mLblPlayerName;
+    TextSwitcher mLblPlayerName;
     TextSwitcher mLblAnkimals;
     ImageView mImvPlayerAnkimal;
 
@@ -31,6 +31,8 @@ public class CountersActivity extends NavigationDrawerActivity {
         mLblAnkimals = maiView.findViewById(R.id.lbl_ankimals);
         mImvPlayerAnkimal = maiView.findViewById(R.id.imv_player_ankimal);
 
+        mLblPlayerName.setInAnimation(getBaseContext(), R.anim.slide_up_in);
+        mLblPlayerName.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
         mLblPoints.setInAnimation(getBaseContext(), R.anim.slide_up_in);
         mLblPoints.setOutAnimation(getBaseContext(), R.anim.slide_up_out);
         mLblAnkimals.setInAnimation(getBaseContext(), R.anim.slide_up_in);
