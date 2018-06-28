@@ -158,7 +158,7 @@ public class FirebaseHelper {
 
     }
 
-    private boolean isPublic() {
+    public boolean isPublic() {
 
         Calendar participantsDate = Calendar.getInstance();
         participantsDate.set(Calendar.DAY_OF_MONTH, 28);

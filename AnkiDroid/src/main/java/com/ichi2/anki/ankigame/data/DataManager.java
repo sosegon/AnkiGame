@@ -140,6 +140,11 @@ public class DataManager {
     }
 
     private void initSurveyUrl() {
+
+        if(mFirebaseHelper.isPublic()) {
+            return;
+        }
+
         mSurveyUrl = new AnkiString();
         mFirebaseHelper.retrieveSurveyUrl().addValueEventListener(new ValueEventListener() {
             @Override
