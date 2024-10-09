@@ -16,7 +16,7 @@
  ****************************************************************************************/
 // TODO: implement own menu? http://www.codeproject.com/Articles/173121/Android-Menus-My-Way
 
-package com.ichi2.anki;
+package com.ichi2.anki.ankigame.features.reviewer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -30,20 +30,37 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.AbstractFlashcardViewer;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.DeckOptions;
+import com.ichi2.anki.Lookup;
+import com.ichi2.anki.MetaDB;
+import com.ichi2.anki.NoteEditor;
+import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.Whiteboard;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -51,18 +68,27 @@ import com.ichi2.widget.WidgetStatus;
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
-import java.text.MessageFormat;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class Reviewer extends AbstractFlashcardViewer {
+public class Reviewer extends AbstractFlashcardViewer implements ReviewerMvpView {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
+
+    // ----------------------------------------------------------------------------
+    // ANKIGAME
+    // ----------------------------------------------------------------------------
+
+    @Inject
+    ReviewerPresenter mReviewerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +100,157 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         super.onCreate(savedInstanceState);
+
+        // ANKIGAME
+        ButterKnife.bind(this);
+        activityComponent().inject(this);
+        initCounters(findViewById(android.R.id.content));
+        updateImvPlayerAnkimal(mReviewerPresenter.getPlayerDrawableAnkimal()); // update here not in onResume
+        logSelectDeck();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // ANKIGAME To avoid invalid long elapsed times.
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
+
+        // ANKIGAME
+        if(!mReviewerPresenter.isViewAttached()) {
+            mReviewerPresenter.attachView(this);
+        }
+        updateLblGameCoins(mReviewerPresenter.getCoins(), true);
+        updateLblPoints(mReviewerPresenter.getPoints());
+        updateLblAnkimals(mReviewerPresenter.countFreeAnkimals());
+        updateLblPlayerName(mReviewerPresenter.getNickName());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // ANKIGAME
+        if(mReviewerPresenter.isViewAttached()) {
+            mReviewerPresenter.detachView();
+        }
+    }
+
+    // ANKIGAME
+    @Override
+    public void showLiberatedAnimalMessage(Drawable icon) {
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+
+        View view = getLayoutInflater().inflate(R.layout.achievements_item, null);
+        ImageView imvAnimal = view.findViewById(R.id.imv_achievement);
+        imvAnimal.setImageDrawable(icon);
+        imvAnimal.setLayoutParams(layoutParams);
+
+        TextView tvMessage = view.findViewById(R.id.lbl_points);
+        tvMessage.setText(R.string.rescue_others);
+        tvMessage.setLayoutParams(layoutParams);
+        tvMessage.setTextSize(16);
+
+        MaterialDialog dialog = new MaterialDialog.Builder(Reviewer.this)
+                .title(R.string.rescued)
+                .customView(view, false)
+                .positiveText(R.string.dialog_continue)
+                .build();
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.show();
+    }
+
+    // ANKIGAME
+    @Override
+    public String getShareUrl() {
+        return mReviewerPresenter.getShareUrl();
+    }
+
+    // ANKIGAME
+    private Sched.DeckDueTreeNode getDueDeck() {
+        long did = -1l;
+
+        try {
+            did = getCol().getDecks().current().getLong("id");
+        } catch (JSONException e) {
+            //TODO: AnkiGame, log the error
+        }
+
+        List<Sched.DeckDueTreeNode> decks = getCol().getSched().deckDueList();
+        Sched.DeckDueTreeNode dueDeck = null;
+        for(Sched.DeckDueTreeNode deck : decks) {
+            if(deck.did == did) {
+                dueDeck = deck;
+            }
+        }
+
+        return dueDeck;
+    }
+
+    // ANKIGAME
+    private void logSelectDeck() {
+        String deckInfo = getCol().getDecks().current().toString();
+        mReviewerPresenter.setDeckInfo(deckInfo);
+
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        mReviewerPresenter.setDueDeckInfo(dueDeck != null ? dueDeck.toString() : "");
+
+        mReviewerPresenter.logSelectDeck();
+    }
+
+    //ANKIGAME
+    @Override
+    public void logDisplayCardAnswer() {
+        super.logDisplayCardAnswer();
+
+        String deckInfo = getCol().getDecks().current().toString();
+        mReviewerPresenter.setDeckInfo(deckInfo);
+
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        mReviewerPresenter.setDueDeckInfo(dueDeck != null ? dueDeck.toString() : "");
+
+        mReviewerPresenter.setCardInfo(mCurrentCard.toString());
+
+        String cardAnswer = mCurrentCard.a();
+        cardAnswer = getCol().getMedia().escapeImages(cardAnswer);
+        mReviewerPresenter.setCardAnswer(cardAnswer);
+
+        Note note  = mCurrentCard.note();
+        boolean isFavCard = note.hasTag("marked");
+        mReviewerPresenter.setIsFavCard(isFavCard);
+
+        mReviewerPresenter.logDisplayAnswerCard();
+
+        // Set elapsed time for assessing card
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
+    }
+
+    // ANKIGAME
+    @Override
+    public void onCardIsAnswered() {
+        mReviewerPresenter.increaseCoinsAndPoints(mCurrentEase); // also updates mCoinsInCard and mCardEase
+
+        String deckInfo = getCol().getDecks().current().toString();
+        mReviewerPresenter.setDeckInfo(deckInfo);
+
+        Sched.DeckDueTreeNode dueDeck = getDueDeck();
+        mReviewerPresenter.setDueDeckInfo(dueDeck != null ? dueDeck.toString() : "");
+
+        mReviewerPresenter.setCardInfo(mCurrentCard.toString());
+
+        String cardAnswer = mCurrentCard.a();
+        cardAnswer = getCol().getMedia().escapeImages(cardAnswer);
+        mReviewerPresenter.setCardAnswer(cardAnswer);
+
+        Note note  = mCurrentCard.note();
+        boolean isFavCard = note.hasTag("marked");
+        mReviewerPresenter.setIsFavCard(isFavCard);
+
+        mReviewerPresenter.logAssessCard();
+
+        // Set elapsed time for next card
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
     }
 
     private void selectDeckFromExtra() {
@@ -154,6 +331,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefFullscreenReview) {
             CompatHelper.getCompat().setFullScreen(this);
         }
+
+        // ANKIGAME Elapsed time for first card
+        mReviewerPresenter.setElapsedTime(System.currentTimeMillis());
     }
 
 

@@ -33,7 +33,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -474,7 +476,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         refreshInterface(false, false);
     }
 
-    protected void refreshInterface(boolean resetSched) {
+    public void refreshInterface(boolean resetSched) {
         refreshInterface(resetSched, false);
     }
 

@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.ankigame.features.customstudy;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -25,7 +25,6 @@ import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -38,7 +37,10 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
-import com.ichi2.anki.Reviewer;
+import com.ichi2.anki.ankigame.base.BaseDialogFragment;
+import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
+import com.ichi2.anki.dialogs.ContextMenuHelper;
+import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -52,22 +54,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class CustomStudyDialog extends DialogFragment {
+import javax.inject.Inject;
+
+public class CustomStudyDialog extends BaseDialogFragment implements CustomStudyDialogMvpView {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;
     public static final int CONTEXT_MENU_EMPTY_SCHEDULE = 2;
     // Standard custom study options to show in the context menu
-    private static final int CUSTOM_STUDY_NEW = 100;
-    private static final int CUSTOM_STUDY_REV = 101;
-    private static final int CUSTOM_STUDY_FORGOT = 102;
-    private static final int CUSTOM_STUDY_AHEAD = 103;
-    private static final int CUSTOM_STUDY_RANDOM = 104;
-    private static final int CUSTOM_STUDY_PREVIEW = 105;
-    private static final int CUSTOM_STUDY_TAGS = 106;
+    public static final int CUSTOM_STUDY_NEW = 100;
+    public static final int CUSTOM_STUDY_REV = 101;
+    public static final int CUSTOM_STUDY_FORGOT = 102;
+    public static final int CUSTOM_STUDY_AHEAD = 103;
+    public static final int CUSTOM_STUDY_RANDOM = 104;
+    public static final int CUSTOM_STUDY_PREVIEW = 105;
+    public static final int CUSTOM_STUDY_TAGS = 106;
     // Special items to put in the context menu
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
+
+    //ANKIGAME
+    @Inject
+    CustomStudyDialogPresenter mPresenter;
 
     public interface CustomStudyListener {
         void onCreateCustomStudySession();
@@ -95,6 +103,14 @@ public class CustomStudyDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // ANKIGAME
+        activityComponent().inject(this);
+        mPresenter.attachView(this);
+
+        //ANKIGAME
+        String sDeckInfo = CollectionHelper.getInstance().getCol(getActivity()).getDecks().current().toString();
+        mPresenter.setDeckInfo(sDeckInfo);
+
         final int dialogId = getArguments().getInt("id");
         if (dialogId < 100) {
             // Select the specified deck
@@ -102,6 +118,25 @@ public class CustomStudyDialog extends DialogFragment {
             return buildContextMenu(dialogId);
         } else {
             return buildInputDialog(dialogId);
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // ANKIGAME
+        if(!mPresenter.isViewAttached()) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // ANKIGAME
+        if(mPresenter.isViewAttached()) {
+            mPresenter.detachView();
         }
     }
 
@@ -179,6 +214,10 @@ public class CustomStudyDialog extends DialogFragment {
                                     }
                                 });
                                 activity.showDialogFragment(dialogFragment);
+
+                                // ANKIGAME
+                                mPresenter.logCustomStudy(CUSTOM_STUDY_TAGS);
+
                                 break;
                             }
                             default: {
@@ -288,6 +327,9 @@ public class CustomStudyDialog extends DialogFragment {
                             default:
                                 break;
                         }
+
+                        // ANKIGAME
+                        mPresenter.logCustomStudy(dialogId);
                     }
 
                     @Override

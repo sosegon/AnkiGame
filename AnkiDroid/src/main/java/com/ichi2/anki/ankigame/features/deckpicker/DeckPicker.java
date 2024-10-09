@@ -19,7 +19,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki.ankigame.features.deckpicker;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -61,10 +61,28 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.BuildConfig;
+import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.DeckOptions;
+import com.ichi2.anki.FilteredDeckOptions;
+import com.ichi2.anki.Info;
+import com.ichi2.anki.ModelBrowser;
+import com.ichi2.anki.MyAccount;
+import com.ichi2.anki.NoteEditor;
+import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsActivity;
+import com.ichi2.anki.StudyOptionsFragment;
+import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.ankigame.features.CountersActivity;
+import com.ichi2.anki.ankigame.features.customstudy.CustomStudyDialog;
+import com.ichi2.anki.ankigame.features.game.Game;
+import com.ichi2.anki.ankigame.features.leaderboard.Leaderboard;
+import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -105,12 +123,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class DeckPicker extends NavigationDrawerActivity implements
-        StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
-        MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
+public class DeckPicker extends CountersActivity implements DeckPickerMvpView {
 
 
     /**
@@ -132,6 +151,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private static final int REPORT_ERROR = 10;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
+    private static final int GO_GAME = 13;
 
     // For automatic syncing
     // 10 minutes in milliseconds.
@@ -346,6 +366,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
+    // ----------------------------------------------------------------------------
+    // ANKIGAME
+    // ----------------------------------------------------------------------------
+
+    @Inject DeckPickerPresenter mDeckPickerPresenter;
+
+    @BindView(R.id.achievements)
+    RecyclerView mAchievementsList;
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
@@ -364,6 +392,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
+
+        // ANKIGAME
+        ButterKnife.bind(this);
+        activityComponent().inject(this);
+        mDeckPickerPresenter.attachView(this);
+        initCounters(mainView);
+        // ANKIGAME Init the user. It creates the id if necessary
+        mDeckPickerPresenter.initUser();
+        // ANKIGAME Add new launch
+        mDeckPickerPresenter.addNewLaunch();
+        // ANKIGAME schedule survey notification
+        mDeckPickerPresenter.scheduleSurveyNotification();
+        // ANKIGAME list of achievement
+        mAchievementsList.addItemDecoration(new DividerItemDecoration(this));
+        mAchievementsList.setLayoutManager(new LinearLayoutManager(this));
+        //mAchievementsList.setAdapter(mDeckPickerPresenter.getAchievementAdapter());
+        //ANKIGAME
+        updateImvPlayerAnkimal(mDeckPickerPresenter.getPlayerDrawableAnkimal());
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -448,6 +494,38 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    // ANKIGAME
+    @Override
+    public void showRateDialog() {
+        final String app_name = mDeckPickerPresenter.getAppPackageName();
+        new MaterialDialog.Builder(this)
+        .title(R.string.info_rate)
+        .positiveText(R.string.dialog_ok)
+        .onPositive(
+                (dialog, which) -> {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + app_name)));
+                }
+        )
+        .neutralText(R.string.remind_later)
+        .onNeutral(
+                (dialog, which) -> {}
+        )
+        .negativeText(R.string.no_rate)
+        .onNegative(
+                (dialog, which) -> {
+                    mDeckPickerPresenter.avoidRater();
+                }
+        )
+        .show();
+
+    }
+
+    // ANKIGAME
+    @Override
+    public String getShareUrl() {
+        return mDeckPickerPresenter.getShareUrl();
+    }
+
     /**
      * Try to open the Collection for the first time, and do some error handling if it wasn't successful
      * @return whether or not we were successful
@@ -471,6 +549,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         final FloatingActionButton addDeckButton = (FloatingActionButton) findViewById(R.id.add_deck_action);
         final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
         final FloatingActionButton addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
+        final FloatingActionButton addGameButton = (FloatingActionButton) findViewById(R.id.add_game_action);
+        final FloatingActionButton addLeaderboardButton = (FloatingActionButton) findViewById(R.id.add_leaderboard_action);
         addDeckButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -510,6 +590,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onClick(View view) {
                 mActionsMenu.collapse();
                 addNote();
+            }
+        });
+        // ANKIGAME
+        if(BuildConfig.FLAVOR.contentEquals("independent")) {
+            addGameButton.setVisibility(View.GONE);
+        } else {
+            addGameButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActionsMenu.collapse();
+                    addGame();
+                }
+            });
+        }
+        // ANKIGAME
+        addLeaderboardButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActionsMenu.collapse();
+                addLeaderboard();
             }
         });
     }
@@ -722,8 +822,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
+
+        // ANKIGAME
+        if(!mDeckPickerPresenter.isViewAttached()) {
+            mDeckPickerPresenter.attachView(this);
+        }
+        updateLblGameCoins(mDeckPickerPresenter.getCoins(), true);
+        updateLblPoints(mDeckPickerPresenter.getPoints());
+        updateLblAnkimals(mDeckPickerPresenter.countFreeAnkimals());
+        updateLblPlayerName(mDeckPickerPresenter.getNickName());
+        // The ankimal has to be updated in onCreate only
+        //updateImvPlayerAnkimal(mDeckPickerPresenter.getPlayerDrawableAnkimal());
+        mDeckPickerPresenter.updateAnimalList();
+        mAchievementsList.swapAdapter(mDeckPickerPresenter.getAchievementAdapter(), false);
+        mAchievementsList.scrollToPosition(mDeckPickerPresenter.getNumberFreeAnimals() - 1);
     }
 
+    public void updateAnkimalList() {
+        mDeckPickerPresenter.updateAnimalList();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -768,6 +885,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mProgressDialog.dismiss();
         }
         Timber.d("onDestroy()");
+
+        // ANKIGAME
+        if(mDeckPickerPresenter.isViewAttached()) {
+            mDeckPickerPresenter.detachView();
+        }
     }
 
     private void automaticSync() {
@@ -854,6 +976,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+    }
+
+    // ANKIGAME
+    public void addGame() {
+        mDeckPickerPresenter.logGoToGame();
+        Intent intent = new Intent(DeckPicker.this, Game.class);
+        finishWithAnimation();
+        startActivityForResultWithAnimation(intent, GO_GAME, ActivityTransitionAnimation.LEFT);
+    }
+
+    // ANKIGAME
+    public void addLeaderboard() {
+        Leaderboard leaderboard = new Leaderboard();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(Leaderboard.FRAGMENT_TAG);
+        if(prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        leaderboard.show(ft, Leaderboard.FRAGMENT_TAG);
     }
 
 

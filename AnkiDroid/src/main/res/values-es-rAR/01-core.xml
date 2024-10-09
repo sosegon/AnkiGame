@@ -69,6 +69,60 @@
     <item quantity="one">%1$d tarjeta estudiada en %2$s hoy</item>
     <item quantity="other">%1$d tarjetas estudiadas en %2$s hoy</item>
   </plurals>
+
+  <!-- ANKIGAME -->
+  <string name="rescued">¡Gracias por rescatarme!</string>
+  <string name="rescue_others">¡Gana más puntos para rescatar a mis otros amigos!</string>
+  <string name="study_end">El estudio finalizó. Por favor, llena la encuesta.</string>
+  <string name="thanks_participation">
+    Gracias por participar en el estudio.
+    \nPor favor, llena la encuesta.
+    \nNo presiones el botón regresar hasta finalizar.
+    \nLa encuesta no estará disponible después.
+  </string>
+  <string name="start_survey">Llenar encuesta</string>
+  <string name="remind_later">Recordar después</string>
+  <string name="no_rate">No, gracias.</string>
+  <string name="press_back_again_to_exit">Presiona atrás nuevamente para salir</string>
+  <string name="earn_coins_points">Ganar monedas | puntos</string>
+  <string name="earn_coins">Ganar monedas</string>
+  <string name="earn_points">Ganar puntos</string>
+  <string name="leaderboard">Posiciones</string>
+  <string name="see_leaderboard">Ver posiciones</string>
+  <string name="restart_game">Reiniciar juego</string>
+  <string name="how_to_play">Cómo jugar</string>
+  <string name="has_lost_game">☹Perdiste!☹</string>
+  <string name="has_won_game">☺Ganaste!☺</string>
+  <string name="coins">Monedas \n%1$d ⛁</string>
+  <string name="points">Puntos \n%1$d ★</string>
+  <string name="insufficient_coins">Necesitas %1$d monedas addicionales.</string>
+  <string name="insufficient_points">Necesitas %1$d puntos addicionales.</string>
+  <string name="unable_trick">No puedes usar el truco %1$s en este momento.</string>
+  <string name="menu_options">Opciones</string>
+  <string name="menu_game">Juego</string>
+  <string name="update_nick_name">Cambiar nombre</string>
+  <string name="loading">Cargando...</string>
+  <string name="pausing">Pausando...</string>
+  <string name="share">Compartir</string>
+  <string name="about">Acerca de</string>
+  <string name="privacy">Política de privacidad</string>
+  <string name="game_instuctions">
+    Desliza el tablero ↔ ↕ para mover los cuadros. Cuando dos cuadros con el mismo número chocan, se convierten en uno solo!
+    \n\nForma el cuadro 2048 para ganar.
+    \n\nUsa trucos para que el juego sea más fácil.
+    \n\nRevisa cartas para ganar puntos ★ y monedas ⛁, y así desbloquear y usar los trucos.
+  </string>
+  <string name="share_message">
+    <!--TODO: Ankigame, update app url-->
+    Me estoy divirtiendo con AnkiGame.
+    \n\n<a href="">Inténtalo!</a> #AnkiGame
+  </string>
+  <string name="about_ankigame">
+    AnkiGame es una versión modificada de <a href="">AnkiDroid</a>
+    \n\nCombina las características de AnkiDroid que te permiten aprender nuevos
+    conceptos con la diversión de un juego casual.
+  </string>
+
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar respuesta</string>

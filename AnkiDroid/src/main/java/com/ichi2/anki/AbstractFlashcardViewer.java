@@ -74,6 +74,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.ankigame.features.CountersActivity;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
@@ -107,7 +109,7 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
+public abstract class AbstractFlashcardViewer extends CountersActivity {
 
     /**
      * Whether to save the content of the card in the file system.
@@ -258,7 +260,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
-    private int mCurrentEase;
+    protected int mCurrentEase;
 
     private boolean mButtonHeightSet = false;
 
@@ -1323,8 +1325,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
+        // ANKIGAME
+        onCardIsAnswered();
+
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new DeckTask.TaskData(mCurrentCard, mCurrentEase));
+    }
+
+    public void onCardIsAnswered(){
+
     }
 
 
@@ -2072,6 +2081,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
             }
         }
+
+        logDisplayCardAnswer();
+    }
+
+    //ANKIGAME Implement in subclass
+    public void logDisplayCardAnswer() {
+
     }
 
 

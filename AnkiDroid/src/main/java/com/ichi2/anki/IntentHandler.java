@@ -12,6 +12,8 @@ import android.support.v4.content.IntentCompat;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.ankigame.features.deckpicker.DeckPicker;
+import com.ichi2.anki.ankigame.features.reviewer.Reviewer;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.services.ReminderService;
 

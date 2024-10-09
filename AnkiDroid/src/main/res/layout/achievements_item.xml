@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_player"
+    android:orientation="vertical"
+    android:layout_width="48dp"
+    android:layout_height="78dp"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/lbl_position"
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:gravity="start"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingTop="4dp"
+        android:textColor="@color/material_blue_grey_600"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        tools:text="23"/>
+    <ImageView
+        android:id="@+id/imv_achievement"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:scaleType="fitXY"/>
+    <TextView
+        android:id="@+id/lbl_points"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:gravity="center"
+        android:textSize="10sp"
+        tools:text="100000★"/>
+
+</LinearLayout>
